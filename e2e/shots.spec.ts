@@ -1,13 +1,14 @@
 import { expect, test } from '@playwright/test';
+import { FEATURED } from '../src/data/demo/featured';
 
-/** Every phase 1 route. `name` is the screenshot file name; ids are placeholders until the demo data exists. */
+/** Every phase 1 route. `name` is the screenshot file name; ids are the featured demo records. */
 const routes = [
   { name: 'login', path: '/login' },
   { name: 'dashboard', path: '/' },
   { name: 'farmers', path: '/farmers' },
-  { name: 'farm', path: '/farms/demo' },
+  { name: 'farm', path: `/farms/${FEATURED.farms.shreeGanesh}` },
   { name: 'livestock', path: '/livestock' },
-  { name: 'animal', path: '/animals/demo' },
+  { name: 'animal', path: `/animals/${FEATURED.animals.gauri}` },
   { name: 'reproduction', path: '/reproduction' },
   { name: 'milk-feed', path: '/milk-feed' },
   { name: 'health', path: '/health' },
