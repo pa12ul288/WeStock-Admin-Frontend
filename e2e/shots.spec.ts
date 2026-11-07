@@ -93,6 +93,45 @@ for (const stage of ['inseminated', 'pregnant']) {
   });
 }
 
+test('fix milk entry dialog at 1440', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await signIn(page);
+  await page.goto('/milk-feed');
+  await expect(page.getByTestId('skeleton-row')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Edit entry' }).first().click();
+  await expect(page.getByRole('button', { name: 'Save fix' })).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  await page.waitForTimeout(600);
+  await page.screenshot({ path: '.shots/fix-milk-entry-1440.png' });
+});
+
+test('add entry dialog at 1440', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await signIn(page);
+  await page.goto('/milk-feed');
+  await expect(page.getByTestId('skeleton-row')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Add entry' }).click();
+  await page.waitForTimeout(600);
+  await page.screenshot({ path: '.shots/add-entry-1440.png' });
+});
+
+for (const width of [1440, 390]) {
+  test(`milk and feed monthly at ${width}`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await signIn(page);
+    await page.goto('/milk-feed?period=monthly&tab=feed');
+    await expect(page.getByTestId('skeleton-row')).toHaveCount(0);
+    await expect(page.getByRole('button', { name: /^Download \w+ report$/ })).toBeEnabled({
+      timeout: 20_000,
+    });
+    await page.evaluate(() => document.fonts.ready);
+    await page.waitForTimeout(800);
+    await page.screenshot({ path: `.shots/milk-feed-monthly-${width}.png`, fullPage: true });
+    const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
+    expect(scrollWidth).toBeLessThanOrEqual(width);
+  });
+}
+
 test('add cycle dialog at 1440', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await signIn(page);

@@ -20,6 +20,9 @@ export const ICONS = {
   calendar: 'M4 6h16v14H4zM4 10h16M9 3v4M15 3v4',
   calendarCheck: 'M4 6h16v14H4zM4 10h16M9 3v4M15 3v4M9 15l2 2 4-4',
   flame: 'M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 2-7 2 1 3 3 3 5',
+  rupee: 'M7 4h10M7 8h10M7 4c5 0 6 2 6 4s-2 4-6 4l7 8',
+  sprout: 'M12 21V11M12 11c0-4 3-7 8-7 0 5-3 7-8 7zM12 14c0-3-2.5-5.5-7-5.5 0 4 2.5 5.5 7 5.5z',
+  trash: 'M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13',
 };
 
 export function Icon({ d, size = 18 }: { d: string; size?: number }) {

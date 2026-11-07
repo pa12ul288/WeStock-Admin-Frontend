@@ -1,0 +1,355 @@
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.eyebrow {
+  color: var(--green-ink);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 6px 0 0;
+  color: var(--navy);
+  font-family: var(--font-head);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.sub {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.farmSelect {
+  width: 180px;
+  max-width: 260px;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--navy);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* Charts */
+.chartRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.milkCard,
+.feedCard {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.milkCard {
+  flex: 3 1 520px;
+  padding: 16px 18px 14px;
+}
+
+.feedCard {
+  flex: 2 1 340px;
+  padding: 16px 18px;
+}
+
+.cardHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cardTitle {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cardUnit {
+  color: var(--muted);
+  font-family: var(--font-head);
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.sessions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.sessionTotal {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sessionTotal + .sessionTotal {
+  padding-left: 12px;
+  border-left: 1px solid var(--line-soft);
+}
+
+.sessionValue {
+  color: var(--navy);
+  font-family: var(--font-head);
+  font-size: 17px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.feedAverage {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.bigNumber {
+  color: var(--navy);
+  font-family: var(--font-head);
+  font-size: 28px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.feedBar {
+  display: flex;
+  gap: 3px;
+  height: 10px;
+}
+
+.feedBar span {
+  min-width: 3px;
+  border-radius: 3px;
+}
+
+.feedRows {
+  display: flex;
+  flex-direction: column;
+}
+
+.feedRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-top: 1px solid var(--line-soft);
+  font-size: 13px;
+}
+
+.feedRow i {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 2px;
+}
+
+.feedName {
+  flex: 1;
+}
+
+.feedPercent {
+  width: 40px;
+  color: var(--navy);
+  font-family: var(--font-head);
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* The month's report */
+.reportLines {
+  display: flex;
+  flex-direction: column;
+}
+
+.keyValue {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line-soft);
+  font-size: 14px;
+}
+
+.keyValue span:first-child {
+  color: var(--muted);
+}
+
+.keyValue b {
+  color: var(--navy);
+  font-family: var(--font-head);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  text-align: right;
+}
+
+.reportButton {
+  align-self: flex-start;
+}
+
+/* The tables */
+.tabsRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.farmCell {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.name {
+  color: var(--navy);
+  font-weight: 800;
+}
+
+.number,
+.numberMuted,
+.numberStrong {
+  font-family: var(--font-head);
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.numberMuted {
+  color: var(--muted);
+}
+
+.numberStrong {
+  color: var(--navy);
+}
+
+.enteredBy {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rowActions {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.danger {
+  color: var(--pill-red-ink);
+}
+
+/* Dialogs */
+.dialogGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.kindSwitch {
+  align-self: flex-start;
+}
+
+.entryLine {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 10px;
+  font-size: 14px;
+}
+
+.entryLine span {
+  color: var(--muted);
+}
+
+.entryLine b {
+  color: var(--navy);
+  font-weight: 800;
+  text-align: right;
+}
+
+.deleteSummary {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+@media (max-width: 900px) {
+  .head {
+    align-items: flex-start;
+  }
+
+  .title {
+    font-size: 23px;
+  }
+
+  .sub {
+    font-size: 14px;
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .farmSelect {
+    flex: 1 1 140px;
+    width: auto;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .dialogGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bigNumber {
+    font-size: 23px;
+  }
+}
