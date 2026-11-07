@@ -7,6 +7,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
+import { lastClickY } from './clickPosition';
 import styles from './Toast.module.css';
 
 type Tone = 'success' | 'error';
@@ -19,10 +20,17 @@ const ToastContext = createContext<ToastApi | null>(null);
 const SHOW_FOR_MS = 2800;
 
 export function ToastProvider({ children }: { children: ReactNode }) {
-  const [toast, setToast] = useState<{ id: number; text: string; tone: Tone } | null>(null);
+  const [toast, setToast] = useState<{
+    id: number;
+    text: string;
+    tone: Tone;
+    top: number;
+  } | null>(null);
 
   const show = useCallback((text: string, tone: Tone = 'success') => {
-    setToast((current) => ({ id: (current?.id ?? 0) + 1, text, tone }));
+    // Appears near the last click, so it's where the person is already looking.
+    const top = Math.max(16, Math.min(lastClickY() - 76, window.innerHeight - 76));
+    setToast((current) => ({ id: (current?.id ?? 0) + 1, text, tone, top }));
   }, []);
 
   const toastId = toast?.id;
@@ -37,7 +45,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={api}>
       {children}
-      <div className={styles.region} role="status" aria-live="polite">
+      <div className={styles.region} style={{ top: toast?.top }} role="status" aria-live="polite">
         {toast && (
           <div className={styles.toast} data-tone={toast.tone}>
             <svg

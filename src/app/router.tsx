@@ -20,6 +20,20 @@ const shell = (crumb: string, page: string, nav: ShellHandle['nav']): ShellHandl
   nav,
 });
 
+// import.meta.env.DEV is false in `vite build`, so the gallery and its import leave the bundle.
+const devRoutes: RouteObject[] = import.meta.env.DEV
+  ? [
+      {
+        path: 'dev/components',
+        lazy: async () => {
+          const { ComponentsPage } = await import('../features/dev/ComponentsPage');
+          return { Component: ComponentsPage };
+        },
+        handle: shell('Dev', 'Components', null),
+      },
+    ]
+  : [];
+
 export const routes: RouteObject[] = [
   { path: '/login', element: <LoginPage /> },
   {
@@ -80,6 +94,7 @@ export const routes: RouteObject[] = [
         element: <StaffPage />,
         handle: shell('Admin', 'Staff & activity log', 'staff'),
       },
+      ...devRoutes,
     ],
   },
 ];

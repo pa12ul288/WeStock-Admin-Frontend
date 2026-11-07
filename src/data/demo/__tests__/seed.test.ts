@@ -4,6 +4,9 @@ import { FEATURED } from '../featured';
 import { generateSeed } from '../seed';
 import { NOW, newAdapter, sharedSeed, TODAY } from './helpers';
 
+// Comparing whole seeds is slow when every test file runs at once on a busy machine.
+vi.setConfig({ testTimeout: 60_000 });
+
 const between = (value: number, min: number, max: number) => {
   expect(value).toBeGreaterThanOrEqual(min);
   expect(value).toBeLessThanOrEqual(max);

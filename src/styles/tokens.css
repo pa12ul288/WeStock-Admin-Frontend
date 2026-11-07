@@ -38,6 +38,16 @@
   --segment-bg: #e9eeeb;
   --warn-ink: #7f1d2d;
   --panel-ring: #1f3a4f;
+  --surface-soft: #fafbfa;
+  --line-table: #eef1ef;
+
+  --chart-sky: #8fd3ea;
+  --chart-steel: #8fb3d9;
+  --chart-blue: #5b8dc9;
+  --chart-amber: #f5b547;
+  --chart-orange: #e07b00;
+  --chart-pink: #d6249f;
+  --chart-pink-soft: #f2a6d8;
 
   --nav-text: #c9d1dc;
   --nav-muted: #7d8a9c;

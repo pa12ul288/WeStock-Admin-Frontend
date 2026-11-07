@@ -8,7 +8,7 @@ export type NavKey =
 export interface ShellHandle {
   crumb: string;
   page: string;
-  nav: NavKey;
+  nav: NavKey | null;
 }
 
 function isShellHandle(handle: unknown): handle is ShellHandle {

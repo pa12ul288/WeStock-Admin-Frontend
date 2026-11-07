@@ -1,0 +1,38 @@
+.segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-self: flex-start;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 13px;
+  background: var(--segment-bg);
+}
+
+.segmented button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--ink-softer);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.segmented button[aria-pressed='true'] {
+  background: var(--card);
+  box-shadow: var(--shadow-raised);
+  color: var(--navy);
+}
+
+.count {
+  color: var(--muted);
+  font-family: var(--font-head);
+  font-variant-numeric: tabular-nums;
+}

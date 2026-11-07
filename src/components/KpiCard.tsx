@@ -1,0 +1,60 @@
+import type { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
+import styles from './KpiCard.module.css';
+
+export type KpiTone = 'green' | 'amber' | 'red' | 'blue' | 'pink' | 'grey' | 'milk';
+
+export interface KpiTrend {
+  direction: 'up' | 'down' | 'same';
+  /** `3.6%`, or `same`. */
+  text: string;
+}
+
+interface KpiCardProps {
+  label: string;
+  value: ReactNode;
+  note?: ReactNode;
+  icon?: ReactNode;
+  tone?: KpiTone;
+  trend?: KpiTrend;
+  /** Makes the whole card a link. */
+  to?: string;
+}
+
+const TREND_PREFIX = { up: '↑', down: '↓', same: '=' };
+
+export function KpiCard({ label, value, note, icon, tone = 'green', trend, to }: KpiCardProps) {
+  const content = (
+    <>
+      <div className={styles.head}>
+        {icon && (
+          <span className={styles.icon} data-tone={tone}>
+            {icon}
+          </span>
+        )}
+        <span className={styles.label}>{label}</span>
+      </div>
+      <div className={styles.values}>
+        <span className={styles.value}>{value}</span>
+        {trend && (
+          <span className={styles.trend} data-direction={trend.direction}>
+            <span aria-hidden="true">{TREND_PREFIX[trend.direction]}</span> {trend.text}
+          </span>
+        )}
+      </div>
+      {note && <span className={styles.note}>{note}</span>}
+    </>
+  );
+  return to ? (
+    <Link to={to} className={`${styles.card} ${styles.link}`}>
+      {content}
+    </Link>
+  ) : (
+    <div className={styles.card}>{content}</div>
+  );
+}
+
+/** The row of KPI cards: as many as fit on desktop, two across on a phone. */
+export function KpiGrid({ children }: { children: ReactNode }) {
+  return <div className={styles.grid}>{children}</div>;
+}

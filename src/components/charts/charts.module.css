@@ -1,0 +1,56 @@
+.chart {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  margin: 0;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 0;
+  padding: 0;
+  color: var(--ink-softer);
+  font-size: 12.5px;
+  list-style: none;
+}
+
+.legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.swatch {
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+}
+
+.swatchDashed {
+  width: 14px;
+  height: 0;
+  border-top: 2px dashed;
+}
+
+.tooltip {
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--navy);
+  box-shadow: var(--shadow-toast);
+  color: var(--card);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.totalLabel {
+  fill: var(--ink-softer);
+  font-size: 11.5px;
+}
+
+.chart :global(.recharts-surface):focus,
+.chart :global(.recharts-wrapper):focus {
+  outline: none;
+}

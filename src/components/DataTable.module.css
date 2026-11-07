@@ -1,0 +1,115 @@
+.scroller {
+  position: relative;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.head {
+  position: relative;
+  z-index: 2;
+}
+
+.head th {
+  padding: 11px 18px;
+  border-top: 1px solid var(--line-table);
+  border-bottom: 1px solid var(--line-table);
+  background: var(--surface-soft);
+  color: var(--muted);
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.head th.right {
+  text-align: right;
+}
+
+.table td {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--ink);
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.table td.right {
+  text-align: right;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.table tbody tr:hover td {
+  background: var(--surface-soft);
+}
+
+.shrink {
+  width: 1%;
+}
+
+.linked {
+  cursor: pointer;
+}
+
+.sortButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.sortIcon {
+  opacity: 0.35;
+}
+
+.sortIcon[data-active='true'] {
+  color: var(--navy);
+  opacity: 1;
+}
+
+.srOnly {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.message {
+  position: sticky;
+  left: 0;
+  margin: 16px;
+}
+
+@media (max-width: 900px) {
+  .head th {
+    padding: 10px 12px;
+  }
+
+  .table td {
+    padding: 11px 12px;
+    font-size: 13.5px;
+  }
+
+  .table .hideOnPhone {
+    display: none;
+  }
+}

@@ -1,0 +1,52 @@
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line-table);
+}
+
+.count {
+  color: var(--muted);
+  font-family: var(--font-head);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.pages {
+  display: flex;
+  gap: 4px;
+}
+
+.page,
+.gap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 8px;
+  color: var(--ink-soft);
+  font-family: var(--font-head);
+  font-size: 12px;
+}
+
+.page {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  cursor: pointer;
+}
+
+.page:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.page[aria-current='page'] {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: var(--card);
+}

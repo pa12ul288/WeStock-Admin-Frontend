@@ -1,0 +1,8 @@
+.warning {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--pill-red);
+  color: var(--warn-ink);
+  font-size: 13.5px;
+  line-height: 1.45;
+}

@@ -1,0 +1,32 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.input {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 11px;
+  background: var(--card);
+  color: var(--navy);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.input::placeholder {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.error {
+  color: var(--pill-red-ink);
+  font-size: 12.5px;
+  font-weight: 700;
+}

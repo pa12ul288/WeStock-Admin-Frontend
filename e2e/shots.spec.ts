@@ -15,6 +15,7 @@ const routes = [
   { name: 'health', path: '/health' },
   { name: 'analytics', path: '/analytics' },
   { name: 'staff', path: '/staff' },
+  { name: 'dev-components', path: '/dev/components' },
 ];
 
 const viewports = [
