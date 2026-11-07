@@ -49,6 +49,14 @@ interface LineChartProps<Row extends object> {
   labelEveryOnPhone?: number;
   /** Shows every nth label on desktop. */
   labelEvery?: number;
+  /** Leaves out the bottom axis, when another chart directly below carries the same labels. */
+  hideXAxis?: boolean;
+  /** No line following the pointer, for a chart whose open tooltip marks "now". */
+  hideCursor?: boolean;
+  /** Room for the left axis's labels. */
+  yAxisWidth?: number;
+  /** Leaves out the legend, when the card's header shows it instead. */
+  hideLegend?: boolean;
 }
 
 /** Trends such as temperature and THI. */
@@ -65,6 +73,10 @@ export function LineChart<Row extends object>({
   references = [],
   labelEveryOnPhone = 1,
   labelEvery = 1,
+  hideXAxis = false,
+  hideCursor = false,
+  yAxisWidth = 44,
+  hideLegend = false,
 }: LineChartProps<Row>) {
   const isPhone = useIsPhone();
   const idBase = useId().replace(/:/g, '');
@@ -75,7 +87,7 @@ export function LineChart<Row extends object>({
 
   return (
     <figure className={styles.chart} aria-label={label}>
-      {legend.length > 1 && <ChartLegend items={legend} />}
+      {legend.length > 1 && !hideLegend && <ChartLegend items={legend} />}
       <ResponsiveContainer width="100%" height={height}>
         <ComposedChart
           data={data as Row[]}
@@ -101,6 +113,7 @@ export function LineChart<Row extends object>({
           </defs>
           <CartesianGrid vertical={false} stroke={GRID_COLOUR} strokeDasharray="4 4" />
           <XAxis
+            hide={hideXAxis}
             dataKey={xKey as string}
             tick={AXIS_TICK}
             tickLine={false}
@@ -112,14 +125,14 @@ export function LineChart<Row extends object>({
             tick={AXIS_TICK}
             axisLine={false}
             tickLine={false}
-            width={44}
+            width={yAxisWidth}
             ticks={yTicks}
             domain={yTicks ? [yTicks[0] ?? 0, yTicks.at(-1) ?? 'auto'] : ['auto', 'auto']}
             tickFormatter={formatY}
           />
           <Tooltip
             content={chartTooltip(tooltip)}
-            cursor={{ stroke: AXIS_COLOUR }}
+            cursor={hideCursor ? false : { stroke: AXIS_COLOUR }}
             isAnimationActive={false}
             defaultIndex={highlightIndex}
           />

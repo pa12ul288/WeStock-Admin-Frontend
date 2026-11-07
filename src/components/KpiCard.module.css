@@ -68,6 +68,11 @@
   color: var(--pill-grey-ink);
 }
 
+.icon[data-tone='navy'] {
+  background: var(--navy-tint);
+  color: var(--navy);
+}
+
 .icon[data-tone='milk'] {
   background: var(--milk);
   color: var(--milk-ink);

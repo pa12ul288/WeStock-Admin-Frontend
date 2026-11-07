@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './KpiCard.module.css';
 
-export type KpiTone = 'green' | 'amber' | 'red' | 'blue' | 'pink' | 'grey' | 'milk';
+export type KpiTone = 'green' | 'amber' | 'red' | 'blue' | 'pink' | 'grey' | 'milk' | 'navy';
 
 export interface KpiTrend {
   direction: 'up' | 'down' | 'same';

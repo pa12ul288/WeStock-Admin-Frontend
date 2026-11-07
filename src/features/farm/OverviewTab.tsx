@@ -10,7 +10,7 @@ import { Skeleton } from '../../components/Skeleton';
 import type { FarmDetail } from '../../data/types';
 import { formatCount, formatDateTime, formatLitresTotal, formatRupees } from '../../lib/format';
 import { buildMilkWeek, milkTicks, type LatestEntry } from './helpers';
-import { Icon, ICONS } from './Icon';
+import { Icon, ICONS } from '../../components/Icon';
 import { useFarmLatest, useFarmMilk, useFarmRecords } from './queries';
 import styles from './FarmPage.module.css';
 

@@ -38,6 +38,8 @@ interface BarChartProps<Row extends object> {
   emphasisIndex?: number;
   /** The gap around each bar on a phone. Few bars look better with a smaller one. */
   phoneBarGap?: string;
+  /** Room to the right of the last bar, for a last label wider than its bar. */
+  rightMargin?: number;
   /** Slanted day labels, for 30 bars. */
   rotateLabels?: boolean;
   /** Shows every nth label on a phone. */
@@ -59,6 +61,7 @@ export function BarChart<Row extends object>({
   highlightIndex,
   emphasisIndex,
   phoneBarGap = '35%',
+  rightMargin = 0,
   rotateLabels = false,
   labelEveryOnPhone = 1,
   totalLabel,
@@ -78,7 +81,7 @@ export function BarChart<Row extends object>({
       <ResponsiveContainer width="100%" height={height}>
         <RechartsBarChart
           data={data as Row[]}
-          margin={{ top: totalLabel ? 22 : 10, right: 0, bottom: 0, left: 0 }}
+          margin={{ top: totalLabel ? 22 : 10, right: rightMargin, bottom: 0, left: 0 }}
           barCategoryGap={isPhone ? phoneBarGap : '30%'}
           accessibilityLayer={false}
         >

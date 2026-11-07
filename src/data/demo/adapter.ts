@@ -1229,6 +1229,8 @@ export function createDemoAdapter(store: DemoStore, options: DemoAdapterOptions 
     async listAnimals(f) {
       await wait();
       const needle = (f.q ?? '').trim().toLowerCase();
+      // The box promises Pashu Aadhaar too, typed with or without the spaces or the list's "PA".
+      const aadhaar = needle.replace(/^pa\s*/, '').replace(/\s/g, '');
       const all = animalRows();
       // The totals follow the farm and species group; the other filters only narrow the list.
       const scoped = all.filter(
@@ -1240,7 +1242,10 @@ export function createDemoAdapter(store: DemoStore, options: DemoAdapterOptions 
       const rows = all
         .filter(
           (a) =>
-            (!needle || contains(a.tag_number, needle) || contains(a.name, needle)) &&
+            (!needle ||
+              contains(a.tag_number, needle) ||
+              contains(a.name, needle) ||
+              (/^\d+$/.test(aadhaar) && contains(a.pashu_aadhaar, aadhaar))) &&
             (!f.farm_id || a.farm_id === f.farm_id) &&
             (!f.category || a.category === f.category) &&
             (!f.connection_state || a.connection_state === f.connection_state) &&

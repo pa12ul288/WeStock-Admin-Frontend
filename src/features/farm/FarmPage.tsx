@@ -6,6 +6,7 @@ import { initials } from '../../components/Avatar';
 import { Button, buttonClass } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { EmptyState } from '../../components/EmptyState';
+import { Icon, ICONS } from '../../components/Icon';
 import { KpiCard, KpiGrid } from '../../components/KpiCard';
 import { Segmented } from '../../components/Segmented';
 import { Skeleton } from '../../components/Skeleton';
@@ -14,11 +15,11 @@ import type { FarmDetail } from '../../data/types';
 import { formatCount, formatDate, formatLitresTotal, formatPhone } from '../../lib/format';
 import { LANGUAGE_LABELS, formatPlace } from '../../lib/labels';
 import { useUrlState } from '../../lib/url-state';
-import { AddAnimalDialog } from './AddAnimalDialog';
+import { AddAnimalDialog } from '../livestock/AddAnimalDialog';
+import { useSpecies } from '../livestock/queries';
 import { memberNote, milkTodayNote, speciesMix } from './helpers';
-import { Icon, ICONS } from './Icon';
 import { OverviewTab } from './OverviewTab';
-import { isNotFound, useFarm, useFarmRecords, useSpecies } from './queries';
+import { isNotFound, useFarm, useFarmRecords } from './queries';
 import { SettingsTab } from './SettingsTab';
 import { ShedsMembersTab } from './ShedsMembersTab';
 import styles from './FarmPage.module.css';
@@ -239,7 +240,13 @@ export function FarmPage() {
           onDeleted={() => setDeleted(true)}
         />
       )}
-      {addingAnimal && <AddAnimalDialog detail={detail} onClose={() => setAddingAnimal(false)} />}
+      {addingAnimal && (
+        <AddAnimalDialog
+          farm={detail.farm}
+          sheds={detail.sheds}
+          onClose={() => setAddingAnimal(false)}
+        />
+      )}
     </>
   );
 }

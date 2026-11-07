@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useMemo, useState } from 'react';
 import { AvatarName } from '../../components/Avatar';
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
@@ -23,7 +22,7 @@ import {
   formatRelative,
 } from '../../lib/format';
 import { LANGUAGE_LABELS, LANGUAGES, STATES, formatPlace, isLang } from '../../lib/labels';
-import { useClearUrlParams, useUrlPage, useUrlState } from '../../lib/url-state';
+import { useClearUrlParams, useLastPageGuard, useUrlPage, useUrlState } from '../../lib/url-state';
 import { farmerTotals, farmsByOwner, percentOf, quietLevel } from './helpers';
 import {
   fetchAllFarmers,
@@ -322,7 +321,6 @@ function useExport(isFarmers: boolean, filters: { q?: string; state?: string; la
 export function FarmersPage() {
   const [values, setValues] = useUrlState({ view: 'farmers', q: '', state: '', lang: '' });
   const [page, setPage] = useUrlPage();
-  const [, setParams] = useSearchParams();
   const clearFilters = useClearUrlParams(FILTER_KEYS);
   const isFarmers = values.view !== 'farms';
 
@@ -353,17 +351,7 @@ export function FarmersPage() {
   // A page past the end of a list that shrank: show the last real page instead of nothing.
   const lastPage = Math.max(Math.ceil(total / PAGE_SIZE), 1);
   const pastTheEnd = !list.isPlaceholderData && total > 0 && page > lastPage;
-  useEffect(() => {
-    if (!pastTheEnd) return;
-    setParams(
-      (current) => {
-        const next = new URLSearchParams(current);
-        next.set('page', String(lastPage));
-        return next;
-      },
-      { replace: true },
-    );
-  }, [pastTheEnd, lastPage, setParams]);
+  useLastPageGuard(pastTheEnd, lastPage);
 
   const { busy, run } = useExport(isFarmers, values);
 

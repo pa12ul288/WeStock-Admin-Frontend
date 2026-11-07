@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 export type UrlPatch = Record<string, string | number | null | undefined>;
@@ -113,6 +113,15 @@ export function useUrlSort(fallback: SortState): [SortState, (sort: SortState) =
     [setParams, fallback.key, fallback.dir],
   );
   return [sort, setSort];
+}
+
+/** A page past the end of a list that shrank: moves to the last real page instead of showing nothing. */
+export function useLastPageGuard(pastTheEnd: boolean, lastPage: number): void {
+  const [, setParams] = useSearchParams();
+  useEffect(() => {
+    if (!pastTheEnd) return;
+    setParams((current) => applyUrlPatch(current, { [PAGE_PARAM]: lastPage }), { replace: true });
+  }, [pastTheEnd, lastPage, setParams]);
 }
 
 /** Clears these keys and goes back to the first page: the "Clear filters" action. */

@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRefresh } from '../../app/queries';
 import { dataSource } from '../../data';
 import { DataError } from '../../data/errors';
-import type { Animal, MemberRole, Shed, UUID } from '../../data/types';
+import type { MemberRole, Shed, UUID } from '../../data/types';
 import type { DataSource } from '../../data/source';
 import { fetchAllRows } from '../../lib/csv';
 import { buildLatest, buildRecords } from './helpers';
@@ -18,14 +19,6 @@ export function useFarm(id: UUID, enabled = true) {
     queryFn: () => dataSource.getFarm(id),
     retry: (count, error) => !isNotFound(error) && count < 2,
     enabled,
-  });
-}
-
-export function useSpecies() {
-  return useQuery({
-    queryKey: ['species'],
-    queryFn: () => dataSource.species(),
-    staleTime: Infinity,
   });
 }
 
@@ -97,27 +90,11 @@ export function useProfileByPhone(digits: string | null) {
   return useQuery({ ...profileQuery(digits ?? ''), enabled: digits !== null });
 }
 
-/** After a write everything may have moved (lists, totals, the shell's counts), but not who's in. */
-function useRefresh() {
-  const queryClient = useQueryClient();
-  return () =>
-    queryClient.invalidateQueries({ predicate: (query) => query.queryKey[0] !== 'staff' });
-}
-
 export function useUpdateFarm(id: UUID) {
   const refresh = useRefresh();
   return useMutation({
     mutationFn: (patch: Parameters<DataSource['updateFarm']>[1]) =>
       dataSource.updateFarm(id, patch),
-    onSuccess: refresh,
-  });
-}
-
-export function useCreateAnimal() {
-  const refresh = useRefresh();
-  return useMutation({
-    mutationFn: (values: Parameters<DataSource['createAnimal']>[0]): Promise<Animal> =>
-      dataSource.createAnimal(values),
     onSuccess: refresh,
   });
 }

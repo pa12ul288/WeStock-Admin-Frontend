@@ -104,9 +104,9 @@ function svgDataUrl(svg: string): string {
 function escapeXml(text: string): string {
   return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
-export function animalPhoto(tag: string): string {
+export function animalPhoto(tag: string, photo = 1): string {
   return svgDataUrl(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240"><rect width="320" height="240" fill="#E7EAEE"/><text x="160" y="135" text-anchor="middle" font-family="sans-serif" font-size="48" fill="#0F1B2D">${escapeXml(tag)}</text></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><defs><pattern id="p" width="32" height="32" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="32" height="32" fill="#F4F6F5"/><rect width="16" height="32" fill="#F1F3F2"/></pattern></defs><rect width="240" height="240" fill="url(#p)"/><text x="120" y="118" text-anchor="middle" font-family="sans-serif" font-size="26" fill="#6B7280">Photo ${photo}</text><text x="120" y="150" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#6B7280">Tag ${escapeXml(tag)}</text></svg>`,
   );
 }
 export function slipImage(tube: string): string {
@@ -882,7 +882,10 @@ export function generateSeed(nowMs: number = Date.now(), seed: number = DEMO_SEE
         dob: addDays(today, -dobDays),
         pashu_aadhaar: hasAadhaar ? String(aadhaarDigits) : null,
         status: slot.status,
-        photo_urls: [animalPhoto(slot.tag ?? '')],
+        // Named animals have a few photos, so the page shows a row of them as in the design.
+        photo_urls: [1, 2, 3]
+          .slice(0, slot.name ? 3 : 1)
+          .map((photo) => animalPhoto(slot.tag ?? '', photo)),
         hardware_tag_id: null,
         created_at: createdAt,
         updated_at: createdAt,
@@ -1335,7 +1338,13 @@ export function generateSeed(nowMs: number = Date.now(), seed: number = DEMO_SEE
       created_at: toIso(started),
     });
   };
-  const addPregnant = (animal: Animal, cycleNo: number, daysLeft: number) => {
+  const addPregnant = (
+    animal: Animal,
+    cycleNo: number,
+    daysLeft: number,
+    /** Extra detail for an animal whose page is shown off: its heat, and a later confirmation. */
+    fullStory = false,
+  ) => {
     const gestation = GESTATION_DAYS[animal.species_id] ?? 283;
     const inseminated = istInstant(addDays(today, daysLeft - gestation), 10);
     const tube = tubeNumber();
@@ -1347,9 +1356,14 @@ export function generateSeed(nowMs: number = Date.now(), seed: number = DEMO_SEE
       tube_number: tube,
       insemination_verified: true,
       insemination_image_url: slipImage(tube),
-      pregnancy_confirmed_at: toIso(inseminated + 25 * DAY),
+      pregnancy_confirmed_at: toIso(inseminated + (fullStory ? 69 : 25) * DAY),
       expected_delivery: addDays(today, daysLeft),
       created_at: toIso(inseminated),
+      ...(fullStory && {
+        heat_started_at: toIso(inseminated - DAY),
+        golden_start: toIso(inseminated - 6 * HOUR),
+        golden_end: toIso(inseminated + 6 * HOUR),
+      }),
     });
   };
   const ganga = animalById.get(FEATURED.animals.ganga);
@@ -1360,13 +1374,15 @@ export function generateSeed(nowMs: number = Date.now(), seed: number = DEMO_SEE
     addCycle(gauri, {
       status: 'delivered',
       cycle_no: 1,
+      heat_started_at: toIso(anchor - 587 * DAY),
       inseminated_at: toIso(anchor - 586 * DAY),
+      pregnancy_confirmed_at: toIso(anchor - 520 * DAY),
       expected_delivery: addDays(today, -303),
       delivered_at: toIso(anchor - 303 * DAY),
       insemination_verified: true,
       created_at: toIso(anchor - 586 * DAY),
     });
-    addPregnant(gauri, 2, 74);
+    addPregnant(gauri, 2, 74, true);
   }
   if (kamla) addPregnant(kamla, 1, 6);
   if (ganga) addHeat(ganga, 8, true);

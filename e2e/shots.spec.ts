@@ -35,6 +35,11 @@ for (const viewport of viewports) {
         await expect(page.getByRole('button', { name: /^Alerts, \d+ new$/ })).toBeVisible();
       }
       await page.evaluate(() => document.fonts.ready);
+      // The screens with their data in place, not their loading skeletons.
+      if (route.name !== 'dev-components') {
+        await expect(page.getByTestId('skeleton-row')).toHaveCount(0);
+      }
+      await page.waitForTimeout(800);
 
       await page.screenshot({
         path: `.shots/${route.name}-${viewport.width}.png`,
@@ -46,3 +51,15 @@ for (const viewport of viewports) {
     });
   }
 }
+
+test('add animal dialog at 1440', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await signIn(page);
+  await page.goto('/livestock');
+  await expect(page.getByTestId('skeleton-row')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Add animal' }).click();
+  await expect(page.getByRole('button', { name: 'Add animal' }).last()).toBeEnabled();
+  await page.evaluate(() => document.fonts.ready);
+  await page.waitForTimeout(600);
+  await page.screenshot({ path: '.shots/add-animal-1440.png' });
+});

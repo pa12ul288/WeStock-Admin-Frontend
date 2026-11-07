@@ -11,6 +11,13 @@ export const ICONS = {
   people:
     'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21v-1a6 6 0 0 1 6-6h2a6 6 0 0 1 6 6v1M16 3.5a4 4 0 0 1 0 7.5M22 21v-1a6 6 0 0 0-4-5.6',
   open: 'M7 17L17 7M9 7h8v8',
+  download: 'M12 4v11M7 10l5 5 5-5M5 20h14',
+  collar: 'M5 12a7 7 0 0 1 14 0M8.5 12a3.5 3.5 0 0 1 7 0M12 12v8',
+  thermometer: 'M14 14.8V4a2 2 0 0 0-4 0v10.8a4 4 0 1 0 4 0z',
+  noSignal:
+    'M2 8.8a15 15 0 0 1 4-2.5M22 8.8a15 15 0 0 0-9-3.7M5 12.5a10 10 0 0 1 3-1.8M19 12.5a10 10 0 0 0-3.5-2M8.5 16a5 5 0 0 1 7 0M12 20h.01M3 3l18 18',
+  pencil: 'M4 20h4L19 9l-4-4L4 16z',
+  calendar: 'M4 6h16v14H4zM4 10h16M9 3v4M15 3v4',
 };
 
 export function Icon({ d, size = 18 }: { d: string; size?: number }) {

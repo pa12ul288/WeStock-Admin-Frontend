@@ -107,6 +107,15 @@ export function daysSince(at: DateInput, now: DateInput = Date.now()): number {
   return Math.floor((nowMs + IST_OFFSET) / DAY) - Math.floor((ms + IST_OFFSET) / DAY);
 }
 
+/** How old, from a date of birth: `4 y 2 m`, or `5 m` under a year. */
+export function formatAge(dob: string | null | undefined, now: DateInput = Date.now()): string {
+  if (!dob) return NOTHING;
+  const [fromYear = 0, fromMonth = 0, fromDay = 0] = dob.split('-').map(Number);
+  const [year = 0, month = 0, day = 0] = indiaDay(now).split('-').map(Number);
+  const months = Math.max(0, (year - fromYear) * 12 + month - fromMonth - (day < fromDay ? 1 : 0));
+  return months < 12 ? `${months} m` : `${Math.floor(months / 12)} y ${months % 12} m`;
+}
+
 function grouped(value: number, minDecimals: number, maxDecimals: number): string {
   return new Intl.NumberFormat('en-IN', {
     minimumFractionDigits: minDecimals,

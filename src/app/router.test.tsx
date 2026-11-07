@@ -44,7 +44,6 @@ describe('phase 1 routes, signed in', () => {
     ['/farmers', 'Farmers & farms', 'Farms'],
     [`/farms/${FEATURED.farms.shreeGanesh}`, 'Shree Ganesh Dairy', 'Farmers & farms'],
     ['/livestock', 'Livestock', 'Farms'],
-    ['/animals/demo', 'Animal page', 'Livestock'],
     ['/reproduction', 'Reproduction', 'Records'],
     ['/milk-feed', 'Milk & feed', 'Records'],
     ['/health', 'Health & vaccines', 'Records'],
@@ -67,9 +66,12 @@ describe('phase 1 routes, signed in', () => {
     );
   });
 
-  it('marks the parent item active on a record page', async () => {
-    renderAt('/animals/demo');
-    await h1('Animal page');
+  it('names the animal in the breadcrumb, under its parent item', async () => {
+    renderAt(`/animals/${FEATURED.animals.gauri}`);
+    await h1('Gauri');
+    expect(screen.getByRole('navigation', { name: 'Breadcrumb' }).textContent).toBe(
+      'LivestockGauri · tag 01',
+    );
     expect(screen.getByRole('link', { name: /^Livestock/ }).getAttribute('aria-current')).toBe(
       'page',
     );

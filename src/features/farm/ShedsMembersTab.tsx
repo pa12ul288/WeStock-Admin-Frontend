@@ -12,7 +12,8 @@ import { errorMessage } from '../../lib/errors';
 import { formatCount, formatPhone } from '../../lib/format';
 import { shedMixes } from './helpers';
 import { MemberDialog } from './MemberDialog';
-import { useFarmAnimals, useSetMemberRole, useSpecies } from './queries';
+import { useSpecies } from '../livestock/queries';
+import { useFarmAnimals, useSetMemberRole } from './queries';
 import { ShedDialog, type ShedToEdit } from './ShedDialog';
 import styles from './FarmPage.module.css';
 
