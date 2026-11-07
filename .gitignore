@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.shots/
+playwright-report/
+test-results/
+.env
+.env.local
+.env.*.local
+.DS_Store
+.vercel
+
+# brainwired's database files: kept out of the public repo
+docs/backend-later/

@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Health &amp; vaccines · WeSTOCK Admin</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#F4F6F5}
+*{box-sizing:border-box}
+h1,h2,h3,p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+.app{min-height:100vh;display:flex;background:#F4F6F5;font-family:Nunito,system-ui,sans-serif;color:#1A1A1A;font-size:14px;-webkit-font-smoothing:antialiased}
+.side{flex:0 0 256px;min-width:0;background:#0F1B2D}
+.main{flex:1 1 560px;min-width:0;display:flex;flex-direction:column}
+.panel{flex:1;display:flex;flex-direction:column;gap:18px;padding:8px clamp(16px,2.6vw,36px) 48px;min-width:0}
+.mono{font-family:Poppins,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#0B7A4B}
+.title{font-family:Poppins,system-ui,sans-serif;font-size:28px;font-weight:600;letter-spacing:-.015em;line-height:1.2;color:#0F1B2D}
+.sub{font-size:15px;color:#6B7280;margin-top:6px}
+.ph{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+.acts{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.card{background:#FFFFFF;border:1px solid #E5EAE7;border-radius:16px;box-shadow:0 1px 2px rgba(15,27,45,.04),0 6px 20px rgba(15,27,45,.04);min-width:0}
+.group{background:#FFFFFF;border:1px solid #E5EAE7;border-radius:18px;box-shadow:0 1px 2px rgba(15,27,45,.04),0 6px 20px rgba(15,27,45,.04);padding:14px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.group .card{box-shadow:none}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr));gap:14px}
+.kc{padding:18px 18px 16px;display:flex;flex-direction:column;gap:12px}
+.kh{display:flex;align-items:center;gap:10px}
+.ib{width:36px;height:36px;flex:none;border-radius:11px;background:#E3F8EF;display:flex;align-items:center;justify-content:center;color:#0B7A4B}
+.lbl{flex:1;min-width:0;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lbl-m{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#6B7280}
+.dots{width:28px;height:28px;flex:none;border:0;background:transparent;color:#9CA3AF;display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;padding:0}
+.big{font-family:Poppins,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:28px;font-weight:600;letter-spacing:-.02em;color:#0F1B2D;line-height:1.15;white-space:nowrap}
+.vrow{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.note{font-size:13px;color:#6B7280}
+.chip{display:inline-flex;align-items:center;gap:3px;height:22px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
+.up{background:#E3F8EF;color:#0B7A4B}
+.dn{background:#FDE8EC;color:#B4233C}
+.fl{background:#F1F3F2;color:#374151}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 18px;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;white-space:nowrap;border:1px solid transparent;text-decoration:none}
+.btn-p{background:#2ED08C;color:#0F1B2D}
+.btn-s{background:#FFFFFF;border-color:#DCE2DF;color:#0F1B2D}
+.btn-g{background:#FFFFFF;border-color:#DCE2DF;color:#0F1B2D}
+.btn-sm{height:34px;padding:0 12px;font-size:13px;border-radius:10px}
+.ibtn{width:34px;height:34px;flex:none;border:1px solid #DCE2DF;border-radius:10px;background:#FFFFFF;color:#0F1B2D;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.pill{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap;border:0}
+.pill i{width:6px;height:6px;border-radius:99px;background:currentColor;flex:none}
+.s-red{background:#FDE8EC;color:#B4233C}
+.s-amber{background:#FFF1E0;color:#9A4A00}
+.s-green{background:#E3F8EF;color:#0B7A4B}
+.s-blue{background:#E8EDFC;color:#2A4FD6}
+.s-pink{background:#FBE6F4;color:#A01A78}
+.s-grey{background:#F1F3F2;color:#374151}
+.ch{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ct{display:flex;align-items:center;gap:10px;min-width:0}
+.link{display:inline-flex;align-items:center;gap:4px;font-size:13.5px;font-weight:800;color:#0B7A4B;white-space:nowrap}
+.seg{display:inline-flex;flex-wrap:wrap;padding:4px;background:#E9EEEB;border-radius:13px;gap:2px}
+.seg button{height:34px;padding:0 14px;border:0;border-radius:10px;background:transparent;color:#4B5563;font-size:13.5px;font-weight:800;cursor:pointer;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:#FFFFFF;color:#0F1B2D;box-shadow:0 1px 3px rgba(15,27,45,.12)}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;position:relative}
+table{border-collapse:separate;border-spacing:0;width:100%}
+th{text-align:left;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#6B7280;padding:11px 18px;background:#FAFBFA;border-top:1px solid #EEF1EF;border-bottom:1px solid #EEF1EF;white-space:nowrap}
+td{padding:12px 18px;border-bottom:1px solid #F1F3F2;font-size:14px;white-space:nowrap;color:#1A1A1A}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:#FAFBFA}
+td.r,th.r{text-align:right}
+.tn{font-family:Poppins,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:13.5px}
+.av{width:36px;height:36px;flex:none;border-radius:999px;background:#E3F8EF;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;color:#0B7A4B}
+.who{display:flex;align-items:center;gap:12px}
+.who b{display:block;font-weight:800;color:#0F1B2D}
+.who small{display:block;font-size:12.5px;color:#6B7280;margin-top:1px}
+.muted{color:#6B7280}
+.field{height:40px;width:100%;padding:0 12px;border:1px solid #DCE2DF;border-radius:11px;background:#FFFFFF;font-size:14px;font-weight:700;color:#0F1B2D}
+.fl-lbl{display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:800;color:#0F1B2D}
+.yax{display:flex;flex-direction:column;justify-content:space-between;font-size:11.5px;color:#6B7280;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.gridl{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+.gridl div{border-top:1px dashed #E3E8E5}
+.gridl div:last-child{border-top:1px solid #DCE2DF}
+.xl{font-size:11.5px;color:#6B7280;white-space:nowrap}
+.tip{position:absolute;z-index:2;display:flex;flex-direction:column;gap:2px;padding:8px 12px;border-radius:12px;background:#0F1B2D;color:#FFFFFF;font-size:12px;white-space:nowrap;box-shadow:0 8px 20px rgba(15,27,45,.22)}
+.row{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid #F1F3F2}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:36px 16px;text-align:center;border:1px dashed #DCE2DF;border-radius:14px;background:#FAFBFA}
+.sr{position:absolute;left:0;top:0;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid #F1F3F2;font-size:14px}
+.kv span:first-child{color:#6B7280}
+.kv b{font-weight:800;color:#0F1B2D;text-align:right}
+.show-sm{display:none !important}
+.ovl{position:fixed;inset:0;z-index:50;background:rgba(15,27,45,.48);display:flex;align-items:flex-start;justify-content:center;padding:0 16px;overflow:auto}
+.modal{width:100%;max-width:540px;max-height:calc(100vh - 32px);overflow:auto;background:#FFFFFF;border-radius:20px;box-shadow:0 24px 60px rgba(15,27,45,.28);display:flex;flex-direction:column;margin:0 0 16px;text-align:left}
+.mh{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 22px 0}
+.mt{font-family:Poppins,system-ui,sans-serif;font-size:19px;font-weight:600;color:#0F1B2D}
+.mb{padding:16px 22px 18px;display:flex;flex-direction:column;gap:14px}
+.mf{padding:14px 22px 18px;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;border-top:1px solid #F1F3F2}
+.x{width:34px;height:34px;flex:none;border:0;border-radius:10px;background:#F1F3F2;color:#374151;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.ta{min-height:84px;width:100%;padding:10px 12px;border:1px solid #DCE2DF;border-radius:11px;font-size:14px;font-weight:600;line-height:1.5;resize:vertical;color:#0F1B2D}
+.btn-d{background:#D62F4B;color:#FFFFFF}
+.btn:disabled{opacity:.5;cursor:default}
+.toast{position:fixed;z-index:60;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:12px 18px;border-radius:14px;background:#0F1B2D;color:#FFFFFF;font-size:14px;font-weight:700;box-shadow:0 12px 30px rgba(15,27,45,.3);max-width:calc(100vw - 32px)}
+.toast svg{flex:none;color:#2ED08C}
+.modal textarea{padding:10px 12px;border:1px solid #DCE2DF;border-radius:11px;font-size:14px;line-height:1.5;resize:vertical;width:100%}
+.warn{display:flex;gap:10px;padding:12px 14px;border-radius:12px;background:#FDE8EC;color:#7F1D2D;font-size:13.5px;line-height:1.45}
+.pg{cursor:pointer}
+@media (max-width:900px){
+.app{flex-direction:column}
+.side{flex:none;width:100%}
+.panel{padding:6px 16px 32px;gap:14px}
+.title{font-size:23px}
+.sub{font-size:14px}
+.ph{align-items:flex-start}
+.kgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kgrid .kc{padding:14px 14px 12px;gap:10px}
+.kgrid .big{font-size:20px}
+.kgrid .note{font-size:12px}
+.kgrid .dots{display:none}
+.kgrid .lbl{white-space:normal;line-height:1.25;font-size:11px;letter-spacing:.04em}
+.kgrid .ib{width:30px;height:30px;border-radius:9px}
+.kgrid .step{display:none}
+.show-sm{display:flex !important}
+.g2{grid-template-columns:1fr}
+.modal{border-radius:18px}
+.big{font-size:23px}
+th{padding:10px 12px}
+td{padding:11px 12px;font-size:13.5px}
+.hide-sm{display:none !important}
+.xlr>span:not(:nth-child(5n+1)) .xl{visibility:hidden}
+.xlr2>.xl:nth-child(even){visibility:hidden}
+.xlr2>.xl{min-width:0;text-align:left !important}
+.xlr2>.xl:nth-child(odd){overflow:visible}
+.xl{font-size:10.5px}
+.acts .field{flex:1 1 140px;width:auto !important}
+}
+.tagb{min-width:36px;height:34px;padding:0 6px;flex:none;border:0;border-radius:10px;background:#E3F8EF;color:#0B7A4B !important;display:flex;align-items:center;justify-content:center;font-family:Poppins,system-ui,sans-serif;font-size:11.5px;font-weight:600;color:#1A1A1A}
+.st{display:flex;flex-direction:column;gap:3px;padding-left:12px;border-left:1px solid #F1F3F2}
+.st:first-child{padding-left:0;border-left:0}
+.st .k{display:flex;align-items:center;gap:6px;font-size:12px;color:#4B5563}
+.st .k i{width:7px;height:7px;border-radius:2px}
+.st .v{font-family:Poppins,system-ui,sans-serif;font-size:20px;font-weight:600;color:#0F1B2D;letter-spacing:-.02em}
+</style>
+</helmet>
+<div class="app" onMouseDown="{{trackY}}">
+  <aside class="side"><dc-import name="Sidebar" active="health" hint-size="100%,900px"></dc-import></aside>
+  <div class="main">
+    <dc-import name="TopBar" crumb="Records" page="Health &amp; vaccines" hint-size="100%,56px"></dc-import>
+    <main class="panel">
+      <div class="ph">
+        <div>
+          <span class="eyebrow">Records</span>
+          <h1 class="title" style="margin-top: 6px;">Health &amp; vaccines</h1>
+          <p class="sub">Vaccination schedules and health issues reported on every farm.</p>
+        </div>
+        <div class="acts">
+          <select class="field" aria-label="Farm" value="{{farmF}}" onChange="{{onFarm}}" style="width: auto; height: 36px; border-radius: 999px; padding: 0 14px;"><option value="">All farms</option><option>Shree Ganesh Dairy</option><option>Gir Gau Shala</option><option>Periyar Cattle Farm</option><option>Kaveri Farms</option><option>Yadav Dairy</option><option>Singh Dairy</option><option>Banas Pashu Farm</option></select>
+          <select class="field" aria-label="Species" value="{{spF}}" onChange="{{onSp}}" style="width: auto; height: 36px; border-radius: 999px; padding: 0 14px;"><option value="">All species</option><option>Cattle</option><option>Buffalo</option><option>Goat</option><option>Sheep</option></select>
+          <button type="button" class="btn btn-p" onClick="{{toggleAdd}}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Vaccine schedule</button>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 12px;">
+        <sc-for list="{{summary}}" as="c" hint-placeholder-count="2">
+          <section class="card kc">
+            <div class="kh">
+              <span class="ib" style="background: {{c.tint}}; color: {{c.ink}};"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{c.icon}}"></path></svg></span>
+              <span class="lbl">{{c.label}}</span>
+            </div>
+            <div class="vrow"><span class="big">{{c.value}}</span><span class="chip {{c.cls}}">{{c.delta}}</span></div>
+            <div role="img" aria-label="{{c.aria}}" style="display: flex; gap: 3px; height: 8px;">
+              <sc-for list="{{c.parts}}" as="p" hint-placeholder-count="3"><span style="width: {{p.w}}; border-radius: 3px; background: {{p.c}};"></span></sc-for>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+              <sc-for list="{{c.parts}}" as="p" hint-placeholder-count="3">
+                <div class="st"><span class="k"><i style="background: {{p.c}};"></i>{{p.label}}</span><span class="v">{{p.n}}</span><span class="note">{{p.note}}</span></div>
+              </sc-for>
+            </div>
+          </section>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{adding}}" hint-placeholder-val="{{false}}">
+        <form class="card" onSubmit="{{noSubmit}}" style="padding: 16px 18px; display: flex; flex-direction: column; gap: 14px;">
+          <div class="ch"><div style="display: flex; flex-direction: column; gap: 4px;"><span class="lbl-m">Add a vaccine schedule</span><span class="note">Creates a reminder for each animal. The farmer sees it in the app.</span></div></div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 14px;">
+            <label class="fl-lbl">Vaccine<input class="field" name="vaccine" type="text" defaultValue="FMD (foot-and-mouth)"></label>
+            <label class="fl-lbl">Give to<select class="field" name="who" onChange="{{onWho}}"><option value="cattle">All cattle on a farm</option><option value="buffalo">All buffalo on a farm</option><option value="one">One animal</option></select></label>
+            <label class="fl-lbl">Farm<select class="field" name="farm" onChange="{{onSchedFarm}}"><option>Shree Ganesh Dairy</option><option>Gir Gau Shala</option><option>Kaveri Farms</option><option>Banas Pashu Farm</option></select></label>
+            <label class="fl-lbl">Due date<input class="field mono" name="due" type="text" defaultValue="20 Nov 2026"></label>
+          </div>
+          <label class="fl-lbl">Note for the farmer<input class="field" name="note" type="text" defaultValue="Ask your vet or the local veterinary dispensary for the booster dose."></label>
+          <div style="display: flex; justify-content: flex-end; gap: 8px; padding-top: 12px; border-top: 1px solid #F1F3F2;"><button type="button" class="btn btn-s" onClick="{{toggleAdd}}">Cancel</button><button type="button" class="btn btn-p" onClick="{{createSchedule}}">{{createLabel}}</button></div>
+        </form>
+      </sc-if>
+
+      <section class="card" style="overflow: hidden;">
+          <div class="ch" style="padding: 12px 16px;">
+            <div class="seg" role="tablist" aria-label="Lists">
+              <button type="button" role="tab" aria-pressed="{{vSel}}" aria-selected="{{vSel}}" onClick="{{showVax}}">Vaccinations <span class="mono" style="color: #6B7280;">{{vaxCount}}</span></button>
+              <button type="button" role="tab" aria-pressed="{{hSel}}" aria-selected="{{hSel}}" onClick="{{showHealth}}">Health issues <span class="mono" style="color: #6B7280;">{{healthCount}}</span></button>
+            </div>
+            <span class="note">{{note}}</span>
+          </div>
+          <div class="tw">
+            <sc-if value="{{isVax}}" hint-placeholder-val="{{true}}">
+              <table>
+                <thead><tr><th>Animal</th><th>Vaccine</th><th>Due</th><th>Status</th><th><span class="sr">Action</span></th></tr></thead>
+                <tbody>
+                  <sc-for list="{{vax}}" as="r" hint-placeholder-count="7">
+                    <tr>
+                      <td><div class="who"><span class="tagb">{{r.tag}}</span><span><b>{{r.name}}</b><small>{{r.farm}}</small></span></div></td>
+                      <td>{{r.vaccine}}</td>
+                      <td class="tn muted">{{r.due}}</td>
+                      <td><span class="pill {{r.cls}}"><i></i>{{r.status}}</span></td>
+                      <td class="r" style="width: 1%;"><sc-if value="{{r.open}}" hint-placeholder-val="{{true}}"><button type="button" class="btn btn-s btn-sm" onClick="{{r.act}}"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg>Mark given</button></sc-if><sc-if value="{{r.done}}" hint-placeholder-val="{{false}}"><button type="button" class="btn btn-s btn-sm" onClick="{{r.undo}}">Undo</button></sc-if></td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+              <sc-if value="{{rowsEmpty}}" hint-placeholder-val="{{false}}"><div class="empty" style="margin: 16px;"><span style="font-weight: 800; color: #0F1B2D;">Nothing matches this farm and species</span><span class="note">Pick “All farms” or another species.</span></div></sc-if>
+            </sc-if>
+            <sc-if value="{{isHealth}}" hint-placeholder-val="{{false}}">
+              <table>
+                <thead><tr><th>Animal</th><th>Issue</th><th>Status</th><th>Source</th><th>Since</th><th><span class="sr">Action</span></th></tr></thead>
+                <tbody>
+                  <sc-for list="{{health}}" as="r" hint-placeholder-count="6">
+                    <tr>
+                      <td><div class="who"><span class="tagb">{{r.tag}}</span><span><b>{{r.name}}</b><small>{{r.farm}}</small></span></div></td>
+                      <td><div style="display: flex; flex-direction: column; gap: 1px;"><span style="font-weight: 800; color: #0F1B2D;">{{r.issue}}</span><span class="note">{{r.notes}}</span></div></td>
+                      <td><span class="pill {{r.cls}}"><i></i>{{r.status}}</span></td>
+                      <td><span class="pill s-grey">{{r.via}}</span></td>
+                      <td class="tn muted">{{r.since}}</td>
+                      <td class="r" style="width: 1%;"><sc-if value="{{r.open}}" hint-placeholder-val="{{true}}"><button type="button" class="btn btn-s btn-sm" onClick="{{r.act}}">Mark resolved</button></sc-if><sc-if value="{{r.done}}" hint-placeholder-val="{{false}}"><button type="button" class="btn btn-s btn-sm" onClick="{{r.undo}}">Undo</button></sc-if></td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+              <sc-if value="{{rowsEmpty}}" hint-placeholder-val="{{false}}"><div class="empty" style="margin: 16px;"><span style="font-weight: 800; color: #0F1B2D;">Nothing matches this farm and species</span><span class="note">Pick “All farms” or another species.</span></div></sc-if>
+            </sc-if>
+          </div>
+        </section>
+    </main>
+  </div>
+  <sc-if value="{{toastOn}}" hint-placeholder-val="{{false}}"><div class="toast" role="status" style="top: {{toastTop}};"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg><span>{{toastText}}</span></div></sc-if>
+  <sc-if value="{{modalOpen}}" hint-placeholder-val="{{false}}">
+    <div class="ovl" onClick="{{closeModal}}">
+      <form class="modal" onClick="{{stop}}" onSubmit="{{noSubmit}}" aria-label="{{modalTitle}}" style="margin-top: {{modalTop}};">
+        <div class="mh"><div><h2 class="mt">{{modalTitle}}</h2><p class="note" style="margin-top: 4px; line-height: 1.45;">{{modalSub}}</p></div><button type="button" class="x" aria-label="Close" onClick="{{closeModal}}"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div>
+        <div class="mb">
+          <sc-if value="{{hasErr}}" hint-placeholder-val="{{false}}"><div class="warn">{{errText}}</div></sc-if>
+        </div>
+        <div class="mf"><button type="button" class="btn btn-s" onClick="{{closeModal}}">Cancel</button><button type="button" class="btn {{okCls}}" onClick="{{confirm}}">{{okLabel}}</button></div>
+      </form>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1150}}'>
+class Component extends DCLogic {
+  open(kind, form) { this.setState({ modal: kind, form: form || {}, err: '' }); }
+  close() { this.setState({ modal: null, err: '' }); }
+  say(msg) {
+    this.setState({ modal: null, err: '', toast: msg });
+    clearTimeout(this.__tt);
+    this.__tt = setTimeout(() => this.setState({ toast: null }), 2800);
+  }
+  formOf(e) {
+    const el = e && e.currentTarget && e.currentTarget.closest ? e.currentTarget.closest('form') : null;
+    return el ? Object.fromEntries(new FormData(el).entries()) : {};
+  }
+  csv(name, rows) {
+    try {
+      const body = rows.map((r) => r.map((v) => '"' + String(v).replace(/"/g, '""') + '"').join(',')).join('\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([body], { type: 'text/csv' }));
+      a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    } catch (err) { }
+  }
+  ui(titles) {
+    const s = this.state || {};
+    const m = s.modal || '';
+    const t = titles[m] || ['', '', 'Save', 'btn-p'];
+    const vh = (typeof window !== 'undefined' && window.innerHeight) || 900;
+    const y = this.__y || 140;
+    const out = {
+      modalOpen: !!m, modalTop: Math.max(16, Math.min(y - 170, vh - 480)) + 'px',
+      toastOn: !!s.toast, toastText: s.toast || '', toastTop: Math.max(16, Math.min(y - 76, vh - 76)) + 'px',
+      f: s.form || {}, closeModal: () => this.close(), stop: (e) => e.stopPropagation(), noSubmit: (e) => e.preventDefault(),
+      trackY: (e) => { this.__y = e.clientY; },
+      modalTitle: t[0], modalSub: t[1] || '', okLabel: t[2] || 'Save', okCls: t[3] || 'btn-p',
+      hasErr: !!s.err, errText: s.err || ''
+    };
+    Object.keys(titles).forEach((k) => { out['is_' + k] = m === k; });
+    return out;
+  }
+  renderVals() {
+    const tab = (this.state && this.state.tab) || 'vax';
+    const adding = !!(this.state && this.state.adding);
+    const part = (label, n, total, c, note) => ({ label, n: n.toLocaleString('en-IN'), c, note, w: (n / total * 100).toFixed(1) + '%' });
+    const summary = [
+      { label: 'Vaccinations not yet given', value: '1,720', delta: '↓ 4%', cls: 'up', tint: '#E8EDFC', ink: '#2A4FD6', icon: 'M18 2l4 4M15 5l4 4M7 13l4 4M4 20l3-3M8 10l6 6 5-5-6-6z',
+        aria: '214 overdue, 386 due in 7 days, 1,120 upcoming',
+        parts: [part('Overdue', 214, 1720, '#D62F4B', 'past the due date'), part('Due', 386, 1720, '#F59E0B', 'in the next 7 days'), part('Upcoming', 1120, 1720, '#8FA8F0', 'in 8 to 30 days')] },
+      { label: 'Open health issues', value: '140', delta: '↑ 9 new', cls: 'dn', tint: '#FDE8EC', ink: '#B4233C', icon: 'M9 3h6v6h6v6h-6v6H9v-6H3V9h6z',
+        aria: '41 sick, 77 detected, 22 long-term conditions',
+        parts: [part('Sick', 41, 140, '#D62F4B', 'needs care now'), part('Detected', 77, 140, '#F59E0B', 'to be checked'), part('Long-term', 22, 140, '#9CA3AF', 'ongoing conditions')] }
+    ];
+    const C = { red: 's-red', orange: 's-amber', blue: 's-blue', grey: 's-grey' };
+    const vax = ((this.state && this.state.newVax) || []).concat([
+      ['07', 'Kali (buffalo)', 'Shree Ganesh Dairy', 'HS (haemorrhagic septicaemia)', '28 Oct 2026', 'Overdue · 8 days', 'red'],
+      ['14', 'Rani (buffalo)', 'Gir Gau Shala', 'FMD (foot-and-mouth)', '30 Oct 2026', 'Overdue · 6 days', 'red'],
+      ['04', 'Shyama', 'Yadav Dairy', 'Brucellosis', '01 Nov 2026', 'Overdue · 4 days', 'red'],
+      ['01', 'Gauri', 'Shree Ganesh Dairy', 'FMD (foot-and-mouth)', '09 Nov 2026', 'Due in 4 days', 'orange'],
+      ['03', 'Ammini', 'Periyar Cattle Farm', 'Lumpy skin disease', '12 Nov 2026', 'Due in 7 days', 'orange'],
+      ['05', 'Kannan', 'Kaveri Farms', 'Black quarter (BQ)', '28 Nov 2026', 'Upcoming', 'blue'],
+      ['16', 'Moti', 'Gir Gau Shala', 'FMD (foot-and-mouth)', '02 Dec 2026', 'Upcoming', 'blue']
+    ]).map(([tag, name, farm, vaccine, due, status, k, sp0]) => {
+      const key = 'v' + tag + vaccine + farm;
+      const done = !!((this.state && this.state.given) || {})[key];
+      return {
+        tag, name, farm, vaccine, due, status: done ? 'Given today' : status, cls: done ? 's-green' : C[k], open: !done, done,
+        sp: sp0 || (name.includes('(buffalo)') ? 'Buffalo' : 'Cattle'),
+        act: () => { this.setState({ given: { ...((this.state && this.state.given) || {}), [key]: true } }); this.say(vaccine + ' marked given for ' + name.replace(' (buffalo)', '') + ' · the farmer sees it in the app'); },
+        undo: () => { const g = { ...((this.state && this.state.given) || {}) }; delete g[key]; this.setState({ given: g }); this.say('Undone · ' + name.replace(' (buffalo)', '') + ' is back to ' + status.toLowerCase()); }
+      };
+    });
+    const health = [
+      ['06', 'Neeli', 'Periyar Cattle Farm', 'Not eating since morning', 'Farmer added a photo', 'Sick', 'red', 'Farmer', 'Today 08:10'],
+      ['12', 'Valli', 'Kaveri Farms', 'Mastitis suspected', 'Vet visit booked', 'Sick', 'red', 'Farmer', '03 Nov 2026'],
+      ['02', 'Lakshmi', 'Shree Ganesh Dairy', 'High body temperature', '40.1 °C reading from her collar', 'Detected', 'orange', 'Collar', 'Today 11:52'],
+      ['22', 'Heera', 'Singh Dairy', 'Cough and nasal discharge', 'Logged after a chat with Gau', 'Detected', 'orange', 'Gau', 'Today 07:30'],
+      ['19', 'Chandra', 'Shree Ganesh Dairy', 'Limping, front left leg', 'Seen by the farmer', 'Detected', 'orange', 'Farmer', 'Yesterday'],
+      ['44', 'Champa', 'Banas Pashu Farm', 'Repeat breeder', 'Three cycles without pregnancy', 'Long-term', 'grey', 'Farmer', '21 Oct 2026']
+    ].map(([tag, name, farm, issue, notes, status, k, via, since]) => {
+      const key = 'h' + tag + issue;
+      const done = !!((this.state && this.state.resolved) || {})[key];
+      return {
+        tag, name, farm, issue, notes, via, since, status: done ? 'Resolved' : status, cls: done ? 's-green' : C[k], open: !done, done, sp: 'Cattle',
+        act: () => { this.setState({ resolved: { ...((this.state && this.state.resolved) || {}), [key]: true } }); this.say('“' + issue + '” resolved for ' + name); },
+        undo: () => { const r = { ...((this.state && this.state.resolved) || {}) }; delete r[key]; this.setState({ resolved: r }); this.say('Undone · back to ' + status.toLowerCase()); }
+      };
+    });
+    const v = tab === 'vax';
+    const st = this.state || {};
+    const farmF = st.farmF || '', spF = st.spF || '';
+    const keep = (r) => (!farmF || r.farm === farmF) && (!spF || r.sp === spF);
+    const vaxShown = vax.filter(keep), healthShown = health.filter(keep);
+    const herd = { 'Shree Ganesh Dairy': [41, 17], 'Gir Gau Shala': [29, 12], 'Kaveri Farms': [52, 22], 'Banas Pashu Farm': [44, 17] };
+    const sf = st.schedFarm || 'Shree Ganesh Dairy', who = st.who || 'cattle';
+    const n = who === 'one' ? 1 : herd[sf][who === 'buffalo' ? 1 : 0];
+    const givenN = Object.keys(st.given || {}).length, resolvedN = Object.keys(st.resolved || {}).length;
+    summary[0] = { ...summary[0], value: (1720 - givenN + (st.extraReminders || 0)).toLocaleString('en-IN') };
+    summary[1] = { ...summary[1], value: String(140 - resolvedN) };
+    return {
+      ...this.ui({}),
+      summary, vax: vaxShown, health: healthShown, isVax: v, isHealth: !v, adding, toggleAdd: () => this.setState({ adding: !adding }),
+      confirm: () => this.close(),
+      rowsEmpty: (v ? vaxShown : healthShown).length === 0, vaxCount: summary[0].value, healthCount: summary[1].value,
+      farmF, spF, onFarm: (e) => this.setState({ farmF: e.target.value }), onSp: (e) => this.setState({ spF: e.target.value }),
+      onWho: (e) => this.setState({ who: e.target.value }), onSchedFarm: (e) => this.setState({ schedFarm: e.target.value }),
+      createLabel: n === 1 ? 'Create 1 reminder' : 'Create ' + n + ' reminders',
+      createSchedule: (e) => {
+        const d = this.formOf(e);
+        if (!(d.vaccine || '').trim()) { this.say('Add the vaccine name first'); return; }
+        const row = [who === 'one' ? '—' : 'All', who === 'buffalo' ? 'All buffalo · ' + n : who === 'one' ? 'One animal' : 'All cattle · ' + n, sf, d.vaccine.trim(), (d.due || '').trim() || 'No date', 'Scheduled · just now', 'blue', who === 'buffalo' ? 'Buffalo' : 'Cattle'];
+        this.setState({ adding: false, newVax: [row].concat(st.newVax || []), extraReminders: (st.extraReminders || 0) + n, tab: 'vax' });
+        this.say(n + ' reminder' + (n > 1 ? 's' : '') + ' created for ' + d.vaccine.trim() + ' at ' + sf);
+      },
+      note: v ? 'Overdue first · due = within 7 days · upcoming = 8 to 30 days' : 'Sick first · Gau only suggests; the farmer confirms',
+      vSel: v ? 'true' : 'false', hSel: v ? 'false' : 'true',
+      showVax: () => this.setState({ tab: 'vax' }), showHealth: () => this.setState({ tab: 'health' })
+    };
+  }
+}
+</script>
+</body>
+</html>

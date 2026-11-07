@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WeSTOCK Admin top bar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+.tb{position:relative;z-index:30;box-sizing:border-box;width:100%;min-height:68px;display:flex;align-items:center;gap:12px;padding:12px clamp(16px,2.6vw,36px);background:#F4F6F5;font-family:Nunito,system-ui,sans-serif;color:#1A1A1A;-webkit-font-smoothing:antialiased}
+.tb *{box-sizing:border-box}
+.tb .srch{position:relative;display:flex;align-items:center;gap:8px;width:300px;height:42px;padding:0 14px;border:1px solid #E3E8E5;border-radius:999px;background:#FFFFFF;color:#6B7280}
+.tb .rb{width:42px;height:42px;flex:none;border:1px solid #E3E8E5;border-radius:999px;background:#FFFFFF;color:#0F1B2D;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;padding:0}
+.tb .pop{position:absolute;top:calc(100% + 8px);right:0;width:340px;max-width:calc(100vw - 32px);background:#FFFFFF;border:1px solid #E5EAE7;border-radius:16px;box-shadow:0 18px 44px rgba(15,27,45,.18);padding:8px;display:flex;flex-direction:column;z-index:31}
+.tb .pop a{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;text-decoration:none;color:#1A1A1A}
+.tb .pop a:hover{background:#F4F6F5}
+.tb .pk{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#6B7280;padding:8px 10px 4px}
+.tb .ico{width:32px;height:32px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center}
+@media (max-width:900px){
+.tb{min-height:56px;padding:10px 16px;gap:8px}
+.tb .crumb,.tb .sep,.tb .date{display:none !important}
+.tb .srch{width:auto;flex:1;min-width:0;height:40px;position:static}
+.tb .nav{flex:0 1 auto;min-width:0}
+.tb .right{flex:1;min-width:0;position:static}
+.tb .pop{left:16px;right:16px;width:auto}
+}
+</style>
+</helmet>
+<header class="tb">
+  <nav class="nav" aria-label="Breadcrumb" style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+    <span class="crumb" style="font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #6B7280; white-space: nowrap;">{{crumb}}</span>
+    <svg class="sep" aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
+    <span style="font-family: Poppins, system-ui, sans-serif; font-size: 14.5px; font-weight: 600; color: #0F1B2D; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{page}}</span>
+  </nav>
+  <div class="right" style="margin-left: auto; position: relative; display: flex; align-items: center; gap: 8px;">
+    <label class="srch">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+      <input type="search" aria-label="Go to a farmer, farm or tag number" placeholder="Go to farm, farmer or tag…" value="{{q}}" onInput="{{onQ}}" onFocus="{{onFocus}}" onBlur="{{onBlur}}" style="flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font: inherit; font-size: 14px; color: #1A1A1A;">
+      <sc-if value="{{showResults}}" hint-placeholder-val="{{false}}">
+        <div class="pop" role="listbox" aria-label="Search results" style="left: 0; right: auto; width: 100%; min-width: 300px;">
+          <span class="pk">{{resultsLabel}}</span>
+          <sc-for list="{{results}}" as="r" hint-placeholder-count="4">
+            <a href="{{r.href}}" role="option"><span class="ico" style="background: {{r.tint}}; color: {{r.ink}};"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="{{r.icon}}"></path></svg></span><span style="display: flex; flex-direction: column; min-width: 0;"><span style="font-size: 14px; font-weight: 800; color: #0F1B2D;">{{r.title}}</span><span style="font-size: 12.5px; color: #6B7280;">{{r.sub}}</span></span></a>
+          </sc-for>
+          <sc-if value="{{noResults}}" hint-placeholder-val="{{false}}"><span style="padding: 10px; font-size: 13.5px; color: #6B7280;">No farm, farmer or tag matches “{{q}}”.</span></sc-if>
+        </div>
+      </sc-if>
+    </label>
+    <span class="date" style="display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 14px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E3E8E5; font-size: 13px; font-weight: 800; color: #0F1B2D; white-space: nowrap;">
+      <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v14H4zM4 10h16M9 3v4M15 3v4"></path></svg>Thu, 05 Nov 2026
+    </span>
+    <button type="button" class="rb" aria-label="{{bellLabel}}" aria-expanded="{{bellOpen}}" onClick="{{toggleBell}}">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16v-5a6 6 0 1 1 12 0v5l2 2H4l2-2zM10 20a2 2 0 0 0 4 0"></path></svg>
+      <sc-if value="{{hasUnread}}" hint-placeholder-val="{{true}}"><span aria-hidden="true" style="position: absolute; top: 2px; right: 0; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 999px; background: #D62F4B; color: #FFFFFF; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid #F4F6F5;">{{unread}}</span></sc-if>
+    </button>
+    <sc-if value="{{showBell}}" hint-placeholder-val="{{false}}">
+      <div class="pop" role="dialog" aria-label="Alerts">
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 6px 10px 4px;"><span style="font-family: Poppins, system-ui, sans-serif; font-size: 15px; font-weight: 600; color: #0F1B2D;">Alerts</span><button type="button" onClick="{{markRead}}" style="border: 0; background: transparent; color: #0B7A4B; font: inherit; font-size: 13px; font-weight: 800; cursor: pointer; padding: 4px;">Mark all as read</button></div>
+        <sc-for list="{{alerts}}" as="a" hint-placeholder-count="4">
+          <a href="{{a.href}}"><span class="ico" style="background: {{a.tint}}; color: {{a.ink}};"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="{{a.icon}}"></path></svg></span><span style="flex: 1; display: flex; flex-direction: column; min-width: 0;"><span style="font-size: 14px; font-weight: {{a.w}}; color: #0F1B2D;">{{a.title}}</span><span style="font-size: 12.5px; color: #6B7280;">{{a.sub}}</span></span><sc-if value="{{a.unread}}" hint-placeholder-val="{{true}}"><span aria-label="Unread" style="width: 8px; height: 8px; border-radius: 99px; background: #2ED08C;"></span></sc-if></a>
+        </sc-for>
+      </div>
+    </sc-if>
+  </div>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"crumb":{"editor":"string","default":"Overview"},"page":{"editor":"string","default":"Dashboard"},"$preview":{"width":1184,"height":68}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const q = s.q || '';
+    const IC = {
+      farm: 'M3 21V10l9-6 9 6v11M9 21v-6h6v6M3 21h18',
+      farmer: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0',
+      tag: 'M3 12V4h8l10 10-8 8L3 12zM7.5 7.5h.01',
+      clock: 'M12 7v5l3 2M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z',
+      vaccine: 'M18 2l4 4M15 5l4 4M7 13l4 4M4 20l3-3M8 10l6 6 5-5-6-6z',
+      temp: 'M14 14.8V4a2 2 0 0 0-4 0v10.8a4 4 0 1 0 4 0z',
+      health: 'M9 3h6v6h6v6h-6v6H9v-6H3V9h6z'
+    };
+    const G = ['#E3F8EF', '#0B7A4B'], N = ['#E7EAEE', '#0F1B2D'], B = ['#E8EDFC', '#2A4FD6'];
+    const index = [
+      ['Shree Ganesh Dairy', 'Farm · Kolhapur, Maharashtra', 'FarmDetail.dc.html', IC.farm, N],
+      ['Periyar Cattle Farm', 'Farm · Kottayam, Kerala', 'FarmDetail.dc.html', IC.farm, N],
+      ['Gir Gau Shala', 'Farm · Anand, Gujarat', 'FarmDetail.dc.html', IC.farm, N],
+      ['Kaveri Farms', 'Farm · Erode, Tamil Nadu', 'FarmDetail.dc.html', IC.farm, N],
+      ['Ramesh Patil', 'Farmer · +91 98220 •••41', 'Farmers.dc.html', IC.farmer, G],
+      ['Sunita Desai', 'Farmer · +91 97250 •••08', 'Farmers.dc.html', IC.farmer, G],
+      ['Joseph Varghese', 'Farmer · +91 94470 •••19', 'Farmers.dc.html', IC.farmer, G],
+      ['Tag 01 · Gauri', 'Cattle · Shree Ganesh Dairy', 'Animal.dc.html', IC.tag, B],
+      ['Tag 02 · Lakshmi', 'Cattle · Shree Ganesh Dairy', 'Animal.dc.html', IC.tag, B],
+      ['Tag 04 · Ganga', 'Cattle · Shree Ganesh Dairy', 'Animal.dc.html', IC.tag, B],
+      ['Tag 14 · Rani', 'Buffalo · Gir Gau Shala', 'Animal.dc.html', IC.tag, B]
+    ];
+    const ql = q.trim().toLowerCase();
+    const results = (ql ? index.filter(([t, sub]) => (t + ' ' + sub).toLowerCase().includes(ql)) : index.slice(0, 4)).slice(0, 6)
+      .map(([title, sub, href, icon, c]) => ({ title, sub, href, icon, tint: c[0], ink: c[1] }));
+    const read = !!s.read;
+    const alerts = [
+      ['Golden period ends in 15 min', 'Bhoori · Banas Pashu Farm', 'Reproduction.dc.html', IC.clock, ['#FBE6F4', '#A01A78']],
+      ['Temperature high · 40.1 °C', 'Lakshmi · Shree Ganesh Dairy', 'Animal.dc.html', IC.temp, ['#FFF1E0', '#9A4A00']],
+      ['12 vaccines overdue', 'Shree Ganesh Dairy', 'Health.dc.html', IC.vaccine, ['#E8EDFC', '#2A4FD6']],
+      ['3 animals marked sick', 'Periyar Cattle Farm', 'Health.dc.html', IC.health, ['#FDE8EC', '#B4233C']]
+    ].map(([title, sub, href, icon, c]) => ({ title, sub, href, icon, tint: c[0], ink: c[1], unread: !read, w: read ? '700' : '800' }));
+    return {
+      crumb: this.props.crumb ?? 'Overview', page: this.props.page ?? 'Dashboard',
+      q, onQ: (e) => this.setState({ q: e.target.value, focus: true, bell: false }),
+      onFocus: () => this.setState({ focus: true, bell: false }),
+      onBlur: () => { clearTimeout(this.__bt); this.__bt = setTimeout(() => this.setState({ focus: false }), 180); },
+      showResults: !!s.focus && !s.bell, results, noResults: results.length === 0,
+      resultsLabel: ql ? 'Results' : 'Recent',
+      bellOpen: s.bell ? 'true' : 'false', showBell: !!s.bell,
+      toggleBell: () => this.setState({ bell: !s.bell, focus: false }),
+      hasUnread: !read, unread: '9', bellLabel: read ? 'Alerts' : 'Alerts, 9 new',
+      alerts, markRead: () => this.setState({ read: true })
+    };
+  }
+}
+</script>
+</body>
+</html>

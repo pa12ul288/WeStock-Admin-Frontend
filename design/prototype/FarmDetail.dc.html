@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Shree Ganesh Dairy · WeSTOCK Admin</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#F4F6F5}
+*{box-sizing:border-box}
+h1,h2,h3,p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+.app{min-height:100vh;display:flex;background:#F4F6F5;font-family:Nunito,system-ui,sans-serif;color:#1A1A1A;font-size:14px;-webkit-font-smoothing:antialiased}
+.side{flex:0 0 256px;min-width:0;background:#0F1B2D}
+.main{flex:1 1 560px;min-width:0;display:flex;flex-direction:column}
+.panel{flex:1;display:flex;flex-direction:column;gap:18px;padding:8px clamp(16px,2.6vw,36px) 48px;min-width:0}
+.mono{font-family:Poppins,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#0B7A4B}
+.title{font-family:Poppins,system-ui,sans-serif;font-size:28px;font-weight:600;letter-spacing:-.015em;line-height:1.2;color:#0F1B2D}
+.sub{font-size:15px;color:#6B7280;margin-top:6px}
+.ph{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+.acts{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.card{background:#FFFFFF;border:1px solid #E5EAE7;border-radius:16px;box-shadow:0 1px 2px rgba(15,27,45,.04),0 6px 20px rgba(15,27,45,.04);min-width:0}
+.group{background:#FFFFFF;border:1px solid #E5EAE7;border-radius:18px;box-shadow:0 1px 2px rgba(15,27,45,.04),0 6px 20px rgba(15,27,45,.04);padding:14px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.group .card{box-shadow:none}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr));gap:14px}
+.kc{padding:18px 18px 16px;display:flex;flex-direction:column;gap:12px}
+.kh{display:flex;align-items:center;gap:10px}
+.ib{width:36px;height:36px;flex:none;border-radius:11px;background:#E3F8EF;display:flex;align-items:center;justify-content:center;color:#0B7A4B}
+.lbl{flex:1;min-width:0;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lbl-m{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#6B7280}
+.dots{width:28px;height:28px;flex:none;border:0;background:transparent;color:#9CA3AF;display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;padding:0}
+.big{font-family:Poppins,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:28px;font-weight:600;letter-spacing:-.02em;color:#0F1B2D;line-height:1.15;white-space:nowrap}
+.vrow{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.note{font-size:13px;color:#6B7280}
+.chip{display:inline-flex;align-items:center;gap:3px;height:22px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
+.up{background:#E3F8EF;color:#0B7A4B}
+.dn{background:#FDE8EC;color:#B4233C}
+.fl{background:#F1F3F2;color:#374151}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 18px;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;white-space:nowrap;border:1px solid transparent;text-decoration:none}
+.btn-p{background:#2ED08C;color:#0F1B2D}
+.btn-s{background:#FFFFFF;border-color:#DCE2DF;color:#0F1B2D}
+.btn-g{background:#FFFFFF;border-color:#DCE2DF;color:#0F1B2D}
+.btn-sm{height:34px;padding:0 12px;font-size:13px;border-radius:10px}
+.ibtn{width:34px;height:34px;flex:none;border:1px solid #DCE2DF;border-radius:10px;background:#FFFFFF;color:#0F1B2D;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.pill{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap;border:0}
+.pill i{width:6px;height:6px;border-radius:99px;background:currentColor;flex:none}
+.s-red{background:#FDE8EC;color:#B4233C}
+.s-amber{background:#FFF1E0;color:#9A4A00}
+.s-green{background:#E3F8EF;color:#0B7A4B}
+.s-blue{background:#E8EDFC;color:#2A4FD6}
+.s-pink{background:#FBE6F4;color:#A01A78}
+.s-grey{background:#F1F3F2;color:#374151}
+.ch{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ct{display:flex;align-items:center;gap:10px;min-width:0}
+.link{display:inline-flex;align-items:center;gap:4px;font-size:13.5px;font-weight:800;color:#0B7A4B;white-space:nowrap}
+.seg{display:inline-flex;flex-wrap:wrap;padding:4px;background:#E9EEEB;border-radius:13px;gap:2px}
+.seg button{height:34px;padding:0 14px;border:0;border-radius:10px;background:transparent;color:#4B5563;font-size:13.5px;font-weight:800;cursor:pointer;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:#FFFFFF;color:#0F1B2D;box-shadow:0 1px 3px rgba(15,27,45,.12)}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;position:relative}
+table{border-collapse:separate;border-spacing:0;width:100%}
+th{text-align:left;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#6B7280;padding:11px 18px;background:#FAFBFA;border-top:1px solid #EEF1EF;border-bottom:1px solid #EEF1EF;white-space:nowrap}
+td{padding:12px 18px;border-bottom:1px solid #F1F3F2;font-size:14px;white-space:nowrap;color:#1A1A1A}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:#FAFBFA}
+td.r,th.r{text-align:right}
+.tn{font-family:Poppins,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:13.5px}
+.av{width:36px;height:36px;flex:none;border-radius:999px;background:#E3F8EF;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;color:#0B7A4B}
+.who{display:flex;align-items:center;gap:12px}
+.who b{display:block;font-weight:800;color:#0F1B2D}
+.who small{display:block;font-size:12.5px;color:#6B7280;margin-top:1px}
+.muted{color:#6B7280}
+.field{height:40px;width:100%;padding:0 12px;border:1px solid #DCE2DF;border-radius:11px;background:#FFFFFF;font-size:14px;font-weight:700;color:#0F1B2D}
+.fl-lbl{display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:800;color:#0F1B2D}
+.yax{display:flex;flex-direction:column;justify-content:space-between;font-size:11.5px;color:#6B7280;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.gridl{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+.gridl div{border-top:1px dashed #E3E8E5}
+.gridl div:last-child{border-top:1px solid #DCE2DF}
+.xl{font-size:11.5px;color:#6B7280;white-space:nowrap}
+.tip{position:absolute;z-index:2;display:flex;flex-direction:column;gap:2px;padding:8px 12px;border-radius:12px;background:#0F1B2D;color:#FFFFFF;font-size:12px;white-space:nowrap;box-shadow:0 8px 20px rgba(15,27,45,.22)}
+.row{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid #F1F3F2}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:36px 16px;text-align:center;border:1px dashed #DCE2DF;border-radius:14px;background:#FAFBFA}
+.sr{position:absolute;left:0;top:0;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid #F1F3F2;font-size:14px}
+.kv span:first-child{color:#6B7280}
+.kv b{font-weight:800;color:#0F1B2D;text-align:right}
+.show-sm{display:none !important}
+.ovl{position:fixed;inset:0;z-index:50;background:rgba(15,27,45,.48);display:flex;align-items:flex-start;justify-content:center;padding:0 16px;overflow:auto}
+.modal{width:100%;max-width:540px;max-height:calc(100vh - 32px);overflow:auto;background:#FFFFFF;border-radius:20px;box-shadow:0 24px 60px rgba(15,27,45,.28);display:flex;flex-direction:column;margin:0 0 16px;text-align:left}
+.mh{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 22px 0}
+.mt{font-family:Poppins,system-ui,sans-serif;font-size:19px;font-weight:600;color:#0F1B2D}
+.mb{padding:16px 22px 18px;display:flex;flex-direction:column;gap:14px}
+.mf{padding:14px 22px 18px;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;border-top:1px solid #F1F3F2}
+.x{width:34px;height:34px;flex:none;border:0;border-radius:10px;background:#F1F3F2;color:#374151;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.ta{min-height:84px;width:100%;padding:10px 12px;border:1px solid #DCE2DF;border-radius:11px;font-size:14px;font-weight:600;line-height:1.5;resize:vertical;color:#0F1B2D}
+.btn-d{background:#D62F4B;color:#FFFFFF}
+.btn:disabled{opacity:.5;cursor:default}
+.toast{position:fixed;z-index:60;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:12px 18px;border-radius:14px;background:#0F1B2D;color:#FFFFFF;font-size:14px;font-weight:700;box-shadow:0 12px 30px rgba(15,27,45,.3);max-width:calc(100vw - 32px)}
+.toast svg{flex:none;color:#2ED08C}
+.modal textarea{padding:10px 12px;border:1px solid #DCE2DF;border-radius:11px;font-size:14px;line-height:1.5;resize:vertical;width:100%}
+.warn{display:flex;gap:10px;padding:12px 14px;border-radius:12px;background:#FDE8EC;color:#7F1D2D;font-size:13.5px;line-height:1.45}
+.pg{cursor:pointer}
+@media (max-width:900px){
+.app{flex-direction:column}
+.side{flex:none;width:100%}
+.panel{padding:6px 16px 32px;gap:14px}
+.title{font-size:23px}
+.sub{font-size:14px}
+.ph{align-items:flex-start}
+.kgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kgrid .kc{padding:14px 14px 12px;gap:10px}
+.kgrid .big{font-size:20px}
+.kgrid .note{font-size:12px}
+.kgrid .dots{display:none}
+.kgrid .lbl{white-space:normal;line-height:1.25;font-size:11px;letter-spacing:.04em}
+.kgrid .ib{width:30px;height:30px;border-radius:9px}
+.kgrid .step{display:none}
+.show-sm{display:flex !important}
+.g2{grid-template-columns:1fr}
+.modal{border-radius:18px}
+.big{font-size:23px}
+th{padding:10px 12px}
+td{padding:11px 12px;font-size:13.5px}
+.hide-sm{display:none !important}
+.xlr>span:not(:nth-child(5n+1)) .xl{visibility:hidden}
+.xlr2>.xl:nth-child(even){visibility:hidden}
+.xlr2>.xl{min-width:0;text-align:left !important}
+.xlr2>.xl:nth-child(odd){overflow:visible}
+.xl{font-size:10.5px}
+.acts .field{flex:1 1 140px;width:auto !important}
+}
+.ms{display:flex;flex-direction:column;gap:3px;padding:10px 12px;border:1px solid #EEF1EF;border-radius:10px;background:#FAFBFA}
+.ms .v{font-family:Poppins,system-ui,sans-serif;font-size:20px;font-weight:600;color:#0F1B2D;letter-spacing:-.02em;line-height:1.2}
+.ms .l{display:flex;align-items:center;gap:6px;font-size:12px;color:#4B5563}
+.ms i{width:6px;height:6px;border-radius:99px;flex:none}
+.meta{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#4B5563}
+.bar{flex:1 1 0;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px}
+.bar .b{width:100%;max-width:34px;border-radius:999px}
+</style>
+</helmet>
+<div class="app" onMouseDown="{{trackY}}">
+  <aside class="side"><dc-import name="Sidebar" active="farmers" hint-size="100%,900px"></dc-import></aside>
+  <div class="main">
+    <dc-import name="TopBar" crumb="Farmers &amp; farms" page="Shree Ganesh Dairy" hint-size="100%,56px"></dc-import>
+    <main class="panel">
+      <div class="ph">
+        <div style="display: flex; align-items: center; gap: 16px; min-width: 0;">
+          <span aria-hidden="true" class="hide-sm" style="width: 64px; height: 64px; flex: none; border-radius: 18px; background: #E3F8EF; display: flex; align-items: center; justify-content: center; font-family: Poppins, system-ui, sans-serif; font-size: 17px; font-weight: 800; color: #0B7A4B;">SG</span>
+          <div style="min-width: 0;">
+            <span class="eyebrow">Farm · since 12 Mar 2026</span>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 4px;"><h1 class="title">{{farmName}}</h1><span class="pill s-blue">Blackbox + collars</span></div>
+            <div style="display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 8px;">
+              <span class="meta"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"></path></svg>Ramesh Patil <span class="mono" style="font-size: 12px; color: #6B7280;">+91 98220 •••41</span></span>
+              <span class="meta"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"></path></svg>Kolhapur, Maharashtra</span>
+              <span class="meta"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h9M8.5 3v2M6 5c1 4 4 7 7 8M11 5c-1 4-4 7-7 8M13 21l4-9 4 9M14.5 18h5"></path></svg>App in Marathi</span>
+            </div>
+          </div>
+        </div>
+        <div class="acts">
+          <button type="button" onClick="{{toSettings}}" class="btn btn-g">Edit farm</button>
+          <button type="button" class="btn btn-p" onClick="{{openAnimal}}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Add animal</button>
+        </div>
+      </div>
+
+      <div class="kgrid">
+        <sc-for list="{{hero}}" as="h" hint-placeholder-count="5">
+          <div class="card kc">
+            <div class="kh">
+              <span class="ib"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{h.icon}}"></path></svg></span>
+              <span class="lbl">{{h.label}}</span>
+            </div>
+            <span class="big">{{h.value}}</span>
+            <span class="note">{{h.note}}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <div class="seg" role="tablist" aria-label="Farm sections" style="align-self: flex-start;">
+        <sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
+          <button type="button" role="tab" aria-pressed="{{t.selected}}" aria-selected="{{t.selected}}" onClick="{{t.pick}}">{{t.label}}</button>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{deleted}}" hint-placeholder-val="{{false}}">
+        <div class="card empty" style="padding: 48px 16px;"><span style="font-family: Poppins, system-ui, sans-serif; font-size: 18px; font-weight: 600; color: #0F1B2D;">This farm was deleted</span><span class="note">Its animals and records are no longer in the app. The deletion is in the activity log.</span><a href="Farmers.dc.html" class="btn btn-p btn-sm" style="margin-top: 6px;">Back to farmers &amp; farms</a></div>
+      </sc-if>
+      <sc-if value="{{isOverview}}" hint-placeholder-val="{{true}}">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <section class="group" aria-label="Records">
+            <span class="lbl-m" style="padding: 2px 2px 0;">Records on this farm</span>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 12px;">
+              <sc-for list="{{records}}" as="r" hint-placeholder-count="3">
+                <a href="{{r.href}}" class="card kc">
+                  <div class="kh">
+                    <span class="ib" style="background: {{r.tint}}; color: {{r.ink}};"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{r.icon}}"></path></svg></span>
+                    <span class="lbl">{{r.label}}</span>
+                    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"></path></svg>
+                  </div>
+                  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;">
+                    <sc-for list="{{r.stats}}" as="s" hint-placeholder-count="4">
+                      <span class="ms"><span class="v">{{s.v}}</span><span class="l"><i style="background: {{s.c}};"></i>{{s.l}}</span></span>
+                    </sc-for>
+                  </div>
+                </a>
+              </sc-for>
+            </div>
+          </section>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch;">
+            <section class="card" style="flex: 3 1 520px; padding: 16px 18px 14px; display: flex; flex-direction: column; gap: 14px;">
+              <div class="ch">
+                <span class="lbl-m">Milk per day · last 7 days</span>
+                <a href="MilkFeed.dc.html" class="link">Entries <span aria-hidden="true">→</span></a>
+              </div>
+              <div style="display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px;"><span class="big">2,258 L</span><span class="chip up">↑ 4.1%</span><span class="note">₹95,195 · 168 L so far today</span></div>
+              <div style="display: flex; gap: 12px;">
+                <div class="yax" style="height: 190px; width: 30px; margin-top: -6px;"><span>450 L</span><span>300</span><span>150</span><span>0</span></div>
+                <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px;">
+                  <div style="position: relative; height: 190px;">
+                    <div class="gridl" aria-hidden="true"><div></div><div></div><div></div><div></div></div>
+                    <div role="img" aria-label="Milk per day, 29 Oct to 04 Nov, highest 340 litres on 03 Nov" style="position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 16px; padding: 0 6px;">
+                      <sc-for list="{{bars}}" as="b" hint-placeholder-count="7">
+                        <div class="bar" title="{{b.tip}}"><span class="mono" style="font-size: 11px; color: {{b.lc}};">{{b.val}}</span><span class="b" style="height: {{b.h}}; background: {{b.c}};"></span></div>
+                      </sc-for>
+                    </div>
+                  </div>
+                  <div class="xlr2" style="display: flex; gap: 16px; padding: 0 6px;"><sc-for list="{{bars}}" as="b" hint-placeholder-count="7"><span class="xl" style="flex: 1 1 0; text-align: center; color: {{b.lc}};">{{b.day}}</span></sc-for></div>
+                </div>
+              </div>
+            </section>
+            <section class="card" style="flex: 2 1 320px; padding: 16px 18px 6px; display: flex; flex-direction: column;">
+              <div class="ch" style="padding-bottom: 10px;"><span class="lbl-m">Coming up</span><span class="mono" style="font-size: 11.5px; color: #6B7280;">next 30 days</span></div>
+              <sc-for list="{{upcoming}}" as="u" hint-placeholder-count="4">
+                <div class="row">
+                  <span style="width: 44px; flex: none; display: flex; flex-direction: column; align-items: center; padding: 5px 0; border: 1px solid #E5EAE7; border-radius: 9px; background: #FFFFFF;"><span class="mono" style="font-size: 9.5px; letter-spacing: .06em; color: {{u.ink}};">{{u.mon}}</span><span class="mono" style="font-size: 16px; font-weight: 600; color: #0F1B2D;">{{u.day}}</span></span>
+                  <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;"><span style="font-size: 13.5px; font-weight: 800; color: #0F1B2D;">{{u.what}}</span><span class="note">{{u.detail}}</span></span>
+                  <span class="pill {{u.cls}}">{{u.tag}}</span>
+                </div>
+              </sc-for>
+            </section>
+          </div>
+
+          <section class="card" style="overflow: hidden;">
+            <div class="ch" style="padding: 14px 16px;"><span class="lbl-m">Latest entries from the app</span><a href="Staff.dc.html" class="link">Activity log <span aria-hidden="true">→</span></a></div>
+            <div class="tw">
+              <table>
+                <thead><tr><th>Time</th><th>Type</th><th>Record</th><th>Entered by</th></tr></thead>
+                <tbody>
+                  <sc-for list="{{entries}}" as="e" hint-placeholder-count="6">
+                    <tr><td class="tn muted">{{e.when}}</td><td><span class="pill {{e.cls}}">{{e.what}}</span></td><td>{{e.detail}}</td><td>{{e.by}}<sc-if value="{{e.staff}}" hint-placeholder-val="{{false}}"> <span class="pill s-grey" style="margin-left: 6px;">Staff</span></sc-if></td></tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isSheds}}" hint-placeholder-val="{{false}}">
+        <div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px;">
+          <section class="card" style="flex: 3 1 520px; overflow: hidden;">
+            <div class="ch" style="padding: 14px 16px;"><div class="ct"><span class="lbl-m">Sheds</span><span class="pill s-grey">{{shedCount}}</span></div><button type="button" class="btn btn-s btn-sm" onClick="{{addShed}}">Add shed</button></div>
+            <div class="tw">
+              <table>
+                <thead><tr><th>Code</th><th>Name</th><th class="r">Animals</th><th>Who lives here</th><th><span class="sr">Edit</span></th></tr></thead>
+                <tbody>
+                  <sc-for list="{{sheds}}" as="s" hint-placeholder-count="4">
+                    <tr><td><span class="pill s-grey mono">{{s.code}}</span></td><td style="font-weight: 800;">{{s.name}}</td><td class="r tn">{{s.n}}</td><td class="muted">{{s.mix}}</td><td class="r" style="width: 1%;"><sc-if value="{{s.editable}}" hint-placeholder-val="{{true}}"><button type="button" class="btn btn-s btn-sm" onClick="{{s.edit}}">Edit</button></sc-if></td></tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </div>
+          </section>
+          <section class="card" style="flex: 2 1 360px; padding: 14px 16px 8px; display: flex; flex-direction: column;">
+            <div class="ch" style="padding-bottom: 10px;"><div class="ct"><span class="lbl-m">Farm members</span><span class="pill s-grey">{{memberCount}}</span></div><button type="button" class="btn btn-s btn-sm" onClick="{{addMember}}">Add member</button></div>
+            <sc-for list="{{members}}" as="m" hint-placeholder-count="3">
+              <div class="row">
+                <span class="av">{{m.ini}}</span>
+                <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;"><span style="font-size: 13.5px; font-weight: 800; color: #0F1B2D;">{{m.name}}</span><span class="mono" style="font-size: 11.5px; color: #6B7280;">{{m.phone}}</span></span>
+                <select class="field" aria-label="{{m.label}}" onChange="{{m.setRole}}" style="width: auto; height: 34px; font-size: 13px;"><sc-for list="{{m.opts}}" as="o" hint-placeholder-count="3"><option value="{{o.v}}" selected="{{o.sel}}">{{o.v}}</option></sc-for></select>
+              </div>
+            </sc-for>
+            <p class="note" style="padding: 10px 0 6px;">Owners and managers can change farm records. Workers can add entries.</p>
+          </section>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isSettings}}" hint-placeholder-val="{{false}}">
+        <div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px;">
+          <form class="card" onSubmit="{{noSubmit}}" style="flex: 3 1 520px; padding: 18px; display: flex; flex-direction: column; gap: 16px;">
+            <span class="lbl-m">Farm details</span>
+            <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;">
+              <label class="fl-lbl">Farm name<input class="field" name="farmName" type="text" defaultValue="{{farmName}}"></label>
+              <label class="fl-lbl">Owner<select class="field"><option>Ramesh Patil</option><option>Suresh Patil</option></select></label>
+              <label class="fl-lbl">District<input class="field" type="text" defaultValue="Kolhapur"></label>
+              <label class="fl-lbl">State<select class="field"><option>Maharashtra</option><option>Gujarat</option><option>Kerala</option><option>Tamil Nadu</option></select></label>
+              <label class="fl-lbl">Map location<input class="field mono" type="text" defaultValue="16.7050, 74.2433"></label>
+              <span></span>
+            </div>
+            <label class="fl-lbl">Description<textarea rows="3" style="padding: 10px; border: 1px solid #DCE2DF; border-radius: 9px; font-size: 13px; line-height: 1.5; resize: vertical;">Family dairy with Gir and HF-cross cows, Murrah buffalo and a few goats.</textarea></label>
+            <span class="lbl-m" style="padding-top: 6px;">Alerts</span>
+            <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;">
+              <label class="fl-lbl">Fever alert at<span style="position: relative; display: block;"><input class="field mono" type="text" defaultValue="39.5"><span class="mono" style="position: absolute; right: 10px; top: 9px; font-size: 12px; color: #6B7280;">°C</span></span></label>
+              <label class="fl-lbl">Collar offline after<span style="position: relative; display: block;"><input class="field mono" type="text" defaultValue="15"><span class="mono" style="position: absolute; right: 10px; top: 9px; font-size: 12px; color: #6B7280;">min</span></span></label>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 8px; padding-top: 14px; border-top: 1px solid #F1F3F2;">
+              <button type="button" onClick="{{toOverview}}" class="btn btn-s">Cancel</button>
+              <button type="button" onClick="{{saveFarm}}" class="btn btn-p">Save changes</button>
+            </div>
+          </form>
+          <section class="card" style="flex: 2 1 320px; padding: 18px; display: flex; flex-direction: column; gap: 12px; border-color: #F6C9D2;">
+            <span class="lbl-m" style="color: #B4233C;">Danger zone</span>
+            <p class="note" style="line-height: 1.5;">These change who controls the farm or remove its data. Both are recorded in the activity log.</p>
+            <button type="button" class="btn btn-s" onClick="{{openTransfer}}" style="justify-content: flex-start; border-radius: 9px;">Transfer ownership</button>
+            <button type="button" class="btn btn-s" onClick="{{openDelete}}" style="justify-content: flex-start; border-radius: 9px; color: #B4233C; border-color: #F6C9D2;">Delete farm and its records</button>
+          </section>
+        </div>
+      </sc-if>
+    </main>
+  </div>
+  <sc-if value="{{toastOn}}" hint-placeholder-val="{{false}}"><div class="toast" role="status" style="top: {{toastTop}};"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg><span>{{toastText}}</span></div></sc-if>
+  <sc-if value="{{modalOpen}}" hint-placeholder-val="{{false}}">
+    <div class="ovl" onClick="{{closeModal}}">
+      <form class="modal" onClick="{{stop}}" onSubmit="{{noSubmit}}" aria-label="{{modalTitle}}" style="margin-top: {{modalTop}};">
+        <div class="mh"><div><h2 class="mt">{{modalTitle}}</h2><p class="note" style="margin-top: 4px; line-height: 1.45;">{{modalSub}}</p></div><button type="button" class="x" aria-label="Close" onClick="{{closeModal}}"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div>
+        <div class="mb">
+          <sc-if value="{{is_animal}}" hint-placeholder-val="{{false}}">
+            <div class="g2">
+              <label class="fl-lbl">Tag number<input class="field" name="tag" type="text" placeholder="e.g. 65"></label>
+              <label class="fl-lbl">Name<input class="field" name="name" type="text" placeholder="Optional"></label>
+              <label class="fl-lbl">Species<select class="field" name="species"><option>Cattle</option><option>Buffalo</option><option>Goat</option><option>Sheep</option><option>Poultry</option><option>Pig</option><option>Horse</option><option>Other</option></select></label>
+              <label class="fl-lbl">Breed<input class="field" name="breed" type="text" placeholder="e.g. Gir"></label>
+              <label class="fl-lbl">Gender<select class="field" name="gender"><option>Female</option><option>Male</option></select></label>
+              <label class="fl-lbl">Shed<select class="field" name="shed"><sc-for list="{{shedOpts}}" as="o" hint-placeholder-count="3"><option>{{o}}</option></sc-for></select></label>
+            </div>
+          </sc-if>
+          <sc-if value="{{is_shed}}" hint-placeholder-val="{{false}}">
+            <div class="g2">
+              <label class="fl-lbl">Shed code<input class="field" name="code" type="text" defaultValue="{{f.code}}" placeholder="e.g. S4"></label>
+              <label class="fl-lbl">Shed name<input class="field" name="name" type="text" defaultValue="{{f.name}}" placeholder="e.g. Heifer shed"></label>
+            </div>
+          </sc-if>
+          <sc-if value="{{is_member}}" hint-placeholder-val="{{false}}">
+            <div class="g2">
+              <label class="fl-lbl">Name<input class="field" name="name" type="text" placeholder="e.g. Sachin Patil"></label>
+              <label class="fl-lbl">Phone number<input class="field" name="phone" type="tel" placeholder="+91 98xxx xxxxx"></label>
+              <label class="fl-lbl">Role<select class="field" name="role"><option>Worker</option><option>Manager</option><option>Owner</option></select></label>
+            </div>
+            <p class="note">They sign in to the WeSTOCK app with this phone number.</p>
+          </sc-if>
+          <sc-if value="{{is_transfer}}" hint-placeholder-val="{{false}}">
+            <label class="fl-lbl">New owner<select class="field" name="owner"><sc-for list="{{ownerOpts}}" as="o" hint-placeholder-count="2"><option>{{o}}</option></sc-for></select></label>
+            <p class="note">The current owner becomes a manager. The change is saved to the activity log.</p>
+          </sc-if>
+          <sc-if value="{{is_delete}}" hint-placeholder-val="{{false}}">
+            <div class="warn">This removes the farm, its {{animalCount}} animals and all their milk, feed, health and breeding records from the app.</div>
+            <label class="fl-lbl">Type the farm name to confirm<input class="field" name="confirm" type="text" placeholder="{{farmName}}" autocomplete="off"></label>
+          </sc-if>
+          <sc-if value="{{hasErr}}" hint-placeholder-val="{{false}}"><div class="warn">{{errText}}</div></sc-if>
+        </div>
+        <div class="mf"><button type="button" class="btn btn-s" onClick="{{closeModal}}">Cancel</button><button type="button" class="btn {{okCls}}" onClick="{{confirm}}">{{okLabel}}</button></div>
+      </form>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+class Component extends DCLogic {
+  open(kind, form) { this.setState({ modal: kind, form: form || {}, err: '' }); }
+  close() { this.setState({ modal: null, err: '' }); }
+  say(msg) {
+    this.setState({ modal: null, err: '', toast: msg });
+    clearTimeout(this.__tt);
+    this.__tt = setTimeout(() => this.setState({ toast: null }), 2800);
+  }
+  formOf(e) {
+    const el = e && e.currentTarget && e.currentTarget.closest ? e.currentTarget.closest('form') : null;
+    return el ? Object.fromEntries(new FormData(el).entries()) : {};
+  }
+  csv(name, rows) {
+    try {
+      const body = rows.map((r) => r.map((v) => '"' + String(v).replace(/"/g, '""') + '"').join(',')).join('\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([body], { type: 'text/csv' }));
+      a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    } catch (err) { }
+  }
+  ui(titles) {
+    const s = this.state || {};
+    const m = s.modal || '';
+    const t = titles[m] || ['', '', 'Save', 'btn-p'];
+    const vh = (typeof window !== 'undefined' && window.innerHeight) || 900;
+    const y = this.__y || 140;
+    const out = {
+      modalOpen: !!m, modalTop: Math.max(16, Math.min(y - 170, vh - 480)) + 'px',
+      toastOn: !!s.toast, toastText: s.toast || '', toastTop: Math.max(16, Math.min(y - 76, vh - 76)) + 'px',
+      f: s.form || {}, closeModal: () => this.close(), stop: (e) => e.stopPropagation(), noSubmit: (e) => e.preventDefault(),
+      trackY: (e) => { this.__y = e.clientY; },
+      modalTitle: t[0], modalSub: t[1] || '', okLabel: t[2] || 'Save', okCls: t[3] || 'btn-p',
+      hasErr: !!s.err, errText: s.err || ''
+    };
+    Object.keys(titles).forEach((k) => { out['is_' + k] = m === k; });
+    return out;
+  }
+  renderVals() {
+    const tab = (this.state && this.state.tab) || 'overview';
+    const go = (t) => () => this.setState({ tab: t });
+    const tabs = [['overview', 'Overview'], ['sheds', 'Sheds & members'], ['settings', 'Farm settings']].map(([key, label]) => ({
+      label, pick: go(key), selected: key === tab ? 'true' : 'false'
+    }));
+    const IC = {
+      tag: 'M3 12V4h8l10 10-8 8L3 12zM7.5 7.5h.01',
+      milk: 'M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z',
+      heart: 'M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z',
+      vaccine: 'M18 2l4 4M15 5l4 4M7 13l4 4M4 20l3-3M8 10l6 6 5-5-6-6z',
+      health: 'M9 3h6v6h6v6h-6v6H9v-6H3V9h6z',
+      people: 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21v-1a6 6 0 0 1 6-6h2a6 6 0 0 1 6 6v1M16 3.5a4 4 0 0 1 0 7.5M22 21v-1a6 6 0 0 0-4-5.6'
+    };
+    const hero = [
+      { label: 'Animals', value: '64', note: '41 cattle · 17 buffalo · 6 goats', icon: IC.tag },
+      { label: 'Milk today', value: '168 L', note: 'Morning and afternoon so far', icon: IC.milk },
+      { label: 'Pregnant', value: '14', note: '3 may deliver in 30 days', icon: IC.heart },
+      { label: 'Vaccines overdue', value: '12', note: 'Oldest is 8 days late', icon: IC.vaccine },
+      { label: 'Members', value: '3', note: '1 owner · 2 managers', icon: IC.people }
+    ];
+    const R = '#A01A78', RED = '#B4233C', AMB = '#9A4A00', GRN = '#0B7A4B', BLU = '#2A4FD6', GRY = '#9CA3AF';
+    const records = [
+      { label: 'Reproduction', href: 'Reproduction.dc.html', icon: IC.heart, tint: '#FBE6F4', ink: '#A01A78', stats: [{ v: '2', l: 'In heat', c: R }, { v: '5', l: 'Inseminated', c: R }, { v: '14', l: 'Pregnant', c: R }, { v: '3', l: 'May deliver', c: R }] },
+      { label: 'Health issues', href: 'Health.dc.html', icon: IC.health, tint: '#FDE8EC', ink: '#B4233C', stats: [{ v: '1', l: 'Detected', c: AMB }, { v: '2', l: 'Sick', c: RED }, { v: '1', l: 'Long-term', c: GRY }, { v: '6', l: 'Resolved this month', c: GRN }] },
+      { label: 'Vaccination', href: 'Health.dc.html', icon: IC.vaccine, tint: '#E8EDFC', ink: '#2A4FD6', stats: [{ v: '12', l: 'Overdue', c: RED }, { v: '4', l: 'Due in 7 days', c: AMB }, { v: '9', l: 'Upcoming', c: BLU }, { v: '18', l: 'Given this month', c: GRN }] }
+    ];
+    const mv = [318, 322, 309, 331, 326, 340, 312];
+    const days = ['29 Oct', '30 Oct', '31 Oct', '01 Nov', '02 Nov', '03 Nov', '04 Nov'];
+    const best = Math.max(...mv);
+    const bars = mv.map((v, i) => ({
+      day: days[i], val: String(v), tip: days[i] + ': ' + v + ' L', h: (v / 450 * 100).toFixed(1) + '%',
+      c: v === best ? '#0E6C80' : '#BEEFF7', lc: v === best ? '#0E6C80' : '#6B7280'
+    }));
+    const upcoming = [
+      { mon: 'TODAY', day: '05', what: 'Ganga · golden period ends 20:30', detail: 'Heat confirmed by the farmer', tag: 'Breeding', cls: 's-pink', ink: '#A01A78' },
+      { mon: 'NOV', day: '09', what: 'Gauri · FMD vaccine due', detail: 'Plus 3 other cattle', tag: 'Vaccine', cls: 's-blue', ink: '#6B7280' },
+      { mon: 'NOV', day: '17', what: 'Sita · may deliver', detail: 'Pregnant, cycle 2', tag: 'Breeding', cls: 's-pink', ink: '#6B7280' },
+      { mon: 'DEC', day: '02', what: 'Gauri · BQ vaccine', detail: 'Black quarter, upcoming', tag: 'Vaccine', cls: 's-blue', ink: '#6B7280' }
+    ];
+    const C = { milk: 's-blue', feed: 's-green', vax: 's-blue', health: 's-red', repro: 's-pink' };
+    const entries = [
+      ['vax', 'Vaccine', 'Tag 07 Kali · FMD marked done', 'Rahul Deshmukh', '05 Nov · 10:15', true],
+      ['repro', 'Heat', 'Tag 04 Ganga · farmer confirmed the heat alert', 'Ramesh Patil', '05 Nov · 08:40', false],
+      ['milk', 'Milk', 'Tag 02 Lakshmi · 14.5 L, morning', 'Suresh Patil', '05 Nov · 06:40', false],
+      ['feed', 'Feed', 'S1 Main shed · green fodder 220 kg · ₹660', 'Ganpat Jadhav', '05 Nov · 06:05', false],
+      ['milk', 'Milk', 'Whole herd · 144 L, evening', 'Suresh Patil', '04 Nov · 18:30', false],
+      ['health', 'Health', 'Tag 19 Chandra · limping, detected', 'Ramesh Patil', '04 Nov · 17:20', false]
+    ].map(([k, what, detail, by, when, staff]) => ({ what, detail, by, when, staff, cls: C[k] }));
+    const st = this.state || {};
+    const farmName = st.farmName || 'Shree Ganesh Dairy';
+    const shedData = st.sheds || [
+      { code: 'S1', name: 'Main shed', n: 28, mix: '28 cattle' },
+      { code: 'S2', name: 'Buffalo shed', n: 17, mix: '17 buffalo' },
+      { code: 'S3', name: 'Calf & goat shed', n: 13, mix: '7 calves · 6 goats' }
+    ];
+    const memberData = st.members || [
+      { name: 'Ramesh Patil', phone: '+91 98220 •••41', role: 'Owner' },
+      { name: 'Suresh Patil', phone: '+91 98221 •••02', role: 'Manager' },
+      { name: 'Ganpat Jadhav', phone: '+91 90280 •••77', role: 'Manager' }
+    ];
+    const extra = st.extraAnimals || 0;
+    const animalCount = 64 + extra;
+    const sheds = shedData.map((sh, i) => ({ ...sh, n: String(sh.n), editable: true, edit: () => this.open('shed', { idx: i, code: sh.code, name: sh.name }) }))
+      .concat([{ code: '—', name: 'Not in a shed', n: '6', mix: '6 cattle', editable: false, edit: null }]);
+    const members = memberData.map((m, i) => ({
+      ...m, ini: m.name.split(' ').map((x) => x[0]).slice(0, 2).join(''), label: 'Role for ' + m.name,
+      opts: ['Owner', 'Manager', 'Worker'].map((v) => ({ v, sel: v === m.role ? 'selected' : null })),
+      setRole: (e) => { const role = e.target.value; this.setState({ members: memberData.map((x, j) => (j === i ? { ...x, role } : x)) }); this.say(m.name + ' is now ' + role.toLowerCase() + ' · saved to the activity log'); }
+    }));
+    const owners = memberData.filter((m) => m.role !== 'Owner').map((m) => m.name);
+    hero[0] = { ...hero[0], value: String(animalCount) };
+    hero[4] = { ...hero[4], value: String(memberData.length), note: memberData.filter((m) => m.role === 'Owner').length + ' owner · ' + memberData.filter((m) => m.role === 'Manager').length + ' managers · ' + memberData.filter((m) => m.role === 'Worker').length + ' workers' };
+    const deleted = !!st.deleted;
+    return {
+      ...this.ui({
+        animal: ['Add an animal', 'Adds it to ' + farmName + '. The farmer sees it in the app straight away.', 'Add animal'],
+        shed: [st.form && st.form.idx !== undefined ? 'Edit shed' : 'Add a shed', 'Sheds group animals and tell the Blackbox where readings come from.', st.form && st.form.idx !== undefined ? 'Save shed' : 'Add shed'],
+        member: ['Add a farm member', 'Members can see this farm in the app. Workers can add entries; managers can also change records.', 'Add member'],
+        transfer: ['Transfer ownership', 'Choose who owns ' + farmName + ' from now on.', 'Transfer'],
+        delete: ['Delete ' + farmName + '?', 'Only do this if the farmer asked for it.', 'Delete farm', 'btn-d']
+      }),
+      tabs, hero, records, bars, upcoming, entries, sheds, members, farmName, animalCount: String(animalCount),
+      shedCount: String(shedData.length), memberCount: String(memberData.length),
+      shedOpts: shedData.map((x) => x.code + ' · ' + x.name).concat(['Not in a shed']), ownerOpts: owners.length ? owners : ['No other members yet'],
+      deleted, isOverview: !deleted && tab === 'overview', isSheds: !deleted && tab === 'sheds', isSettings: !deleted && tab === 'settings',
+      toSettings: go('settings'), toOverview: go('overview'),
+      openAnimal: () => this.open('animal'), addShed: () => this.open('shed', {}), addMember: () => this.open('member'),
+      openTransfer: () => this.open('transfer'), openDelete: () => this.open('delete'),
+      saveFarm: (e) => { const d = this.formOf(e); this.setState({ farmName: (d.farmName || '').trim() || farmName, tab: 'overview' }); this.say('Farm details saved · logged in the activity log'); },
+      confirm: (e) => {
+        const d = this.formOf(e);
+        const m = st.modal;
+        if (m === 'animal') {
+          if (!(d.tag || '').trim()) { this.setState({ err: 'Add a tag number.' }); return; }
+          this.setState({ extraAnimals: extra + 1 });
+          this.say('Tag ' + d.tag.trim() + (d.name ? ' · ' + d.name.trim() : '') + ' added to ' + farmName);
+        } else if (m === 'shed') {
+          if (!(d.code || '').trim() || !(d.name || '').trim()) { this.setState({ err: 'Add a shed code and a name.' }); return; }
+          const idx = st.form && st.form.idx;
+          const next = idx !== undefined ? shedData.map((x, j) => (j === idx ? { ...x, code: d.code.trim(), name: d.name.trim() } : x)) : shedData.concat([{ code: d.code.trim(), name: d.name.trim(), n: 0, mix: 'No animals yet' }]);
+          this.setState({ sheds: next });
+          this.say(idx !== undefined ? 'Shed updated' : 'Shed ' + d.code.trim() + ' added');
+        } else if (m === 'member') {
+          if (!(d.name || '').trim() || (d.phone || '').replace(/[^0-9]/g, '').length < 10) { this.setState({ err: 'Add a name and a 10-digit phone number.' }); return; }
+          const digits = d.phone.replace(/[^0-9]/g, '').slice(-10);
+          this.setState({ members: memberData.concat([{ name: d.name.trim(), phone: '+91 ' + digits.slice(0, 5) + ' •••' + digits.slice(-2), role: d.role }]) });
+          this.say(d.name.trim() + ' added as ' + d.role.toLowerCase());
+        } else if (m === 'transfer') {
+          if (!owners.length) { this.close(); return; }
+          this.setState({ members: memberData.map((x) => (x.name === d.owner ? { ...x, role: 'Owner' } : x.role === 'Owner' ? { ...x, role: 'Manager' } : x)) });
+          this.say(d.owner + ' now owns ' + farmName);
+        } else if (m === 'delete') {
+          if ((d.confirm || '').trim().toLowerCase() !== farmName.toLowerCase()) { this.setState({ err: 'Type “' + farmName + '” exactly to confirm.' }); return; }
+          this.setState({ deleted: true });
+          this.say(farmName + ' deleted · saved to the activity log');
+        }
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

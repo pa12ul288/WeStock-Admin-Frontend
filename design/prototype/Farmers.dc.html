@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Farmers &amp; farms · WeSTOCK Admin</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#F4F6F5}
+*{box-sizing:border-box}
+h1,h2,h3,p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+.app{min-height:100vh;display:flex;background:#F4F6F5;font-family:Nunito,system-ui,sans-serif;color:#1A1A1A;font-size:14px;-webkit-font-smoothing:antialiased}
+.side{flex:0 0 256px;min-width:0;background:#0F1B2D}
+.main{flex:1 1 560px;min-width:0;display:flex;flex-direction:column}
+.panel{flex:1;display:flex;flex-direction:column;gap:18px;padding:8px clamp(16px,2.6vw,36px) 48px;min-width:0}
+.mono{font-family:Poppins,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#0B7A4B}
+.title{font-family:Poppins,system-ui,sans-serif;font-size:28px;font-weight:600;letter-spacing:-.015em;line-height:1.2;color:#0F1B2D}
+.sub{font-size:15px;color:#6B7280;margin-top:6px}
+.ph{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+.acts{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.card{background:#FFFFFF;border:1px solid #E5EAE7;border-radius:16px;box-shadow:0 1px 2px rgba(15,27,45,.04),0 6px 20px rgba(15,27,45,.04);min-width:0}
+.group{background:#FFFFFF;border:1px solid #E5EAE7;border-radius:18px;box-shadow:0 1px 2px rgba(15,27,45,.04),0 6px 20px rgba(15,27,45,.04);padding:14px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.group .card{box-shadow:none}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr));gap:14px}
+.kc{padding:18px 18px 16px;display:flex;flex-direction:column;gap:12px}
+.kh{display:flex;align-items:center;gap:10px}
+.ib{width:36px;height:36px;flex:none;border-radius:11px;background:#E3F8EF;display:flex;align-items:center;justify-content:center;color:#0B7A4B}
+.lbl{flex:1;min-width:0;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lbl-m{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#6B7280}
+.dots{width:28px;height:28px;flex:none;border:0;background:transparent;color:#9CA3AF;display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;padding:0}
+.big{font-family:Poppins,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:28px;font-weight:600;letter-spacing:-.02em;color:#0F1B2D;line-height:1.15;white-space:nowrap}
+.vrow{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.note{font-size:13px;color:#6B7280}
+.chip{display:inline-flex;align-items:center;gap:3px;height:22px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
+.up{background:#E3F8EF;color:#0B7A4B}
+.dn{background:#FDE8EC;color:#B4233C}
+.fl{background:#F1F3F2;color:#374151}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 18px;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;white-space:nowrap;border:1px solid transparent;text-decoration:none}
+.btn-p{background:#2ED08C;color:#0F1B2D}
+.btn-s{background:#FFFFFF;border-color:#DCE2DF;color:#0F1B2D}
+.btn-g{background:#FFFFFF;border-color:#DCE2DF;color:#0F1B2D}
+.btn-sm{height:34px;padding:0 12px;font-size:13px;border-radius:10px}
+.ibtn{width:34px;height:34px;flex:none;border:1px solid #DCE2DF;border-radius:10px;background:#FFFFFF;color:#0F1B2D;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.pill{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap;border:0}
+.pill i{width:6px;height:6px;border-radius:99px;background:currentColor;flex:none}
+.s-red{background:#FDE8EC;color:#B4233C}
+.s-amber{background:#FFF1E0;color:#9A4A00}
+.s-green{background:#E3F8EF;color:#0B7A4B}
+.s-blue{background:#E8EDFC;color:#2A4FD6}
+.s-pink{background:#FBE6F4;color:#A01A78}
+.s-grey{background:#F1F3F2;color:#374151}
+.ch{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ct{display:flex;align-items:center;gap:10px;min-width:0}
+.link{display:inline-flex;align-items:center;gap:4px;font-size:13.5px;font-weight:800;color:#0B7A4B;white-space:nowrap}
+.seg{display:inline-flex;flex-wrap:wrap;padding:4px;background:#E9EEEB;border-radius:13px;gap:2px}
+.seg button{height:34px;padding:0 14px;border:0;border-radius:10px;background:transparent;color:#4B5563;font-size:13.5px;font-weight:800;cursor:pointer;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:#FFFFFF;color:#0F1B2D;box-shadow:0 1px 3px rgba(15,27,45,.12)}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;position:relative}
+table{border-collapse:separate;border-spacing:0;width:100%}
+th{text-align:left;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#6B7280;padding:11px 18px;background:#FAFBFA;border-top:1px solid #EEF1EF;border-bottom:1px solid #EEF1EF;white-space:nowrap}
+td{padding:12px 18px;border-bottom:1px solid #F1F3F2;font-size:14px;white-space:nowrap;color:#1A1A1A}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:#FAFBFA}
+td.r,th.r{text-align:right}
+.tn{font-family:Poppins,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:13.5px}
+.av{width:36px;height:36px;flex:none;border-radius:999px;background:#E3F8EF;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;color:#0B7A4B}
+.who{display:flex;align-items:center;gap:12px}
+.who b{display:block;font-weight:800;color:#0F1B2D}
+.who small{display:block;font-size:12.5px;color:#6B7280;margin-top:1px}
+.muted{color:#6B7280}
+.field{height:40px;width:100%;padding:0 12px;border:1px solid #DCE2DF;border-radius:11px;background:#FFFFFF;font-size:14px;font-weight:700;color:#0F1B2D}
+.fl-lbl{display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:800;color:#0F1B2D}
+.yax{display:flex;flex-direction:column;justify-content:space-between;font-size:11.5px;color:#6B7280;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.gridl{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+.gridl div{border-top:1px dashed #E3E8E5}
+.gridl div:last-child{border-top:1px solid #DCE2DF}
+.xl{font-size:11.5px;color:#6B7280;white-space:nowrap}
+.tip{position:absolute;z-index:2;display:flex;flex-direction:column;gap:2px;padding:8px 12px;border-radius:12px;background:#0F1B2D;color:#FFFFFF;font-size:12px;white-space:nowrap;box-shadow:0 8px 20px rgba(15,27,45,.22)}
+.row{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid #F1F3F2}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:36px 16px;text-align:center;border:1px dashed #DCE2DF;border-radius:14px;background:#FAFBFA}
+.sr{position:absolute;left:0;top:0;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid #F1F3F2;font-size:14px}
+.kv span:first-child{color:#6B7280}
+.kv b{font-weight:800;color:#0F1B2D;text-align:right}
+.show-sm{display:none !important}
+.ovl{position:fixed;inset:0;z-index:50;background:rgba(15,27,45,.48);display:flex;align-items:flex-start;justify-content:center;padding:0 16px;overflow:auto}
+.modal{width:100%;max-width:540px;max-height:calc(100vh - 32px);overflow:auto;background:#FFFFFF;border-radius:20px;box-shadow:0 24px 60px rgba(15,27,45,.28);display:flex;flex-direction:column;margin:0 0 16px;text-align:left}
+.mh{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 22px 0}
+.mt{font-family:Poppins,system-ui,sans-serif;font-size:19px;font-weight:600;color:#0F1B2D}
+.mb{padding:16px 22px 18px;display:flex;flex-direction:column;gap:14px}
+.mf{padding:14px 22px 18px;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;border-top:1px solid #F1F3F2}
+.x{width:34px;height:34px;flex:none;border:0;border-radius:10px;background:#F1F3F2;color:#374151;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.ta{min-height:84px;width:100%;padding:10px 12px;border:1px solid #DCE2DF;border-radius:11px;font-size:14px;font-weight:600;line-height:1.5;resize:vertical;color:#0F1B2D}
+.btn-d{background:#D62F4B;color:#FFFFFF}
+.btn:disabled{opacity:.5;cursor:default}
+.toast{position:fixed;z-index:60;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:12px 18px;border-radius:14px;background:#0F1B2D;color:#FFFFFF;font-size:14px;font-weight:700;box-shadow:0 12px 30px rgba(15,27,45,.3);max-width:calc(100vw - 32px)}
+.toast svg{flex:none;color:#2ED08C}
+.modal textarea{padding:10px 12px;border:1px solid #DCE2DF;border-radius:11px;font-size:14px;line-height:1.5;resize:vertical;width:100%}
+.warn{display:flex;gap:10px;padding:12px 14px;border-radius:12px;background:#FDE8EC;color:#7F1D2D;font-size:13.5px;line-height:1.45}
+.pg{cursor:pointer}
+@media (max-width:900px){
+.app{flex-direction:column}
+.side{flex:none;width:100%}
+.panel{padding:6px 16px 32px;gap:14px}
+.title{font-size:23px}
+.sub{font-size:14px}
+.ph{align-items:flex-start}
+.kgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kgrid .kc{padding:14px 14px 12px;gap:10px}
+.kgrid .big{font-size:20px}
+.kgrid .note{font-size:12px}
+.kgrid .dots{display:none}
+.kgrid .lbl{white-space:normal;line-height:1.25;font-size:11px;letter-spacing:.04em}
+.kgrid .ib{width:30px;height:30px;border-radius:9px}
+.kgrid .step{display:none}
+.show-sm{display:flex !important}
+.g2{grid-template-columns:1fr}
+.modal{border-radius:18px}
+.big{font-size:23px}
+th{padding:10px 12px}
+td{padding:11px 12px;font-size:13.5px}
+.hide-sm{display:none !important}
+.xlr>span:not(:nth-child(5n+1)) .xl{visibility:hidden}
+.xlr2>.xl:nth-child(even){visibility:hidden}
+.xlr2>.xl{min-width:0;text-align:left !important}
+.xlr2>.xl:nth-child(odd){overflow:visible}
+.xl{font-size:10.5px}
+.acts .field{flex:1 1 140px;width:auto !important}
+}
+.pg{min-width:30px;height:30px;padding:0 8px;border:1px solid #E5EAE7;border-radius:8px;background:#FFFFFF;font-family:Poppins,system-ui,sans-serif;font-size:12px;color:#374151;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.pg[aria-current="page"]{background:#0F1B2D;border-color:#0F1B2D;color:#FFFFFF}
+</style>
+</helmet>
+<div class="app" onMouseDown="{{trackY}}">
+  <aside class="side"><dc-import name="Sidebar" active="farmers" hint-size="100%,900px"></dc-import></aside>
+  <div class="main">
+    <dc-import name="TopBar" crumb="Farms" page="Farmers &amp; farms" hint-size="100%,56px"></dc-import>
+    <main class="panel">
+      <div class="ph">
+        <div>
+          <span class="eyebrow">Farms</span>
+          <h1 class="title" style="margin-top: 6px;">Farmers &amp; farms</h1>
+          <p class="sub">Everyone using the WeSTOCK app, and the farms they run.</p>
+        </div>
+        <div class="acts">
+          <button type="button" class="btn btn-g" onClick="{{exportCsv}}"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>Export CSV</button>
+        </div>
+      </div>
+
+      <div class="kgrid">
+        <sc-for list="{{stats}}" as="k" hint-placeholder-count="4">
+          <div class="card kc">
+            <div class="kh">
+              <span class="ib"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{k.icon}}"></path></svg></span>
+              <span class="lbl">{{k.label}}</span>
+            </div>
+            <div class="vrow"><span class="big">{{k.value}}</span><span class="chip {{k.cls}}">{{k.delta}}</span></div>
+            <span class="note">{{k.note}}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <section class="card" style="overflow: hidden;">
+        <div class="ch" style="padding: 12px 16px;">
+          <div class="seg" role="group" aria-label="Show">
+            <button type="button" aria-pressed="{{fPressed}}" onClick="{{showFarmers}}">Farmers <span class="mono" style="color: #6B7280;">1,284</span></button>
+            <button type="button" aria-pressed="{{mPressed}}" onClick="{{showFarms}}">Farms <span class="mono" style="color: #6B7280;">1,412</span></button>
+          </div>
+          <div class="acts">
+            <label style="display: flex; align-items: center; gap: 8px; width: 260px; height: 32px; padding: 0 10px; border: 1px solid #DCE2DF; border-radius: 9px; background: #FFFFFF; color: #6B7280;"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg><input type="search" aria-label="{{searchLabel}}" placeholder="{{searchLabel}}" value="{{q}}" onInput="{{onSearch}}" style="flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font-size: 13px;"></label>
+            <select class="field" aria-label="State" onChange="{{onState}}" style="width: auto; height: 32px; font-size: 12.5px;"><option value="">All states</option><option>Maharashtra</option><option>Gujarat</option><option>Kerala</option><option>Tamil Nadu</option><option>Uttar Pradesh</option><option>Haryana</option></select>
+            <sc-if value="{{isFarmers}}" hint-placeholder-val="{{true}}"><select class="field" aria-label="App language" onChange="{{onLang}}" style="width: auto; height: 32px; font-size: 12.5px;"><option value="">All languages</option><option>Hindi</option><option>Marathi</option><option>Malayalam</option><option>Gujarati</option><option>Tamil</option><option>English</option></select></sc-if>
+          </div>
+        </div>
+        <div class="tw">
+          <sc-if value="{{isFarmers}}" hint-placeholder-val="{{true}}">
+            <table>
+              <thead><tr><th>Farmer</th><th>App language</th><th>Farms</th><th class="r">Animals</th><th>Location</th><th>Joined</th><th>Last entry</th><th><span class="sr">Open</span></th></tr></thead>
+              <tbody>
+                <sc-for list="{{farmers}}" as="f" hint-placeholder-count="10">
+                  <tr>
+                    <td><div class="who"><span class="av">{{f.ini}}</span><span><b>{{f.name}}</b><small class="mono" style="font-size: 11.5px;">{{f.phone}}</small></span></div></td>
+                    <td>{{f.lang}}</td>
+                    <td>{{f.farm}}<span class="muted">{{f.more}}</span></td>
+                    <td class="r tn">{{f.animals}}</td>
+                    <td class="muted">{{f.place}}</td>
+                    <td class="tn muted">{{f.joined}}</td>
+                    <td><sc-if value="{{f.quiet}}" hint-placeholder-val="{{false}}"><span class="pill {{f.cls}}"><i></i>{{f.last}}</span></sc-if><sc-if value="{{f.fresh}}" hint-placeholder-val="{{true}}"><span class="muted">{{f.last}}</span></sc-if></td>
+                    <td class="r" style="width: 1%;"><a href="FarmDetail.dc.html" class="ibtn" aria-label="Open {{f.name}}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></a></td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </sc-if>
+          <sc-if value="{{isFarms}}" hint-placeholder-val="{{false}}">
+            <table>
+              <thead><tr><th>Farm</th><th>Location</th><th class="r">Sheds</th><th class="r">Animals</th><th class="r">Members</th><th>Mode</th><th>Milk, last 7 days</th><th><span class="sr">Open</span></th></tr></thead>
+              <tbody>
+                <sc-for list="{{farms}}" as="f" hint-placeholder-count="8">
+                  <tr>
+                    <td><div class="who"><span class="av">{{f.ini}}</span><span><b>{{f.name}}</b><small>{{f.owner}}</small></span></div></td>
+                    <td class="muted">{{f.place}}</td>
+                    <td class="r tn">{{f.sheds}}</td>
+                    <td class="r tn">{{f.animals}}</td>
+                    <td class="r tn">{{f.members}}</td>
+                    <td><span class="pill {{f.modeCls}}">{{f.mode}}</span></td>
+                    <td><div style="display: flex; align-items: center; gap: 10px;"><svg aria-hidden="true" width="80" height="24" viewBox="0 0 80 24"><polyline points="{{f.spark}}" fill="none" stroke="#0B7A4B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></polyline></svg><span class="tn">{{f.milk}}</span></div></td>
+                    <td class="r" style="width: 1%;"><a href="FarmDetail.dc.html" class="ibtn" aria-label="Open {{f.name}}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></a></td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </sc-if>
+          <sc-if value="{{empty}}" hint-placeholder-val="{{false}}"><div class="empty" style="margin: 16px;"><span style="font-weight: 800; color: #0F1B2D;">Nothing matches these filters</span><span class="note">Try another name, state or language.</span><button type="button" class="btn btn-s btn-sm" onClick="{{clearFilters}}">Clear filters</button></div></sc-if>
+        </div>
+        <div class="ch" style="padding: 12px 16px; border-top: 1px solid #EEF1EF;">
+          <span class="mono" style="font-size: 12px; color: #6B7280;">{{countText}}</span>
+          <sc-if value="{{showPager}}" hint-placeholder-val="{{true}}">
+            <nav aria-label="Pages" style="display: flex; gap: 4px;">
+              <button type="button" class="pg" aria-label="Previous page" onClick="{{prevPage}}">‹</button>
+              <sc-for list="{{pages}}" as="g" hint-placeholder-count="4"><sc-if value="{{g.isNum}}" hint-placeholder-val="{{true}}"><button type="button" class="pg" aria-current="{{g.cur}}" onClick="{{g.pick}}">{{g.label}}</button></sc-if><sc-if value="{{g.isGap}}" hint-placeholder-val="{{false}}"><span class="pg" aria-hidden="true" style="border: 0; background: transparent; cursor: default;">…</span></sc-if></sc-for>
+              <button type="button" class="pg" aria-label="Next page" onClick="{{nextPage}}">›</button>
+            </nav>
+          </sc-if>
+        </div>
+      </section>
+    </main>
+  </div>
+  <sc-if value="{{toastOn}}" hint-placeholder-val="{{false}}"><div class="toast" role="status" style="top: {{toastTop}};"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg><span>{{toastText}}</span></div></sc-if>
+  <sc-if value="{{modalOpen}}" hint-placeholder-val="{{false}}">
+    <div class="ovl" onClick="{{closeModal}}">
+      <form class="modal" onClick="{{stop}}" onSubmit="{{noSubmit}}" aria-label="{{modalTitle}}" style="margin-top: {{modalTop}};">
+        <div class="mh"><div><h2 class="mt">{{modalTitle}}</h2><p class="note" style="margin-top: 4px; line-height: 1.45;">{{modalSub}}</p></div><button type="button" class="x" aria-label="Close" onClick="{{closeModal}}"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div>
+        <div class="mb">
+<!--KINDS-->
+          <sc-if value="{{hasErr}}" hint-placeholder-val="{{false}}"><div class="warn">{{errText}}</div></sc-if>
+        </div>
+        <div class="mf"><button type="button" class="btn btn-s" onClick="{{closeModal}}">Cancel</button><button type="button" class="btn {{okCls}}" onClick="{{confirm}}">{{okLabel}}</button></div>
+      </form>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  open(kind, form) { this.setState({ modal: kind, form: form || {}, err: '' }); }
+  close() { this.setState({ modal: null, err: '' }); }
+  say(msg) {
+    this.setState({ modal: null, err: '', toast: msg });
+    clearTimeout(this.__tt);
+    this.__tt = setTimeout(() => this.setState({ toast: null }), 2800);
+  }
+  formOf(e) {
+    const el = e && e.currentTarget && e.currentTarget.closest ? e.currentTarget.closest('form') : null;
+    return el ? Object.fromEntries(new FormData(el).entries()) : {};
+  }
+  csv(name, rows) {
+    try {
+      const body = rows.map((r) => r.map((v) => '"' + String(v).replace(/"/g, '""') + '"').join(',')).join('\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([body], { type: 'text/csv' }));
+      a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    } catch (err) { }
+  }
+  ui(titles) {
+    const s = this.state || {};
+    const m = s.modal || '';
+    const t = titles[m] || ['', '', 'Save', 'btn-p'];
+    const vh = (typeof window !== 'undefined' && window.innerHeight) || 900;
+    const y = this.__y || 140;
+    const out = {
+      modalOpen: !!m, modalTop: Math.max(16, Math.min(y - 170, vh - 480)) + 'px',
+      toastOn: !!s.toast, toastText: s.toast || '', toastTop: Math.max(16, Math.min(y - 76, vh - 76)) + 'px',
+      f: s.form || {}, closeModal: () => this.close(), stop: (e) => e.stopPropagation(), noSubmit: (e) => e.preventDefault(),
+      trackY: (e) => { this.__y = e.clientY; },
+      modalTitle: t[0], modalSub: t[1] || '', okLabel: t[2] || 'Save', okCls: t[3] || 'btn-p',
+      hasErr: !!s.err, errText: s.err || ''
+    };
+    Object.keys(titles).forEach((k) => { out['is_' + k] = m === k; });
+    return out;
+  }
+  renderVals() {
+    const view = (this.state && this.state.view) || 'farmers';
+    const stats = [
+      { label: 'Farmers', value: '1,284', delta: '↑ 12%', cls: 'up', note: '146 joined this month', icon: 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21v-1a6 6 0 0 1 6-6h2a6 6 0 0 1 6 6v1M16 3.5a4 4 0 0 1 0 7.5M22 21v-1a6 6 0 0 0-4-5.6' },
+      { label: 'Logged this week', value: '1,061', delta: '83%', cls: 'fl', note: 'Made an entry in the last 7 days', icon: 'M5 12l5 5 9-10' },
+      { label: 'Quiet 3–7 days', value: '131', delta: '10%', cls: 'fl', note: 'No entry for 3 to 7 days', icon: 'M12 7v5l3 2M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z' },
+      { label: 'Quiet 7+ days', value: '92', delta: '7%', cls: 'dn', note: 'May need a call from support', icon: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 8v5M12 16h.01' }
+    ];
+    const farmers = [
+      ['Ramesh Patil', '+91 98220 •••41', 'Marathi', 'Shree Ganesh Dairy', ' +1', 86, 'Kolhapur, Maharashtra', '12 Mar 2026', '2 h ago', 0],
+      ['Sunita Desai', '+91 97250 •••08', 'Gujarati', 'Gir Gau Shala', '', 41, 'Anand, Gujarat', '02 Feb 2026', '4 days ago', 1],
+      ['Joseph Varghese', '+91 94470 •••19', 'Malayalam', 'Periyar Cattle Farm', '', 9, 'Kottayam, Kerala', '18 Jun 2026', '35 min ago', 0],
+      ['Murugan Selvam', '+91 98430 •••72', 'Tamil', 'Kaveri Farms', ' +2', 117, 'Erode, Tamil Nadu', '09 Jan 2026', '1 h ago', 0],
+      ['Rajendra Yadav', '+91 99350 •••64', 'Hindi', 'Yadav Dairy', '', 28, 'Mathura, Uttar Pradesh', '27 Apr 2026', 'Yesterday', 0],
+      ['Kavita Shinde', '+91 90110 •••37', 'Marathi', 'Shinde Gotha', '', 16, 'Ahilyanagar, Maharashtra', '14 Aug 2026', '3 h ago', 0],
+      ['Bhavesh Chaudhary', '+91 98790 •••55', 'Gujarati', 'Banas Pashu Farm', ' +1', 83, 'Banaskantha, Gujarat', '21 Mar 2026', '6 h ago', 0],
+      ['Lakshmi Narayanan', '+91 94430 •••90', 'Tamil', 'Lakshmi Farm', '', 9, 'Namakkal, Tamil Nadu', '05 May 2026', '9 days ago', 2],
+      ['Anil Kumar Singh', '+91 98120 •••23', 'Hindi', 'Singh Dairy', '', 31, 'Karnal, Haryana', '30 Jul 2026', '5 h ago', 0],
+      ['Mariamma Thomas', '+91 94960 •••46', 'Malayalam', 'Thomas Farm', '', 12, 'Idukki, Kerala', '11 Oct 2026', '20 min ago', 0],
+      ['Ganesh Pawar', '+91 98500 •••12', 'Marathi', 'Pawar Dairy', '', 24, 'Satara, Maharashtra', '03 Feb 2026', '1 h ago', 0],
+      ['Hetal Patel', '+91 98250 •••77', 'Gujarati', 'Hetal Farm', '', 19, 'Mehsana, Gujarat', '15 Mar 2026', '5 days ago', 1],
+      ['Ravi Kumar', '+91 99000 •••31', 'Hindi', 'Ravi Pashu Palan', '', 14, 'Agra, Uttar Pradesh', '22 Jun 2026', '2 h ago', 0],
+      ['Selvi Arumugam', '+91 94420 •••58', 'Tamil', 'Selvi Farm', '', 11, 'Salem, Tamil Nadu', '08 Jul 2026', 'Yesterday', 0],
+      ['Biju Mathew', '+91 94470 •••83', 'Malayalam', 'Mathew Dairy', '', 21, 'Thrissur, Kerala', '19 Apr 2026', '50 min ago', 0],
+      ['Suresh Jadhav', '+91 98810 •••05', 'Marathi', 'Jadhav Gotha', '', 33, 'Sangli, Maharashtra', '27 May 2026', '12 days ago', 2],
+      ['Paramjit Kaur', '+91 98140 •••62', 'Hindi', 'Kaur Dairy', '', 38, 'Ambala, Haryana', '01 Aug 2026', '4 h ago', 0],
+      ['Manoj Yadav', '+91 99360 •••47', 'Hindi', 'Manoj Dairy', '', 17, 'Etawah, Uttar Pradesh', '12 Sep 2026', '3 days ago', 1],
+      ['Kokila Ben', '+91 97270 •••29', 'Gujarati', 'Kokila Pashu Farm', '', 26, 'Amreli, Gujarat', '24 Jan 2026', '30 min ago', 0],
+      ['Arun Krishnan', '+91 94860 •••91', 'Tamil', 'Krishnan Farm', '', 15, 'Madurai, Tamil Nadu', '06 Oct 2026', '8 h ago', 0],
+      ['Asha Nair', '+91 94950 •••36', 'English', 'Nair Farms', '', 8, 'Palakkad, Kerala', '29 Oct 2026', 'Today', 0],
+      ['Dattatray More', '+91 90210 •••74', 'Marathi', 'More Dairy', '', 29, 'Pune, Maharashtra', '17 Feb 2026', '6 h ago', 0],
+      ['Jignesh Desai', '+91 98980 •••15', 'Gujarati', 'Desai Gaushala', '', 44, 'Kheda, Gujarat', '11 Apr 2026', '1 h ago', 0],
+      ['Sanjay Chauhan', '+91 98160 •••88', 'Hindi', 'Chauhan Dairy', '', 22, 'Hisar, Haryana', '05 Jun 2026', '2 days ago', 0],
+      ['Revathi Subramaniam', '+91 94430 •••52', 'Tamil', 'Revathi Farm', '', 13, 'Tiruppur, Tamil Nadu', '20 Aug 2026', '10 days ago', 2],
+      ['Thomas Kurian', '+91 94460 •••09', 'Malayalam', 'Kurian Estate Dairy', '', 18, 'Kottayam, Kerala', '13 Mar 2026', '3 h ago', 0],
+      ['Lata Gaikwad', '+91 90960 •••66', 'Marathi', 'Gaikwad Farm', '', 10, 'Nashik, Maharashtra', '02 Oct 2026', '4 days ago', 1],
+      ['Ramkumar Verma', '+91 99190 •••21', 'Hindi', 'Verma Dairy', '', 27, 'Bareilly, Uttar Pradesh', '28 Jul 2026', '7 h ago', 0],
+      ['Divya Shetty', '+91 97310 •••43', 'English', 'Shetty Farm', '', 7, 'Erode, Tamil Nadu', '30 Oct 2026', 'Yesterday', 0]
+    ].map(([name, phone, lang, farm, more, animals, place, joined, last, q]) => ({
+      name, phone, lang, farm, more, animals: String(animals), place, joined, last, quiet: q > 0, fresh: q === 0,
+      cls: q === 2 ? 's-red' : 's-amber', ini: name.split(' ').map((p) => p[0]).slice(0, 2).join('')
+    }));
+    const sp = (v) => { const mx = Math.max(...v, 1); return v.map((x, i) => (2 + i / (v.length - 1) * 76).toFixed(1) + ',' + (21 - x / mx * 18).toFixed(1)).join(' '); };
+    const farms = [
+      ['Shree Ganesh Dairy', 'Ramesh Patil', 'Kolhapur, Maharashtra', 3, 64, 3, true, [318, 322, 309, 331, 326, 340, 312], '2,258 L'],
+      ['Patil Goat Farm', 'Ramesh Patil', 'Kolhapur, Maharashtra', 1, 22, 1, false, [0, 0, 0, 0, 0, 0, 0], 'No milk logged'],
+      ['Kaveri Farms', 'Murugan Selvam', 'Erode, Tamil Nadu', 4, 74, 4, true, [402, 396, 380, 371, 352, 340, 330], '2,571 L'],
+      ['Periyar Cattle Farm', 'Joseph Varghese', 'Kottayam, Kerala', 2, 9, 2, false, [24.5, 23, 25.5, 22, 24, 26, 23.5], '168.5 L'],
+      ['Gir Gau Shala', 'Sunita Desai', 'Anand, Gujarat', 3, 41, 2, true, [210, 214, 205, 0, 0, 0, 0], '629 L'],
+      ['Banas Pashu Farm', 'Bhavesh Chaudhary', 'Banaskantha, Gujarat', 4, 61, 3, true, [402, 410, 405, 415, 420, 412, 418], '2,882 L'],
+      ['Yadav Dairy', 'Rajendra Yadav', 'Mathura, Uttar Pradesh', 2, 28, 2, false, [262, 258, 251, 240, 233, 225, 214], '1,683 L'],
+      ['Singh Dairy', 'Anil Kumar Singh', 'Karnal, Haryana', 2, 31, 1, false, [176, 178, 175, 180, 177, 181, 176], '1,243 L']
+    ].map(([name, owner, place, sheds, animals, members, hw, mv, milk]) => ({
+      name, owner, place, sheds: String(sheds), animals: String(animals), members: String(members), milk, spark: sp(mv),
+      mode: hw ? 'Blackbox + collars' : 'Manual entry', modeCls: hw ? 's-blue' : 's-grey',
+      ini: name.split(' ').map((w) => w[0]).slice(0, 2).join('')
+    }));
+    const isFarmers = view === 'farmers';
+    const st = this.state || {};
+    const q = st.q || '', state = st.stateF || '', lang = st.lang || '', page = st.page || 1;
+    const ql = q.trim().toLowerCase();
+    const fRows = farmers.filter((f) => (!ql || (f.name + ' ' + f.phone + ' ' + f.farm).toLowerCase().includes(ql)) && (!state || f.place.endsWith(state)) && (!lang || f.lang === lang));
+    const mRows = farms.filter((f) => (!ql || (f.name + ' ' + f.owner).toLowerCase().includes(ql)) && (!state || f.place.endsWith(state)));
+    const filtered = !!(ql || state || (isFarmers && lang));
+    const rows = isFarmers ? fRows : mRows;
+    const size = 10;
+    const samplePages = Math.max(1, Math.ceil(rows.length / size));
+    const realPages = isFarmers ? 129 : 142;
+    const totalPages = filtered ? samplePages : realPages;
+    const cur = Math.min(page, totalPages);
+    const sliceAt = ((cur - 1) % samplePages) * size;
+    const shown = rows.slice(sliceAt, sliceAt + size);
+    const go = (n) => () => this.setState({ page: Math.max(1, Math.min(totalPages, n)) });
+    const nums = totalPages <= 4 ? Array.from({ length: totalPages }, (_, i) => i + 1) : [1, 2, 3, totalPages];
+    if (totalPages > 4 && cur > 3 && cur < totalPages) nums.splice(3, 0, cur);
+    const pages = [];
+    nums.forEach((n, i) => { if (i > 0 && n - nums[i - 1] > 1) pages.push({ label: '…', cur: 'false', pick: null, isNum: false, isGap: true }); pages.push({ label: n.toLocaleString('en-IN'), cur: n === cur ? 'page' : 'false', pick: go(n), isNum: true, isGap: false }); });
+    const total = isFarmers ? 1284 : 1412;
+    const a1 = (cur - 1) * size + 1;
+    const countText = filtered
+      ? (rows.length ? 'Showing ' + (sliceAt + 1) + '–' + (sliceAt + shown.length) + ' of ' + rows.length + ' matching ' + (isFarmers ? 'farmers' : 'farms') : 'No matches')
+      : 'Showing ' + a1.toLocaleString('en-IN') + '–' + Math.min(a1 + size - 1, total).toLocaleString('en-IN') + ' of ' + total.toLocaleString('en-IN') + (isFarmers ? ' farmers' : ' farms');
+    return {
+      ...this.ui({}),
+      stats, farmers: isFarmers ? shown : [], farms: isFarmers ? [] : shown, isFarmers, isFarms: !isFarmers,
+      searchLabel: isFarmers ? 'Search name, phone or farm' : 'Search farm or owner',
+      q, onSearch: (e) => this.setState({ q: e.target.value, page: 1 }),
+      onState: (e) => this.setState({ stateF: e.target.value, page: 1 }), onLang: (e) => this.setState({ lang: e.target.value, page: 1 }),
+      clearFilters: () => this.setState({ q: '', stateF: '', lang: '', page: 1 }),
+      empty: rows.length === 0, showPager: rows.length > 0 && totalPages > 1,
+      countText, pages, prevPage: go(cur - 1), nextPage: go(cur + 1),
+      fPressed: isFarmers ? 'true' : 'false', mPressed: isFarmers ? 'false' : 'true',
+      showFarmers: () => this.setState({ view: 'farmers', page: 1 }), showFarms: () => this.setState({ view: 'farms', page: 1 }),
+      exportCsv: () => {
+        const head = isFarmers ? [['Farmer', 'Phone', 'App language', 'Farm', 'Animals', 'Location', 'Joined', 'Last entry']] : [['Farm', 'Owner', 'Location', 'Sheds', 'Animals', 'Members', 'Mode', 'Milk, last 7 days']];
+        const body = isFarmers ? rows.map((f) => [f.name, f.phone, f.lang, f.farm + f.more, f.animals, f.place, f.joined, f.last]) : rows.map((f) => [f.name, f.owner, f.place, f.sheds, f.animals, f.members, f.mode, f.milk]);
+        const name = isFarmers ? 'farmers.csv' : 'farms.csv';
+        this.csv(name, head.concat(body));
+        this.say(name + ' downloaded · ' + body.length + ' rows');
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

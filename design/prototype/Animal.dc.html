@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gauri, tag 01 · WeSTOCK Admin</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#F4F6F5}
+*{box-sizing:border-box}
+h1,h2,h3,p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+.app{min-height:100vh;display:flex;background:#F4F6F5;font-family:Nunito,system-ui,sans-serif;color:#1A1A1A;font-size:14px;-webkit-font-smoothing:antialiased}
+.side{flex:0 0 256px;min-width:0;background:#0F1B2D}
+.main{flex:1 1 560px;min-width:0;display:flex;flex-direction:column}
+.panel{flex:1;display:flex;flex-direction:column;gap:18px;padding:8px clamp(16px,2.6vw,36px) 48px;min-width:0}
+.mono{font-family:Poppins,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#0B7A4B}
+.title{font-family:Poppins,system-ui,sans-serif;font-size:28px;font-weight:600;letter-spacing:-.015em;line-height:1.2;color:#0F1B2D}
+.sub{font-size:15px;color:#6B7280;margin-top:6px}
+.ph{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+.acts{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.card{background:#FFFFFF;border:1px solid #E5EAE7;border-radius:16px;box-shadow:0 1px 2px rgba(15,27,45,.04),0 6px 20px rgba(15,27,45,.04);min-width:0}
+.group{background:#FFFFFF;border:1px solid #E5EAE7;border-radius:18px;box-shadow:0 1px 2px rgba(15,27,45,.04),0 6px 20px rgba(15,27,45,.04);padding:14px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.group .card{box-shadow:none}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr));gap:14px}
+.kc{padding:18px 18px 16px;display:flex;flex-direction:column;gap:12px}
+.kh{display:flex;align-items:center;gap:10px}
+.ib{width:36px;height:36px;flex:none;border-radius:11px;background:#E3F8EF;display:flex;align-items:center;justify-content:center;color:#0B7A4B}
+.lbl{flex:1;min-width:0;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lbl-m{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#6B7280}
+.dots{width:28px;height:28px;flex:none;border:0;background:transparent;color:#9CA3AF;display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;padding:0}
+.big{font-family:Poppins,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:28px;font-weight:600;letter-spacing:-.02em;color:#0F1B2D;line-height:1.15;white-space:nowrap}
+.vrow{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.note{font-size:13px;color:#6B7280}
+.chip{display:inline-flex;align-items:center;gap:3px;height:22px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
+.up{background:#E3F8EF;color:#0B7A4B}
+.dn{background:#FDE8EC;color:#B4233C}
+.fl{background:#F1F3F2;color:#374151}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 18px;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;white-space:nowrap;border:1px solid transparent;text-decoration:none}
+.btn-p{background:#2ED08C;color:#0F1B2D}
+.btn-s{background:#FFFFFF;border-color:#DCE2DF;color:#0F1B2D}
+.btn-g{background:#FFFFFF;border-color:#DCE2DF;color:#0F1B2D}
+.btn-sm{height:34px;padding:0 12px;font-size:13px;border-radius:10px}
+.ibtn{width:34px;height:34px;flex:none;border:1px solid #DCE2DF;border-radius:10px;background:#FFFFFF;color:#0F1B2D;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.pill{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap;border:0}
+.pill i{width:6px;height:6px;border-radius:99px;background:currentColor;flex:none}
+.s-red{background:#FDE8EC;color:#B4233C}
+.s-amber{background:#FFF1E0;color:#9A4A00}
+.s-green{background:#E3F8EF;color:#0B7A4B}
+.s-blue{background:#E8EDFC;color:#2A4FD6}
+.s-pink{background:#FBE6F4;color:#A01A78}
+.s-grey{background:#F1F3F2;color:#374151}
+.ch{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ct{display:flex;align-items:center;gap:10px;min-width:0}
+.link{display:inline-flex;align-items:center;gap:4px;font-size:13.5px;font-weight:800;color:#0B7A4B;white-space:nowrap}
+.seg{display:inline-flex;flex-wrap:wrap;padding:4px;background:#E9EEEB;border-radius:13px;gap:2px}
+.seg button{height:34px;padding:0 14px;border:0;border-radius:10px;background:transparent;color:#4B5563;font-size:13.5px;font-weight:800;cursor:pointer;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:#FFFFFF;color:#0F1B2D;box-shadow:0 1px 3px rgba(15,27,45,.12)}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;position:relative}
+table{border-collapse:separate;border-spacing:0;width:100%}
+th{text-align:left;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#6B7280;padding:11px 18px;background:#FAFBFA;border-top:1px solid #EEF1EF;border-bottom:1px solid #EEF1EF;white-space:nowrap}
+td{padding:12px 18px;border-bottom:1px solid #F1F3F2;font-size:14px;white-space:nowrap;color:#1A1A1A}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:#FAFBFA}
+td.r,th.r{text-align:right}
+.tn{font-family:Poppins,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:13.5px}
+.av{width:36px;height:36px;flex:none;border-radius:999px;background:#E3F8EF;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;color:#0B7A4B}
+.who{display:flex;align-items:center;gap:12px}
+.who b{display:block;font-weight:800;color:#0F1B2D}
+.who small{display:block;font-size:12.5px;color:#6B7280;margin-top:1px}
+.muted{color:#6B7280}
+.field{height:40px;width:100%;padding:0 12px;border:1px solid #DCE2DF;border-radius:11px;background:#FFFFFF;font-size:14px;font-weight:700;color:#0F1B2D}
+.fl-lbl{display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:800;color:#0F1B2D}
+.yax{display:flex;flex-direction:column;justify-content:space-between;font-size:11.5px;color:#6B7280;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.gridl{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+.gridl div{border-top:1px dashed #E3E8E5}
+.gridl div:last-child{border-top:1px solid #DCE2DF}
+.xl{font-size:11.5px;color:#6B7280;white-space:nowrap}
+.tip{position:absolute;z-index:2;display:flex;flex-direction:column;gap:2px;padding:8px 12px;border-radius:12px;background:#0F1B2D;color:#FFFFFF;font-size:12px;white-space:nowrap;box-shadow:0 8px 20px rgba(15,27,45,.22)}
+.row{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid #F1F3F2}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:36px 16px;text-align:center;border:1px dashed #DCE2DF;border-radius:14px;background:#FAFBFA}
+.sr{position:absolute;left:0;top:0;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid #F1F3F2;font-size:14px}
+.kv span:first-child{color:#6B7280}
+.kv b{font-weight:800;color:#0F1B2D;text-align:right}
+.show-sm{display:none !important}
+.ovl{position:fixed;inset:0;z-index:50;background:rgba(15,27,45,.48);display:flex;align-items:flex-start;justify-content:center;padding:0 16px;overflow:auto}
+.modal{width:100%;max-width:540px;max-height:calc(100vh - 32px);overflow:auto;background:#FFFFFF;border-radius:20px;box-shadow:0 24px 60px rgba(15,27,45,.28);display:flex;flex-direction:column;margin:0 0 16px;text-align:left}
+.mh{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 22px 0}
+.mt{font-family:Poppins,system-ui,sans-serif;font-size:19px;font-weight:600;color:#0F1B2D}
+.mb{padding:16px 22px 18px;display:flex;flex-direction:column;gap:14px}
+.mf{padding:14px 22px 18px;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;border-top:1px solid #F1F3F2}
+.x{width:34px;height:34px;flex:none;border:0;border-radius:10px;background:#F1F3F2;color:#374151;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.ta{min-height:84px;width:100%;padding:10px 12px;border:1px solid #DCE2DF;border-radius:11px;font-size:14px;font-weight:600;line-height:1.5;resize:vertical;color:#0F1B2D}
+.btn-d{background:#D62F4B;color:#FFFFFF}
+.btn:disabled{opacity:.5;cursor:default}
+.toast{position:fixed;z-index:60;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:12px 18px;border-radius:14px;background:#0F1B2D;color:#FFFFFF;font-size:14px;font-weight:700;box-shadow:0 12px 30px rgba(15,27,45,.3);max-width:calc(100vw - 32px)}
+.toast svg{flex:none;color:#2ED08C}
+.modal textarea{padding:10px 12px;border:1px solid #DCE2DF;border-radius:11px;font-size:14px;line-height:1.5;resize:vertical;width:100%}
+.warn{display:flex;gap:10px;padding:12px 14px;border-radius:12px;background:#FDE8EC;color:#7F1D2D;font-size:13.5px;line-height:1.45}
+.pg{cursor:pointer}
+@media (max-width:900px){
+.app{flex-direction:column}
+.side{flex:none;width:100%}
+.panel{padding:6px 16px 32px;gap:14px}
+.title{font-size:23px}
+.sub{font-size:14px}
+.ph{align-items:flex-start}
+.kgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kgrid .kc{padding:14px 14px 12px;gap:10px}
+.kgrid .big{font-size:20px}
+.kgrid .note{font-size:12px}
+.kgrid .dots{display:none}
+.kgrid .lbl{white-space:normal;line-height:1.25;font-size:11px;letter-spacing:.04em}
+.kgrid .ib{width:30px;height:30px;border-radius:9px}
+.kgrid .step{display:none}
+.show-sm{display:flex !important}
+.g2{grid-template-columns:1fr}
+.modal{border-radius:18px}
+.big{font-size:23px}
+th{padding:10px 12px}
+td{padding:11px 12px;font-size:13.5px}
+.hide-sm{display:none !important}
+.xlr>span:not(:nth-child(5n+1)) .xl{visibility:hidden}
+.xlr2>.xl:nth-child(even){visibility:hidden}
+.xlr2>.xl{min-width:0;text-align:left !important}
+.xlr2>.xl:nth-child(odd){overflow:visible}
+.xl{font-size:10.5px}
+.acts .field{flex:1 1 140px;width:auto !important}
+}
+.meta{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#4B5563;white-space:nowrap}
+.meta b{font-weight:800;color:#0F1B2D}
+.bar{flex:1 1 0;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}
+.bar .b{width:100%;max-width:12px;border-radius:999px}
+.step{display:flex;gap:12px}
+.step .rail{display:flex;flex-direction:column;align-items:center;width:14px;flex:none}
+.step .dot{width:14px;height:14px;border-radius:99px;box-sizing:border-box}
+.step .ln{flex:1;width:1.5px;min-height:12px}
+.ph-img{aspect-ratio:1;border-radius:10px;border:1px solid #E5EAE7;background:repeating-linear-gradient(135deg,#F4F6F5 0 8px,#F1F3F2 8px 16px);display:flex;align-items:center;justify-content:center;font-family:Poppins,system-ui,sans-serif;font-size:11px;color:#6B7280}
+</style>
+</helmet>
+<div class="app" onMouseDown="{{trackY}}">
+  <aside class="side"><dc-import name="Sidebar" active="livestock" hint-size="100%,900px"></dc-import></aside>
+  <div class="main">
+    <dc-import name="TopBar" crumb="Livestock" page="Gauri · tag 01" hint-size="100%,56px"></dc-import>
+    <main class="panel">
+      <div class="ph">
+        <div style="display: flex; align-items: center; gap: 16px; min-width: 0;">
+          <span aria-hidden="true" class="hide-sm" style="width: 64px; height: 64px; flex: none; border-radius: 18px; background: #E3F8EF; display: flex; flex-direction: column; align-items: center; justify-content: center;"><span class="mono" style="font-size: 9.5px; letter-spacing: .08em; color: #0B7A4B;">TAG</span><span class="mono" style="font-size: 21px; font-weight: 600; color: #0B7A4B; line-height: 1.1;">01</span></span>
+          <div style="min-width: 0;">
+            <span class="eyebrow">{{a.species}} · {{a.breed}} · {{a.gender}} · 4 y 2 m</span>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 4px;"><h1 class="title">{{a.name}}</h1><span class="pill {{statusCls}}"><i></i>{{statusText}}</span><sc-if value="{{isActive}}" hint-placeholder-val="{{true}}"><span class="pill s-pink">Pregnant</span></sc-if></div>
+            <div style="display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 8px;">
+              <span class="meta">Pashu Aadhaar <b class="mono" style="font-size: 12.5px;">{{a.aadhaar}}</b></span>
+              <span class="meta">Born <b>{{a.dob}}</b></span>
+              <span class="meta">Shed <b>{{a.shed}}</b></span>
+              <span class="meta">Farm <a href="FarmDetail.dc.html" style="font-weight: 800; color: #0F1B2D; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: #D1D5DB;">Shree Ganesh Dairy</a></span>
+            </div>
+            <span class="note" style="display: block; margin-top: 6px;">Added 14 Mar 2026 by Ramesh Patil · {{changedNote}}</span>
+          </div>
+        </div>
+        <div class="acts">
+          <button type="button" class="btn btn-g" onClick="{{statusBtn}}">{{statusBtnText}}</button>
+          <button type="button" onClick="{{toggleEdit}}" class="btn btn-p"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"></path></svg>Edit animal</button>
+        </div>
+      </div>
+
+      <sc-if value="{{editing}}" hint-placeholder-val="{{false}}">
+        <form class="card" onSubmit="{{noSubmit}}" style="padding: 18px; display: flex; flex-direction: column; gap: 14px;">
+          <div class="ch"><span class="lbl-m">Edit animal</span><span class="note">Every change is saved to the activity log</span></div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 14px;">
+            <label class="fl-lbl">Tag number<input class="field mono" name="tag" type="text" defaultValue="{{a.tag}}"></label>
+            <label class="fl-lbl">Name<input class="field" name="name" type="text" defaultValue="{{a.name}}"></label>
+            <label class="fl-lbl">Species<select class="field" name="species"><option>Cattle</option><option>Buffalo</option><option>Goat</option><option>Sheep</option><option>Poultry</option><option>Pig</option><option>Horse</option><option>Other</option></select></label>
+            <label class="fl-lbl">Breed<input class="field" name="breed" type="text" defaultValue="{{a.breed}}"></label>
+            <label class="fl-lbl">Gender<select class="field" name="gender"><option>Female</option><option>Male</option></select></label>
+            <label class="fl-lbl">Date of birth<input class="field" name="dob" type="text" defaultValue="{{a.dob}}"></label>
+            <label class="fl-lbl">Pashu Aadhaar<input class="field mono" name="aadhaar" type="text" defaultValue="{{a.aadhaar}}" inputmode="numeric"></label>
+            <label class="fl-lbl">Shed<select class="field" name="shed"><option>S1 · Main shed</option><option>S2 · Buffalo shed</option><option>S3 · Calf &amp; goat shed</option></select></label>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 8px; padding-top: 12px; border-top: 1px solid #F1F3F2;"><button type="button" onClick="{{toggleEdit}}" class="btn btn-s">Cancel</button><button type="button" onClick="{{saveEdit}}" class="btn btn-p">Save changes</button></div>
+        </form>
+      </sc-if>
+
+      <div class="kgrid">
+        <sc-for list="{{hero}}" as="h" hint-placeholder-count="4">
+          <div class="card kc">
+            <div class="kh"><span class="ib"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{h.icon}}"></path></svg></span><span class="lbl">{{h.label}}</span></div>
+            <span class="big">{{h.value}}</span>
+            <span class="note">{{h.note}}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch;">
+        <section class="card" style="flex: 3 1 520px; padding: 16px 18px; display: flex; flex-direction: column; gap: 16px;">
+          <div class="ch"><span class="lbl-m">Current pregnancy · cycle 2</span><a href="Reproduction.dc.html" class="link">Edit cycle <span aria-hidden="true">→</span></a></div>
+          <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start;">
+            <div style="display: flex; flex-direction: column; gap: 4px; min-width: 150px;"><span class="big" style="font-size: 34px;">74 days</span><span class="note">to delivery · expected 18 Jan 2027</span></div>
+            <div style="flex: 1 1 260px; display: flex; flex-direction: column;">
+              <div class="kv" style="border-top: 0; padding-top: 0;"><span>Inseminated</span><b>10 Apr 2026 · in golden period</b></div>
+              <div class="kv"><span>Tube no.</span><b><span class="mono" style="font-size: 12.5px;">GIR-22-0417</span> <span class="pill s-green" style="margin-left: 6px;">Verified</span></b></div>
+              <div class="kv"><span>Pregnancy confirmed</span><b>18 Jun 2026</b></div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px; padding-top: 14px; border-top: 1px solid #F1F3F2;">
+            <div style="display: flex; justify-content: space-between;"><span class="lbl-m">Gestation</span><span class="mono" style="font-size: 11.5px; color: #374151;">day 209 of 283 · 74%</span></div>
+            <div role="img" aria-label="Inseminated 10 Apr, confirmed 18 Jun, today is day 209, delivery expected 18 Jan 2027" style="position: relative; height: 8px; margin: 0 6px; border-radius: 99px; background: #F1F3F2;">
+              <div style="width: 73.9%; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #F2A6D8, #D6249F);"></div>
+              <span aria-hidden="true" style="position: absolute; left: 0; top: 50%; width: 12px; height: 12px; transform: translate(-50%, -50%); border-radius: 99px; background: #D6249F; border: 2px solid #FFFFFF;"></span>
+              <span aria-hidden="true" style="position: absolute; left: 24.4%; top: 50%; width: 12px; height: 12px; transform: translate(-50%, -50%); border-radius: 99px; background: #D6249F; border: 2px solid #FFFFFF;"></span>
+              <span aria-hidden="true" style="position: absolute; left: 73.9%; top: 50%; width: 18px; height: 18px; transform: translate(-50%, -50%); border-radius: 99px; background: #FFFFFF; border: 4px solid #A01A78; box-shadow: 0 0 0 4px rgba(193, 21, 116, 0.12);"></span>
+              <span aria-hidden="true" style="position: absolute; left: 100%; top: 50%; width: 12px; height: 12px; transform: translate(-50%, -50%); border-radius: 99px; background: #FFFFFF; border: 2px solid #9CA3AF;"></span>
+            </div>
+            <div aria-hidden="true" class="show-sm" style="justify-content: space-between; font-size: 12.5px;"><span><b style="color: #0F1B2D;">Inseminated</b> <span class="muted">10 Apr</span></span><span><b style="color: #0F1B2D;">Due</b> <span class="muted">18 Jan 2027</span></span></div>
+            <div aria-hidden="true" class="hide-sm" style="position: relative; height: 32px; font-size: 12px;">
+              <span style="position: absolute; left: 0; display: flex; flex-direction: column;"><span style="font-weight: 800; color: #0F1B2D;">Inseminated</span><span class="mono muted" style="font-size: 11px;">10 Apr</span></span>
+              <span style="position: absolute; left: 24.4%; transform: translateX(-35%); display: flex; flex-direction: column;"><span style="font-weight: 800; color: #0F1B2D;">Confirmed</span><span class="mono muted" style="font-size: 11px;">18 Jun</span></span>
+              <span style="position: absolute; left: 73.9%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center;"><span style="font-weight: 800; color: #A01A78;">Today</span><span class="mono muted" style="font-size: 11px;">05 Nov</span></span>
+              <span style="position: absolute; right: 0; display: flex; flex-direction: column; align-items: flex-end;"><span style="font-weight: 800; color: #0F1B2D;">Delivery</span><span class="mono muted" style="font-size: 11px;">18 Jan 2027</span></span>
+            </div>
+          </div>
+        </section>
+        <section class="card" style="flex: 2 1 320px; padding: 16px 18px; display: flex; flex-direction: column; gap: 14px;">
+          <div class="ch"><span class="lbl-m">Collar</span><span class="pill s-green"><i></i>Normal</span></div>
+          <div style="display: flex; align-items: baseline; gap: 8px;"><span class="big" style="font-size: 34px;">38.6 °C</span><span class="note">body temperature now</span></div>
+          <div style="display: flex; flex-direction: column;">
+            <div class="kv"><span>Collar ID</span><b class="mono" style="font-size: 12.5px;">TG-0001</b></div>
+            <div class="kv"><span>Last reading</span><b>2 min ago</b></div>
+            <div class="kv"><span>Battery</span><b style="display: flex; align-items: center; gap: 8px;"><span style="width: 60px; height: 6px; border-radius: 99px; background: #F1F3F2;"><span style="display: block; width: 82%; height: 6px; border-radius: 99px; background: #2ED08C;"></span></span><span class="mono" style="font-size: 12.5px;">82%</span></b></div>
+            <div class="kv"><span>Fever alert at</span><b class="mono" style="font-size: 12.5px;">39.5 °C</b></div>
+          </div>
+        </section>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch;">
+        <section class="card" style="flex: 3 1 520px; padding: 16px 18px 14px; display: flex; flex-direction: column; gap: 12px;">
+          <div class="ch"><span class="lbl-m">Body temperature · today</span>
+            <div class="acts" style="gap: 14px;">
+              <span class="note" style="display: inline-flex; align-items: center; gap: 6px;"><span aria-hidden="true" style="width: 14px; height: 2px; background: #1A1A1A; border-radius: 2px;"></span>Gauri</span>
+              <span class="note" style="display: inline-flex; align-items: center; gap: 6px;"><span aria-hidden="true" style="width: 14px; border-top: 1.5px dashed #D62F4B;"></span>Fever alert 39.5 °C</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <div class="yax" style="height: 150px; width: 40px; margin-top: -6px;"><span>40.5 °C</span><span>39.5</span><span>38.5</span><span>37.5</span></div>
+            <div style="position: relative; flex: 1; min-width: 0; height: 150px;">
+              <div class="gridl" aria-hidden="true"><div></div><div></div><div></div><div></div></div>
+              <svg role="img" aria-label="Gauri's body temperature stayed between 38.4 and 38.7 °C today" width="100%" height="150" viewBox="0 0 600 150" preserveAspectRatio="none" style="position: absolute; inset: 0;">
+                <defs><linearGradient id="gBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D6249F" stop-opacity="0.08"></stop><stop offset="1" stop-color="#1A1A1A" stop-opacity="0"></stop></linearGradient></defs>
+                <line x1="0" y1="50" x2="600" y2="50" stroke="#D62F4B" stroke-width="1.2" stroke-dasharray="5 5" vector-effect="non-scaling-stroke"></line>
+                <path d="{{bodyArea}}" fill="url(#gBody)"></path>
+                <path d="{{bodyLine}}" fill="none" stroke="#D6249F" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+              </svg>
+              <span aria-hidden="true" style="position: absolute; left: {{endX}}; top: {{endY}}; width: 10px; height: 10px; transform: translate(-50%, -50%); border-radius: 99px; background: #FFFFFF; border: 2.5px solid #D6249F;"></span>
+              <span class="mono" style="position: absolute; left: {{endX}}; top: {{endY}}; transform: translate(10px, -50%); padding: 3px 7px; border-radius: 6px; background: #0F1B2D; color: #FFFFFF; font-size: 11px; white-space: nowrap;">38.6 °C now</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <div class="yax" style="height: 46px; width: 40px; margin-top: -4px;"><span>30 °C</span><span>20</span></div>
+            <div style="position: relative; flex: 1; min-width: 0; height: 46px; border-radius: 8px; background: #FAFBFA; border: 1px solid #EEF1EF;">
+              <svg role="img" aria-label="Shed S1 went from 21 °C before dawn to 29 °C mid-afternoon" width="100%" height="46" viewBox="0 0 600 46" preserveAspectRatio="none" style="position: absolute; inset: 0;">
+                <path d="{{shedLine}}" fill="none" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+              </svg>
+              <span class="lbl-m" style="position: absolute; right: 10px; top: 6px; font-size: 10px;">Shed S1 · 21–29 °C</span>
+            </div>
+          </div>
+          <div class="xlr2" style="display: flex; justify-content: space-between; padding-left: 50px;"><sc-for list="{{hours}}" as="t" hint-placeholder-count="7"><span class="xl">{{t}}</span></sc-for></div>
+        </section>
+        <section class="card" style="flex: 2 1 320px; padding: 16px 18px; display: flex; flex-direction: column; gap: 14px;">
+          <div class="ch"><span class="lbl-m">Activity · today</span><span class="mono" style="font-size: 11.5px; color: #6B7280;">00:00 – 18:00</span></div>
+          <div role="img" aria-label="{{actAria}}" style="display: flex; gap: 2px; height: 12px;">
+            <sc-for list="{{act}}" as="a" hint-placeholder-count="6"><span style="width: {{a.w}}; border-radius: 3px; background: {{a.c}};"></span></sc-for>
+          </div>
+          <div style="display: flex; flex-direction: column;">
+            <sc-for list="{{act}}" as="a" hint-placeholder-count="6">
+              <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid #F1F3F2; font-size: 13px;">
+                <span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 2px; background: {{a.c}};"></span>
+                <span style="flex: 1;">{{a.name}}</span>
+                <span class="tn" style="color: #0F1B2D;">{{a.h}}</span>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch;">
+        <section class="card" style="flex: 3 1 520px; padding: 16px 18px 14px; display: flex; flex-direction: column; gap: 14px;">
+          <div class="ch"><span class="lbl-m">Milk · last 30 days</span><a href="MilkFeed.dc.html" class="link">Entries <span aria-hidden="true">→</span></a></div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px 28px;">
+            <span style="display: flex; flex-direction: column; gap: 2px;"><span class="note">This lactation</span><span class="mono" style="font-size: 18px; font-weight: 600; color: #0F1B2D;">3,940 L</span></span>
+            <span style="display: flex; flex-direction: column; gap: 2px;"><span class="note">30-day average</span><span class="mono" style="font-size: 18px; font-weight: 600; color: #0F1B2D;">10.8 L / day</span></span>
+            <span style="display: flex; flex-direction: column; gap: 2px;"><span class="note">Best day</span><span class="mono" style="font-size: 18px; font-weight: 600; color: #0F1B2D;">12.3 L</span></span>
+            <span style="display: flex; flex-direction: column; gap: 2px;"><span class="note">Calved</span><span class="mono" style="font-size: 18px; font-weight: 600; color: #0F1B2D;">06 Jan 2026</span></span>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <div class="yax" style="height: 140px; width: 30px; margin-top: -6px;"><span>15 L</span><span>10</span><span>5</span><span>0</span></div>
+            <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px;">
+              <div style="position: relative; height: 140px;">
+                <div class="gridl" aria-hidden="true"><div></div><div></div><div></div><div></div></div>
+                <div role="img" aria-label="Daily milk eased from about 12 litres to 9.5 litres over 30 days, as expected late in lactation" style="position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 5px; padding: 0 2px;">
+                  <sc-for list="{{milk}}" as="m" hint-placeholder-count="30"><div class="bar" title="{{m.tip}}"><span class="b" style="height: {{m.h}}; background: {{m.c}};"></span></div></sc-for>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between;"><span class="xl">06 Oct</span><span class="xl">16 Oct</span><span class="xl">26 Oct</span><span class="xl" style="color: #0F1B2D;">Today</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="card" style="flex: 2 1 320px; padding: 16px 18px 8px; display: flex; flex-direction: column;">
+          <div class="ch" style="padding-bottom: 10px;"><span class="lbl-m">Vaccinations</span><button type="button" class="btn btn-s btn-sm" onClick="{{addVax}}">Add</button></div>
+          <sc-for list="{{vax}}" as="v" hint-placeholder-count="5">
+            <div class="row">
+              <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;"><span style="font-size: 13.5px; font-weight: 800; color: #0F1B2D;">{{v.name}}</span><span class="note">{{v.date}}</span></span>
+              <span class="pill {{v.cls}}">{{v.status}}</span>
+              <sc-if value="{{v.canGive}}" hint-placeholder-val="{{false}}"><button type="button" class="btn btn-s btn-sm" onClick="{{v.give}}">Mark given</button></sc-if>
+            </div>
+          </sc-for>
+        </section>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch;">
+        <section class="card" style="flex: 1 1 320px; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px;">
+          <span class="lbl-m">Reproduction history</span>
+          <sc-for list="{{cycles}}" as="c" hint-placeholder-count="2">
+            <div style="display: flex; flex-direction: column; gap: 10px; padding-top: 10px; border-top: 1px solid #F1F3F2;">
+              <span class="pill {{c.cls}}" style="align-self: flex-start;">{{c.title}}</span>
+              <div>
+                <sc-for list="{{c.steps}}" as="s" hint-placeholder-count="4">
+                  <div class="step">
+                    <div class="rail"><span class="dot" style="background: {{s.fill}}; border: 2px solid {{s.ring}};"></span><span class="ln" style="background: {{s.line}};"></span></div>
+                    <div style="flex: 1; display: flex; justify-content: space-between; gap: 10px; padding-bottom: 10px; font-size: 13px; line-height: 14px;"><span style="font-weight: 800; color: #0F1B2D;">{{s.label}}</span><span class="muted" style="text-align: right;">{{s.detail}}</span></div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </section>
+        <section class="card" style="flex: 1 1 320px; padding: 16px 18px 8px; display: flex; flex-direction: column;">
+          <div class="ch" style="padding-bottom: 10px;"><div class="ct"><span class="lbl-m">Health history</span><span class="pill {{openCls}}">{{openText}}</span></div><button type="button" class="btn btn-s btn-sm" onClick="{{addEvent}}">Add event</button></div>
+          <sc-for list="{{health}}" as="h" hint-placeholder-count="2">
+            <div class="row" style="align-items: flex-start;">
+              <span style="width: 44px; flex: none; display: flex; flex-direction: column; align-items: center; padding: 5px 0; border: 1px solid #E5EAE7; border-radius: 9px;"><span class="mono" style="font-size: 9.5px; letter-spacing: .06em; color: #6B7280;">{{h.mon}}</span><span class="mono" style="font-size: 16px; font-weight: 600; color: #0F1B2D;">{{h.day}}</span></span>
+              <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px;"><span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px;"><span style="font-size: 13.5px; font-weight: 800; color: #0F1B2D;">{{h.title}}</span><span class="pill {{h.cls}}">{{h.status}}</span><span class="pill s-grey">{{h.src}}</span></span><span class="note" style="line-height: 1.45;">{{h.notes}}</span><sc-if value="{{h.open}}" hint-placeholder-val="{{false}}"><button type="button" class="btn btn-s btn-sm" onClick="{{h.resolve}}" style="align-self: flex-start; margin-top: 4px;">Mark resolved</button></sc-if></span>
+            </div>
+          </sc-for>
+        </section>
+        <section class="card" style="flex: 1 1 320px; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px;">
+          <div class="ch"><span class="lbl-m">Photos</span><span class="mono" style="font-size: 11.5px; color: #6B7280;">3 of 10</span></div>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;">
+            <span class="ph-img">Photo 1</span><span class="ph-img">Photo 2</span><span class="ph-img">Photo 3</span>
+          </div>
+          <p class="note" style="line-height: 1.5;">Added by the farmer from the app. Staff can remove a wrong photo; removals are logged.</p>
+        </section>
+      </div>
+    </main>
+  </div>
+  <sc-if value="{{toastOn}}" hint-placeholder-val="{{false}}"><div class="toast" role="status" style="top: {{toastTop}};"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg><span>{{toastText}}</span></div></sc-if>
+  <sc-if value="{{modalOpen}}" hint-placeholder-val="{{false}}">
+    <div class="ovl" onClick="{{closeModal}}">
+      <form class="modal" onClick="{{stop}}" onSubmit="{{noSubmit}}" aria-label="{{modalTitle}}" style="margin-top: {{modalTop}};">
+        <div class="mh"><div><h2 class="mt">{{modalTitle}}</h2><p class="note" style="margin-top: 4px; line-height: 1.45;">{{modalSub}}</p></div><button type="button" class="x" aria-label="Close" onClick="{{closeModal}}"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div>
+        <div class="mb">
+          <sc-if value="{{is_status}}" hint-placeholder-val="{{false}}">
+            <div class="g2">
+              <label class="fl-lbl">New status<select class="field" name="status"><option>Sold</option><option>Deceased</option></select></label>
+              <label class="fl-lbl">Date<input class="field" name="date" type="text" defaultValue="05 Nov 2026"></label>
+            </div>
+            <label class="fl-lbl">Note<textarea name="note" rows="2" placeholder="e.g. Sold to a farmer in Sangli"></textarea></label>
+            <p class="note">The animal leaves the active herd. Its records stay and the change is logged.</p>
+          </sc-if>
+          <sc-if value="{{is_vax}}" hint-placeholder-val="{{false}}">
+            <label class="fl-lbl">Vaccine<input class="field" name="vaccine" type="text" placeholder="e.g. Theileriosis"></label>
+            <div class="g2">
+              <label class="fl-lbl">Due date<input class="field" name="due" type="text" defaultValue="20 Nov 2026"></label>
+              <label class="fl-lbl">Already given?<select class="field" name="given"><option value="no">No, remind the farmer</option><option value="yes">Yes, given today</option></select></label>
+            </div>
+          </sc-if>
+          <sc-if value="{{is_event}}" hint-placeholder-val="{{false}}">
+            <label class="fl-lbl">What happened<input class="field" name="title" type="text" placeholder="e.g. Not eating since morning"></label>
+            <label class="fl-lbl">Status<select class="field" name="status"><option>Detected</option><option>Sick</option><option>Long-term</option><option>Resolved</option></select></label>
+            <label class="fl-lbl">Notes<textarea name="notes" rows="3" placeholder="What the farmer or vet said"></textarea></label>
+          </sc-if>
+          <sc-if value="{{hasErr}}" hint-placeholder-val="{{false}}"><div class="warn">{{errText}}</div></sc-if>
+        </div>
+        <div class="mf"><button type="button" class="btn btn-s" onClick="{{closeModal}}">Cancel</button><button type="button" class="btn {{okCls}}" onClick="{{confirm}}">{{okLabel}}</button></div>
+      </form>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1900}}'>
+class Component extends DCLogic {
+  open(kind, form) { this.setState({ modal: kind, form: form || {}, err: '' }); }
+  close() { this.setState({ modal: null, err: '' }); }
+  say(msg) {
+    this.setState({ modal: null, err: '', toast: msg });
+    clearTimeout(this.__tt);
+    this.__tt = setTimeout(() => this.setState({ toast: null }), 2800);
+  }
+  formOf(e) {
+    const el = e && e.currentTarget && e.currentTarget.closest ? e.currentTarget.closest('form') : null;
+    return el ? Object.fromEntries(new FormData(el).entries()) : {};
+  }
+  csv(name, rows) {
+    try {
+      const body = rows.map((r) => r.map((v) => '"' + String(v).replace(/"/g, '""') + '"').join(',')).join('\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([body], { type: 'text/csv' }));
+      a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    } catch (err) { }
+  }
+  ui(titles) {
+    const s = this.state || {};
+    const m = s.modal || '';
+    const t = titles[m] || ['', '', 'Save', 'btn-p'];
+    const vh = (typeof window !== 'undefined' && window.innerHeight) || 900;
+    const y = this.__y || 140;
+    const out = {
+      modalOpen: !!m, modalTop: Math.max(16, Math.min(y - 170, vh - 480)) + 'px',
+      toastOn: !!s.toast, toastText: s.toast || '', toastTop: Math.max(16, Math.min(y - 76, vh - 76)) + 'px',
+      f: s.form || {}, closeModal: () => this.close(), stop: (e) => e.stopPropagation(), noSubmit: (e) => e.preventDefault(),
+      trackY: (e) => { this.__y = e.clientY; },
+      modalTitle: t[0], modalSub: t[1] || '', okLabel: t[2] || 'Save', okCls: t[3] || 'btn-p',
+      hasErr: !!s.err, errText: s.err || ''
+    };
+    Object.keys(titles).forEach((k) => { out['is_' + k] = m === k; });
+    return out;
+  }
+  renderVals() {
+    const editing = !!(this.state && this.state.editing);
+    const IC = {
+      heart: 'M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z',
+      cal: 'M4 6h16v14H4zM4 10h16M9 3v4M15 3v4',
+      milk: 'M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z',
+      health: 'M9 3h6v6h6v6h-6v6H9v-6H3V9h6z'
+    };
+    const hero = [
+      { label: 'Total pregnancies', value: '2', note: '1 calf delivered so far', icon: IC.heart },
+      { label: 'Days in milk', value: '303', note: 'Calved 06 Jan 2026', icon: IC.cal },
+      { label: 'Milk today', value: '9.5 L', note: 'Morning 5.5 L · afternoon 4.0 L', icon: IC.milk },
+      { label: 'Open health issues', value: '0', note: 'Last one resolved 22 Jul', icon: IC.health }
+    ];
+    const smooth = (p) => {
+      let d = 'M' + p[0][0].toFixed(1) + ',' + p[0][1].toFixed(1);
+      for (let i = 0; i < p.length - 1; i++) {
+        const a = p[i - 1] || p[i], b = p[i], c = p[i + 1], e = p[i + 2] || c;
+        d += ' C' + (b[0] + (c[0] - a[0]) / 6).toFixed(1) + ',' + (b[1] + (c[1] - a[1]) / 6).toFixed(1) + ' ' + (c[0] - (e[0] - b[0]) / 6).toFixed(1) + ',' + (c[1] - (e[1] - b[1]) / 6).toFixed(1) + ' ' + c[0].toFixed(1) + ',' + c[1].toFixed(1);
+      }
+      return d;
+    };
+    const N = 19;
+    const body = [], shed = [];
+    for (let i = 0; i < N; i++) {
+      const hr = i;
+      const x = hr / 24 * 600;
+      const b = 38.55 + 0.12 * Math.sin((hr - 10) / 24 * 2 * Math.PI) + 0.04 * Math.sin(hr * 1.7);
+      const s = 24.6 + 4.2 * Math.sin((hr - 9) / 24 * 2 * Math.PI);
+      body.push([x, 150 - (b - 37.5) / 3 * 150]);
+      shed.push([x, 42 - (s - 18) / 14 * 38]);
+    }
+    const bodyLine = smooth(body);
+    const last = body[N - 1];
+    const act = [['Ruminating', 5.3, '#0B7A4B'], ['Standing', 4.1, '#0F1B2D'], ['Sitting', 3.6, '#8FB3D9'], ['Eating', 3.4, '#F5B547'], ['Walking', 1.2, '#2ED08C'], ['Drinking', 0.4, '#5B8DC9']].map(([name, h, c]) => ({
+      name, c, h: h.toFixed(1) + ' h', w: (h / 18 * 100).toFixed(2) + '%'
+    }));
+    const mv = [];
+    for (let i = 0; i < 30; i++) mv.push(12.0 - i * 0.08 + 0.35 * Math.sin(i * 1.3));
+    mv[29] = 9.5;
+    const best = mv.indexOf(Math.max(...mv));
+    const milk = mv.map((v, i) => ({ h: (v / 15 * 100).toFixed(1) + '%', c: i === 29 ? '#0E6C80' : '#BEEFF7', tip: (i === 29 ? 'Today' : 'Day ' + (i + 1)) + ': ' + v.toFixed(1) + ' L' }));
+    const st = this.state || {};
+    const vaxData = st.vax || [
+      ['FMD (foot-and-mouth)', 'Due 09 Nov 2026', 'Due in 4 days', 's-amber'],
+      ['Black quarter (BQ)', 'Due 02 Dec 2026', 'Upcoming', 's-blue'],
+      ['Lumpy skin disease', 'Given 20 Aug 2026', 'Done', 's-green'],
+      ['HS (haemorrhagic septicaemia)', 'Given 12 May 2026', 'Done', 's-green'],
+      ['Brucellosis', 'Given 15 Feb 2023', 'Done', 's-green']
+    ];
+    const vax = vaxData.map(([name, date, status, cls], i) => ({
+      name, date, status, cls, canGive: status !== 'Done',
+      give: () => { this.setState({ vax: vaxData.map((v, j) => (j === i ? [v[0], 'Given 05 Nov 2026', 'Done', 's-green'] : v)) }); this.say(name + ' marked as given · the farmer sees it in the app'); }
+    }));
+    const step = (label, detail, done, lastStep) => ({ label, detail, ring: done ? '#A01A78' : '#D1D5DB', fill: done ? '#A01A78' : '#FFFFFF', line: lastStep ? 'transparent' : '#F3D3E6' });
+    const cycles = [
+      { title: 'Cycle 2 · now', cls: 's-pink', steps: [step('Heat', '09 Apr 2026 · farmer confirmed', true), step('Inseminated', '10 Apr 2026 · in golden period', true), step('Pregnant', 'Confirmed 18 Jun 2026', true), step('Delivery', 'Expected 18 Jan 2027', false, true)] },
+      { title: 'Cycle 1', cls: 's-grey', steps: [step('Heat', '31 Mar 2025', true), step('Inseminated', '01 Apr 2025', true), step('Pregnant', 'Confirmed 05 Jun 2025', true), step('Delivered', '06 Jan 2026', true, true)] }
+    ];
+    const HS = { Detected: 's-amber', Sick: 's-red', 'Long-term': 's-grey', Resolved: 's-green' };
+    const healthData = st.health || [
+      { mon: 'JUL', day: '21', title: 'High body temperature', src: 'Collar', status: 'Resolved', notes: 'Detected 21 Jul, resolved next day. The shed was hot that afternoon.' },
+      { mon: 'MAR', day: '28', title: 'Tick infestation', src: 'Farmer', status: 'Resolved', notes: 'Reported by the farmer, treated by the local vet, resolved 03 Apr.' }
+    ];
+    const health = healthData.map((h, i) => ({
+      ...h, cls: HS[h.status] || 's-grey', open: h.status !== 'Resolved',
+      resolve: () => { this.setState({ health: healthData.map((x, j) => (j === i ? { ...x, status: 'Resolved' } : x)) }); this.say('“' + h.title + '” marked resolved'); }
+    }));
+    const openN = healthData.filter((h) => h.status !== 'Resolved').length;
+    const a = st.a || { tag: '01', name: 'Gauri', species: 'Cattle', breed: 'Gir', gender: 'Female', dob: '03 Sep 2022', aadhaar: '4821 7703 9125', shed: 'S1 · Main shed' };
+    const status = st.status || 'Active';
+    hero[3] = { ...hero[3], value: String(openN), note: openN ? 'Added by staff today' : hero[3].note };
+    return {
+      ...this.ui({
+        status: ['Mark ' + a.name + ' as sold or deceased', 'Use this when the farmer has sold the animal or it has died.', 'Save status'],
+        vax: ['Add a vaccination', 'For ' + a.name + ' (tag ' + a.tag + '). The farmer gets a reminder in the app.', 'Add vaccination'],
+        event: ['Add a health event', 'For ' + a.name + ' (tag ' + a.tag + '). Shows in the farmer’s health list.', 'Add event']
+      }),
+      a, statusText: status, statusCls: status === 'Active' ? 's-green' : 's-grey', isActive: status === 'Active',
+      statusBtnText: status === 'Active' ? 'Mark sold or deceased' : 'Mark active again',
+      statusBtn: () => { if (status === 'Active') { this.open('status'); } else { this.setState({ status: 'Active' }); this.say(a.name + ' is active again'); } },
+      changedNote: st.changed ? 'last changed just now by you' : 'last changed 2 h ago by Suresh Patil',
+      openText: openN ? openN + ' open issue' + (openN > 1 ? 's' : '') : 'No open issues', openCls: openN ? 's-amber' : 's-grey',
+      addVax: () => this.open('vax'), addEvent: () => this.open('event'),
+      saveEdit: (e) => {
+        const d = this.formOf(e);
+        if (!(d.tag || '').trim()) { this.say('Add a tag number before saving'); return; }
+        this.setState({ a: { ...a, ...Object.fromEntries(Object.entries(d).map(([k, v]) => [k, String(v).trim()])) }, editing: false, changed: true });
+        this.say('Changes saved · logged in the activity log');
+      },
+      confirm: (e) => {
+        const d = this.formOf(e);
+        const m = st.modal;
+        if (m === 'status') {
+          this.setState({ status: d.status, changed: true });
+          this.say(a.name + ' marked ' + d.status.toLowerCase() + ' on ' + (d.date || '05 Nov 2026'));
+        } else if (m === 'vax') {
+          if (!(d.vaccine || '').trim()) { this.setState({ err: 'Add the vaccine name.' }); return; }
+          const row = d.given === 'yes' ? [d.vaccine.trim(), 'Given 05 Nov 2026', 'Done', 's-green'] : [d.vaccine.trim(), 'Due ' + (d.due || '').trim(), 'Upcoming', 's-blue'];
+          this.setState({ vax: [row].concat(vaxData) });
+          this.say(d.vaccine.trim() + (d.given === 'yes' ? ' recorded as given' : ' reminder added'));
+        } else if (m === 'event') {
+          if (!(d.title || '').trim()) { this.setState({ err: 'Say what happened.' }); return; }
+          this.setState({ health: [{ mon: 'NOV', day: '05', title: d.title.trim(), src: 'Staff', status: d.status, notes: (d.notes || '').trim() || 'Added by staff from the admin dashboard.' }].concat(healthData) });
+          this.say('Health event added · the farmer sees it in the app');
+        }
+      },
+      editing, hero, bodyLine, bodyArea: bodyLine + ' L' + last[0].toFixed(1) + ',150 L0,150 Z', shedLine: smooth(shed),
+      endX: (last[0] / 600 * 100).toFixed(2) + '%', endY: (last[1] / 150 * 100).toFixed(2) + '%',
+      hours: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00'], padR: '0px',
+      act, actAria: 'Today so far: ' + act.map((a) => a.name.toLowerCase() + ' ' + a.h).join(', '),
+      milk, vax, cycles, health,
+      toggleEdit: () => this.setState({ editing: !editing })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dashboard · WeSTOCK Admin</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#F4F6F5}
+*{box-sizing:border-box}
+h1,h2,h3,p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+.app{min-height:100vh;display:flex;background:#F4F6F5;font-family:Nunito,system-ui,sans-serif;color:#1A1A1A;font-size:14px;-webkit-font-smoothing:antialiased}
+.side{flex:0 0 256px;min-width:0;background:#0F1B2D}
+.main{flex:1 1 560px;min-width:0;display:flex;flex-direction:column}
+.panel{flex:1;display:flex;flex-direction:column;gap:18px;padding:8px clamp(16px,2.6vw,36px) 48px;min-width:0}
+.mono{font-family:Poppins,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#0B7A4B}
+.title{font-family:Poppins,system-ui,sans-serif;font-size:28px;font-weight:600;letter-spacing:-.015em;line-height:1.2;color:#0F1B2D}
+.sub{font-size:15px;color:#6B7280;margin-top:6px}
+.ph{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+.acts{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.card{background:#FFFFFF;border:1px solid #E5EAE7;border-radius:16px;box-shadow:0 1px 2px rgba(15,27,45,.04),0 6px 20px rgba(15,27,45,.04);min-width:0}
+.group{background:#FFFFFF;border:1px solid #E5EAE7;border-radius:18px;box-shadow:0 1px 2px rgba(15,27,45,.04),0 6px 20px rgba(15,27,45,.04);padding:14px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.group .card{box-shadow:none}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr));gap:14px}
+.kc{padding:18px 18px 16px;display:flex;flex-direction:column;gap:12px}
+.kh{display:flex;align-items:center;gap:10px}
+.ib{width:36px;height:36px;flex:none;border-radius:11px;background:#E3F8EF;display:flex;align-items:center;justify-content:center;color:#0B7A4B}
+.lbl{flex:1;min-width:0;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lbl-m{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#6B7280}
+.dots{width:28px;height:28px;flex:none;border:0;background:transparent;color:#9CA3AF;display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;padding:0}
+.big{font-family:Poppins,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:28px;font-weight:600;letter-spacing:-.02em;color:#0F1B2D;line-height:1.15;white-space:nowrap}
+.vrow{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.note{font-size:13px;color:#6B7280}
+.chip{display:inline-flex;align-items:center;gap:3px;height:22px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
+.up{background:#E3F8EF;color:#0B7A4B}
+.dn{background:#FDE8EC;color:#B4233C}
+.fl{background:#F1F3F2;color:#374151}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 18px;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;white-space:nowrap;border:1px solid transparent;text-decoration:none}
+.btn-p{background:#2ED08C;color:#0F1B2D}
+.btn-s{background:#FFFFFF;border-color:#DCE2DF;color:#0F1B2D}
+.btn-g{background:#FFFFFF;border-color:#DCE2DF;color:#0F1B2D}
+.btn-sm{height:34px;padding:0 12px;font-size:13px;border-radius:10px}
+.ibtn{width:34px;height:34px;flex:none;border:1px solid #DCE2DF;border-radius:10px;background:#FFFFFF;color:#0F1B2D;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.pill{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap;border:0}
+.pill i{width:6px;height:6px;border-radius:99px;background:currentColor;flex:none}
+.s-red{background:#FDE8EC;color:#B4233C}
+.s-amber{background:#FFF1E0;color:#9A4A00}
+.s-green{background:#E3F8EF;color:#0B7A4B}
+.s-blue{background:#E8EDFC;color:#2A4FD6}
+.s-pink{background:#FBE6F4;color:#A01A78}
+.s-grey{background:#F1F3F2;color:#374151}
+.ch{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ct{display:flex;align-items:center;gap:10px;min-width:0}
+.link{display:inline-flex;align-items:center;gap:4px;font-size:13.5px;font-weight:800;color:#0B7A4B;white-space:nowrap}
+.seg{display:inline-flex;flex-wrap:wrap;padding:4px;background:#E9EEEB;border-radius:13px;gap:2px}
+.seg button{height:34px;padding:0 14px;border:0;border-radius:10px;background:transparent;color:#4B5563;font-size:13.5px;font-weight:800;cursor:pointer;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:#FFFFFF;color:#0F1B2D;box-shadow:0 1px 3px rgba(15,27,45,.12)}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;position:relative}
+table{border-collapse:separate;border-spacing:0;width:100%}
+th{text-align:left;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#6B7280;padding:11px 18px;background:#FAFBFA;border-top:1px solid #EEF1EF;border-bottom:1px solid #EEF1EF;white-space:nowrap}
+td{padding:12px 18px;border-bottom:1px solid #F1F3F2;font-size:14px;white-space:nowrap;color:#1A1A1A}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:#FAFBFA}
+td.r,th.r{text-align:right}
+.tn{font-family:Poppins,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:13.5px}
+.av{width:36px;height:36px;flex:none;border-radius:999px;background:#E3F8EF;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;color:#0B7A4B}
+.who{display:flex;align-items:center;gap:12px}
+.who b{display:block;font-weight:800;color:#0F1B2D}
+.who small{display:block;font-size:12.5px;color:#6B7280;margin-top:1px}
+.muted{color:#6B7280}
+.field{height:40px;width:100%;padding:0 12px;border:1px solid #DCE2DF;border-radius:11px;background:#FFFFFF;font-size:14px;font-weight:700;color:#0F1B2D}
+.fl-lbl{display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:800;color:#0F1B2D}
+.yax{display:flex;flex-direction:column;justify-content:space-between;font-size:11.5px;color:#6B7280;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.gridl{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+.gridl div{border-top:1px dashed #E3E8E5}
+.gridl div:last-child{border-top:1px solid #DCE2DF}
+.xl{font-size:11.5px;color:#6B7280;white-space:nowrap}
+.tip{position:absolute;z-index:2;display:flex;flex-direction:column;gap:2px;padding:8px 12px;border-radius:12px;background:#0F1B2D;color:#FFFFFF;font-size:12px;white-space:nowrap;box-shadow:0 8px 20px rgba(15,27,45,.22)}
+.row{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid #F1F3F2}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:36px 16px;text-align:center;border:1px dashed #DCE2DF;border-radius:14px;background:#FAFBFA}
+.sr{position:absolute;left:0;top:0;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid #F1F3F2;font-size:14px}
+.kv span:first-child{color:#6B7280}
+.kv b{font-weight:800;color:#0F1B2D;text-align:right}
+.show-sm{display:none !important}
+.ovl{position:fixed;inset:0;z-index:50;background:rgba(15,27,45,.48);display:flex;align-items:flex-start;justify-content:center;padding:0 16px;overflow:auto}
+.modal{width:100%;max-width:540px;max-height:calc(100vh - 32px);overflow:auto;background:#FFFFFF;border-radius:20px;box-shadow:0 24px 60px rgba(15,27,45,.28);display:flex;flex-direction:column;margin:0 0 16px;text-align:left}
+.mh{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 22px 0}
+.mt{font-family:Poppins,system-ui,sans-serif;font-size:19px;font-weight:600;color:#0F1B2D}
+.mb{padding:16px 22px 18px;display:flex;flex-direction:column;gap:14px}
+.mf{padding:14px 22px 18px;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;border-top:1px solid #F1F3F2}
+.x{width:34px;height:34px;flex:none;border:0;border-radius:10px;background:#F1F3F2;color:#374151;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.ta{min-height:84px;width:100%;padding:10px 12px;border:1px solid #DCE2DF;border-radius:11px;font-size:14px;font-weight:600;line-height:1.5;resize:vertical;color:#0F1B2D}
+.btn-d{background:#D62F4B;color:#FFFFFF}
+.btn:disabled{opacity:.5;cursor:default}
+.toast{position:fixed;z-index:60;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:12px 18px;border-radius:14px;background:#0F1B2D;color:#FFFFFF;font-size:14px;font-weight:700;box-shadow:0 12px 30px rgba(15,27,45,.3);max-width:calc(100vw - 32px)}
+.toast svg{flex:none;color:#2ED08C}
+.modal textarea{padding:10px 12px;border:1px solid #DCE2DF;border-radius:11px;font-size:14px;line-height:1.5;resize:vertical;width:100%}
+.warn{display:flex;gap:10px;padding:12px 14px;border-radius:12px;background:#FDE8EC;color:#7F1D2D;font-size:13.5px;line-height:1.45}
+.pg{cursor:pointer}
+@media (max-width:900px){
+.app{flex-direction:column}
+.side{flex:none;width:100%}
+.panel{padding:6px 16px 32px;gap:14px}
+.title{font-size:23px}
+.sub{font-size:14px}
+.ph{align-items:flex-start}
+.kgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kgrid .kc{padding:14px 14px 12px;gap:10px}
+.kgrid .big{font-size:20px}
+.kgrid .note{font-size:12px}
+.kgrid .dots{display:none}
+.kgrid .lbl{white-space:normal;line-height:1.25;font-size:11px;letter-spacing:.04em}
+.kgrid .ib{width:30px;height:30px;border-radius:9px}
+.kgrid .step{display:none}
+.show-sm{display:flex !important}
+.g2{grid-template-columns:1fr}
+.modal{border-radius:18px}
+.big{font-size:23px}
+th{padding:10px 12px}
+td{padding:11px 12px;font-size:13.5px}
+.hide-sm{display:none !important}
+.xlr>span:not(:nth-child(5n+1)) .xl{visibility:hidden}
+.xlr2>.xl:nth-child(even){visibility:hidden}
+.xlr2>.xl{min-width:0;text-align:left !important}
+.xlr2>.xl:nth-child(odd){overflow:visible}
+.xl{font-size:10.5px}
+.acts .field{flex:1 1 140px;width:auto !important}
+}
+.bar{flex:1 1 0;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;position:relative}
+.bar .b{width:100%;max-width:20px;border-radius:999px}
+</style>
+</helmet>
+<div class="app" onMouseDown="{{trackY}}">
+  <aside class="side"><dc-import name="Sidebar" active="overview" hint-size="100%,900px"></dc-import></aside>
+  <div class="main">
+    <dc-import name="TopBar" crumb="Overview" page="Dashboard" hint-size="100%,56px"></dc-import>
+    <main class="panel">
+      <div class="ph">
+        <div>
+          <span class="eyebrow">Good evening</span>
+          <h1 class="title" style="margin-top: 6px;">Anjali, here is every farm</h1>
+          <p class="sub">Today at a glance, and how the last 30 days have gone across WeSTOCK.</p>
+        </div>
+        <div class="acts">
+          <a href="Analytics.dc.html" class="btn btn-g">Analytics</a>
+          <button type="button" class="btn btn-p" onClick="{{openInvite}}">Invite staff</button>
+        </div>
+      </div>
+
+      <div class="kgrid">
+        <sc-for list="{{kpis}}" as="k" hint-placeholder-count="4">
+          <a href="{{k.href}}" class="card kc">
+            <div class="kh">
+              <span class="ib" style="background: {{k.tint}}; color: {{k.ink}};"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{k.icon}}"></path></svg></span>
+              <span class="lbl">{{k.label}}</span>
+            </div>
+            <span class="big">{{k.value}}</span>
+            <span class="note">{{k.note}}</span>
+          </a>
+        </sc-for>
+      </div>
+
+      <section class="group" aria-label="Last 30 days">
+        <span class="lbl-m" style="padding: 2px 2px 0;">Last 30 days</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 12px;">
+          <sc-for list="{{period}}" as="p" hint-placeholder-count="3">
+            <div class="card kc">
+              <div class="kh">
+                <span class="ib" style="background: {{p.tint}}; color: {{p.ink}};"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{p.icon}}"></path></svg></span>
+                <span class="lbl">{{p.label}}</span>
+              </div>
+              <div class="vrow"><span class="big" style="font-size: 28px;">{{p.value}}</span><span class="chip {{p.cls}}">{{p.delta}}</span></div>
+              <span class="note">{{p.note}}</span>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <section class="card" style="padding: 16px 18px 14px; display: flex; flex-direction: column; gap: 14px;">
+        <div class="ch">
+          <span class="lbl-m">Milk collected per day · all farms</span>
+          <span class="mono" style="font-size: 11.5px; color: #6B7280;">{{milkSum}} in the period</span>
+        </div>
+        <div style="display: flex; gap: 12px;">
+          <div class="yax" style="height: 200px; width: 34px; margin-top: -6px; padding-bottom: 0;"><span>30k L</span><span>20k</span><span>10k</span><span>0</span></div>
+          <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px;">
+            <div style="position: relative; height: 200px;">
+              <div class="gridl" aria-hidden="true"><div></div><div></div><div></div><div></div></div>
+              <div role="img" aria-label="{{milkAria}}" style="position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 6px; padding: 0 2px;">
+                <sc-for list="{{bars}}" as="b" hint-placeholder-count="30">
+                  <div class="bar" title="{{b.tip}}">
+                    <sc-if value="{{b.peak}}" hint-placeholder-val="{{false}}"><span style="position: absolute; z-index: 2; bottom: calc({{b.h}} - 13px); right: calc(50% + 16px); padding: 6px 10px; border-radius: 8px; background: #0F1B2D; color: #FFFFFF; font-size: 11.5px; white-space: nowrap; box-shadow: 0 6px 16px rgba(15, 27, 45, 0.18);">{{b.tipDay}} · <span class="mono" style="font-weight: 600;">{{b.tipVal}}</span></span></sc-if>
+                    <span class="b" style="height: {{b.h}}; background: {{b.c}};"></span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            <div class="xlr" style="display: flex; gap: 6px; padding: 0 2px; height: 30px;">
+              <sc-for list="{{bars}}" as="b" hint-placeholder-count="30"><span style="flex: 1 1 0; min-width: 0; display: flex; justify-content: center;"><span class="xl" style="display: inline-block; transform: rotate(-55deg) translate(-6px, 4px); transform-origin: center; color: {{b.lc}};">{{b.lbl}}</span></span></sc-for>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch;">
+        <section class="card" style="flex: 1 1 420px; padding: 16px 18px 6px; display: flex; flex-direction: column;">
+          <div class="ch" style="padding-bottom: 10px;"><span class="lbl-m">Needs attention today</span><span class="mono" style="font-size: 11.5px; color: #6B7280;">5 groups</span></div>
+          <sc-for list="{{attention}}" as="t" hint-placeholder-count="5">
+            <a href="{{t.href}}" class="row">
+              <span class="ib" style="background: {{t.tint}}; color: {{t.ink}};"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{t.icon}}"></path></svg></span>
+              <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;"><span style="font-size: 13.5px; font-weight: 800; color: #0F1B2D;">{{t.label}}</span><span class="note">{{t.note}}</span></span>
+              <span class="mono" style="font-size: 17px; font-weight: 600; color: #0F1B2D;">{{t.value}}</span>
+              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
+            </a>
+          </sc-for>
+        </section>
+        <section class="card" style="flex: 1 1 380px; padding: 16px 18px; display: flex; flex-direction: column; gap: 16px;">
+          <div class="ch"><span class="lbl-m">Herd by species</span><a href="Livestock.dc.html" class="link">Livestock <span aria-hidden="true">→</span></a></div>
+          <div style="display: flex; align-items: baseline; gap: 8px;"><span class="big">18,960</span><span class="note">active animals on 1,412 farms</span></div>
+          <div role="img" aria-label="71% cattle, 18% buffalo, 6% goat, 3% poultry, 3% other species" style="display: flex; gap: 3px; height: 10px;">
+            <sc-for list="{{species}}" as="s" hint-placeholder-count="5"><span style="width: {{s.w}}; border-radius: 3px; background: {{s.c}};"></span></sc-for>
+          </div>
+          <div style="display: flex; flex-direction: column;">
+            <sc-for list="{{species}}" as="s" hint-placeholder-count="5">
+              <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid #F1F3F2; font-size: 13px;">
+                <span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 2px; background: {{s.c}};"></span>
+                <span style="flex: 1; color: #1A1A1A;">{{s.name}}</span>
+                <span class="tn muted">{{s.count}}</span>
+                <span class="tn" style="width: 40px; text-align: right; color: #0F1B2D;">{{s.pct}}</span>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+
+      <section class="card" style="overflow: hidden;">
+        <div class="ch" style="padding: 14px 16px;">
+          <div class="ct"><span class="lbl-m">Farms needing attention</span><span class="pill s-grey">{{farmCount}}</span></div>
+          <div class="acts">
+            <div class="seg" role="group" aria-label="Filter"><sc-for list="{{ftabs}}" as="t" hint-placeholder-count="4"><button type="button" aria-pressed="{{t.on}}" onClick="{{t.pick}}">{{t.label}}</button></sc-for></div>
+            <a href="Farmers.dc.html" class="btn btn-s btn-sm">View all farms</a>
+          </div>
+        </div>
+        <div class="tw">
+          <table>
+            <thead><tr><th>Farm</th><th>Location</th><th class="r">Animals</th><th>Last entry</th><th>Issue</th><th><span class="sr">Open</span></th></tr></thead>
+            <tbody>
+              <sc-for list="{{farms}}" as="f" hint-placeholder-count="5">
+                <tr>
+                  <td><div class="who"><span class="av">{{f.ini}}</span><span><b>{{f.farm}}</b><small>{{f.owner}}</small></span></div></td>
+                  <td class="muted">{{f.place}}</td>
+                  <td class="r tn">{{f.animals}}</td>
+                  <td class="muted">{{f.last}}</td>
+                  <td><span class="pill {{f.cls}}"><i></i>{{f.issue}}</span></td>
+                  <td class="r" style="width: 1%;"><a href="FarmDetail.dc.html" class="ibtn" aria-label="Open {{f.farm}}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></a></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch;">
+        <section class="card" style="flex: 3 1 480px; padding: 16px 18px 6px; display: flex; flex-direction: column;">
+          <div class="ch" style="padding-bottom: 10px;"><span class="lbl-m">Recent staff changes</span><a href="Staff.dc.html" class="link">Activity log <span aria-hidden="true">→</span></a></div>
+          <sc-for list="{{activity}}" as="a" hint-placeholder-count="5">
+            <div class="row">
+              <span class="av">{{a.ini}}</span>
+              <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;"><span style="font-size: 13.5px; color: #1A1A1A;"><span style="font-weight: 800; color: #0F1B2D;">{{a.who}}</span> {{a.what}}</span><span class="note">{{a.where}}</span></span>
+              <span class="mono" style="font-size: 11.5px; color: #6B7280;">{{a.when}}</span>
+            </div>
+          </sc-for>
+        </section>
+        <section class="card" style="flex: 2 1 320px; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px;">
+          <div class="ch"><span class="lbl-m">Farmers by app language</span><span class="mono" style="font-size: 11.5px; color: #6B7280;">1,284 farmers</span></div>
+          <sc-for list="{{langs}}" as="l" hint-placeholder-count="6">
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <div style="display: flex; justify-content: space-between; gap: 8px; font-size: 13px;"><span style="color: #1A1A1A;">{{l.name}} <span class="muted">{{l.native}}</span></span><span class="tn muted" style="font-size: 12px;">{{l.count}}</span></div>
+              <div style="height: 6px; border-radius: 99px; background: #F1F3F2;"><div style="width: {{l.w}}; height: 6px; border-radius: 99px; background: #0F1B2D;"></div></div>
+            </div>
+          </sc-for>
+        </section>
+      </div>
+    </main>
+  </div>
+  <sc-if value="{{toastOn}}" hint-placeholder-val="{{false}}"><div class="toast" role="status" style="top: {{toastTop}};"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg><span>{{toastText}}</span></div></sc-if>
+  <sc-if value="{{modalOpen}}" hint-placeholder-val="{{false}}">
+    <div class="ovl" onClick="{{closeModal}}">
+      <form class="modal" onClick="{{stop}}" onSubmit="{{noSubmit}}" aria-label="{{modalTitle}}" style="margin-top: {{modalTop}};">
+        <div class="mh"><div><h2 class="mt">{{modalTitle}}</h2><p class="note" style="margin-top: 4px; line-height: 1.45;">{{modalSub}}</p></div><button type="button" class="x" aria-label="Close" onClick="{{closeModal}}"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div>
+        <div class="mb">
+          <sc-if value="{{is_invite}}" hint-placeholder-val="{{false}}">
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <label class="fl-lbl">Full name<input class="field" name="name" type="text" placeholder="e.g. Meera Iyer"></label>
+              <label class="fl-lbl">Work email<input class="field" name="email" type="email" placeholder="name@[brainwired domain]"></label>
+              <label class="fl-lbl">Role<select class="field" name="role"><option>Support</option><option>Viewer</option><option>Super admin</option></select></label>
+            </div>
+          </sc-if>
+          <sc-if value="{{hasErr}}" hint-placeholder-val="{{false}}"><div class="warn">{{errText}}</div></sc-if>
+        </div>
+        <div class="mf"><button type="button" class="btn btn-s" onClick="{{closeModal}}">Cancel</button><button type="button" class="btn {{okCls}}" onClick="{{confirm}}">{{okLabel}}</button></div>
+      </form>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1900}}'>
+class Component extends DCLogic {
+  open(kind, form) { this.setState({ modal: kind, form: form || {}, err: '' }); }
+  close() { this.setState({ modal: null, err: '' }); }
+  say(msg) {
+    this.setState({ modal: null, err: '', toast: msg });
+    clearTimeout(this.__tt);
+    this.__tt = setTimeout(() => this.setState({ toast: null }), 2800);
+  }
+  formOf(e) {
+    const el = e && e.currentTarget && e.currentTarget.closest ? e.currentTarget.closest('form') : null;
+    return el ? Object.fromEntries(new FormData(el).entries()) : {};
+  }
+  csv(name, rows) {
+    try {
+      const body = rows.map((r) => r.map((v) => '"' + String(v).replace(/"/g, '""') + '"').join(',')).join('\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([body], { type: 'text/csv' }));
+      a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    } catch (err) { }
+  }
+  ui(titles) {
+    const s = this.state || {};
+    const m = s.modal || '';
+    const t = titles[m] || ['', '', 'Save', 'btn-p'];
+    const vh = (typeof window !== 'undefined' && window.innerHeight) || 900;
+    const y = this.__y || 140;
+    const out = {
+      modalOpen: !!m, modalTop: Math.max(16, Math.min(y - 170, vh - 480)) + 'px',
+      toastOn: !!s.toast, toastText: s.toast || '', toastTop: Math.max(16, Math.min(y - 76, vh - 76)) + 'px',
+      f: s.form || {}, closeModal: () => this.close(), stop: (e) => e.stopPropagation(), noSubmit: (e) => e.preventDefault(),
+      trackY: (e) => { this.__y = e.clientY; },
+      modalTitle: t[0], modalSub: t[1] || '', okLabel: t[2] || 'Save', okCls: t[3] || 'btn-p',
+      hasErr: !!s.err, errText: s.err || ''
+    };
+    Object.keys(titles).forEach((k) => { out['is_' + k] = m === k; });
+    return out;
+  }
+  renderVals() {
+    const IC = {
+      farmer: 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21v-1a6 6 0 0 1 6-6h2a6 6 0 0 1 6 6v1M16 3.5a4 4 0 0 1 0 7.5M22 21v-1a6 6 0 0 0-4-5.6',
+      farm: 'M3 21V10l9-6 9 6v11M9 21v-6h6v6M3 21h18',
+      tag: 'M3 12V4h8l10 10-8 8L3 12zM7.5 7.5h.01',
+      milk: 'M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z',
+      feed: 'M12 21V11M12 11c0-4 3-7 8-7 0 5-3 7-8 7zM12 14c0-3-2.5-5.5-7-5.5 0 4 2.5 5.5 7 5.5z',
+      vaccine: 'M18 2l4 4M15 5l4 4M7 13l4 4M4 20l3-3M8 10l6 6 5-5-6-6z',
+      clock: 'M12 7v5l3 2M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z',
+      health: 'M9 3h6v6h6v6h-6v6H9v-6H3V9h6z',
+      heart: 'M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z',
+      nomilk: 'M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11zM4 4l16 16'
+    };
+    const kpis = [
+      { label: 'Farmers', value: '1,284', note: 'Registered in the app', icon: IC.farmer, href: 'Farmers.dc.html', tint: '#E3F8EF', ink: '#0B7A4B' },
+      { label: 'Farms', value: '1,412', note: '312 run a Blackbox and collars', icon: IC.farm, href: 'Farmers.dc.html', tint: '#E7EAEE', ink: '#0F1B2D' },
+      { label: 'Active animals', value: '18,960', note: 'Not sold or deceased', icon: IC.tag, href: 'Livestock.dc.html', tint: '#E8EDFC', ink: '#2A4FD6' },
+      { label: 'Milk yesterday', value: '24,318 L', note: '04 Nov · all three sessions', icon: IC.milk, href: 'MilkFeed.dc.html', tint: '#DDF4F9', ink: '#0E6C80' }
+    ];
+    const mv = [21.2, 21.8, 22.4, 20.6, 21.9, 22.6, 22.1, 21.4, 22.8, 23.1, 21.0, 22.5, 23.4, 22.9, 22.3, 23.6, 24.0, 21.8, 23.1, 23.9, 23.5, 22.8, 24.1, 24.6, 23.8, 22.2, 24.9, 24.1, 25.24, 24.318];
+    const start = new Date(2026, 9, 6);
+    const mon = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const peak = mv.indexOf(Math.max(...mv));
+    const fmt = (n) => Math.round(n).toLocaleString('en-IN');
+    const bars = mv.map((v, i) => {
+      const d = new Date(start.getTime() + i * 86400000);
+      return {
+        h: (v / 30 * 100).toFixed(1) + '%', c: i === peak ? '#0E6C80' : '#BEEFF7', peak: i === peak,
+        lbl: d.getDate() + '/' + (d.getMonth() + 1), lc: i === peak ? '#0F1B2D' : '#6B7280',
+        tip: d.getDate() + ' ' + mon[d.getMonth()] + ': ' + fmt(v * 1000) + ' L',
+        tipDay: String(d.getDate()).padStart(2, '0') + ' ' + mon[d.getMonth()], tipVal: fmt(v * 1000) + ' L'
+      };
+    });
+    const sum = mv.reduce((s, v) => s + v, 0) * 1000;
+    const period = [
+      { label: 'Milk collected', value: fmt(sum) + ' L', delta: '↑ 6%', cls: 'up', note: '₹' + (sum * 40 / 1e7).toFixed(2) + ' crore at farm prices', icon: IC.milk, tint: '#DDF4F9', ink: '#0E6C80' },
+      { label: 'Feed logged', value: '30,41,500 kg', delta: '↑ 2%', cls: 'up', note: '₹94.6 lakh spent on feed', icon: IC.feed, tint: '#E3F8EF', ink: '#0B7A4B' },
+      { label: 'Vaccines given', value: '2,318', delta: '↓ 4%', cls: 'dn', note: '214 still overdue across 63 farms', icon: IC.vaccine, tint: '#E8EDFC', ink: '#2A4FD6' }
+    ];
+    const attention = [
+      { label: 'Golden periods ending soon', note: 'Best time to inseminate ends within 6 hours', value: '23', href: 'Reproduction.dc.html', icon: IC.clock, tint: '#FBE6F4', ink: '#A01A78' },
+      { label: 'Vaccines overdue', note: 'Across 63 farms', value: '214', href: 'Health.dc.html', icon: IC.vaccine, tint: '#E8EDFC', ink: '#2A4FD6' },
+      { label: 'Animals marked sick', note: '9 new since yesterday', value: '41', href: 'Health.dc.html', icon: IC.health, tint: '#FDE8EC', ink: '#B4233C' },
+      { label: 'May deliver this week', note: 'Pregnant, due in 7 days or less', value: '52', href: 'Reproduction.dc.html', icon: IC.heart, tint: '#FBE6F4', ink: '#A01A78' },
+      { label: 'Farms not logging milk', note: 'No milk entry for 3 or more days', value: '17', href: 'Farmers.dc.html', icon: IC.nomilk, tint: '#FFF1E0', ink: '#9A4A00' }
+    ];
+    const species = [['Cattle', 13462, '#2ED08C'], ['Buffalo', 3413, '#0F1B2D'], ['Goat', 1104, '#F59E0B'], ['Poultry', 498, '#D6249F'], ['Sheep, pig, horse & other', 483, '#A3ADB9']].map(([name, n, c]) => ({
+      name, c, count: n.toLocaleString('en-IN'), pct: Math.round(n / 18960 * 100) + '%', w: (n / 18960 * 100).toFixed(2) + '%'
+    }));
+    const farms = [
+      ['Shree Ganesh Dairy', 'Ramesh Patil', 'Kolhapur, Maharashtra', 64, '2 h ago', '12 vaccines overdue', 's-red'],
+      ['Periyar Cattle Farm', 'Joseph Varghese', 'Kottayam, Kerala', 9, '35 min ago', '3 animals sick', 's-red'],
+      ['Gir Gau Shala', 'Sunita Desai', 'Anand, Gujarat', 41, '4 days ago', 'No milk for 4 days', 's-amber'],
+      ['Yadav Dairy', 'Rajendra Yadav', 'Mathura, Uttar Pradesh', 28, 'Yesterday', '2 may deliver this week', 's-pink'],
+      ['Kaveri Farms', 'Murugan Selvam', 'Erode, Tamil Nadu', 35, '1 h ago', 'Milk down 18% this week', 's-amber']
+    ].map(([farm, owner, place, animals, last, issue, cls]) => ({
+      farm, owner, place, animals: String(animals), last, issue, cls, ini: farm.split(' ').map((w) => w[0]).slice(0, 2).join(''),
+      cat: cls === 's-red' ? 'health' : cls === 's-pink' ? 'breeding' : 'milk'
+    }));
+    const fsel = (this.state && this.state.f) || 'all';
+    const farmsShown = fsel === 'all' ? farms : farms.filter((f) => f.cat === fsel);
+    const ftabs = [['all', 'All issues'], ['health', 'Health'], ['breeding', 'Breeding'], ['milk', 'Milk']].map(([k, label]) => ({ label, on: k === fsel ? 'true' : 'false', pick: () => this.setState({ f: k }) }));
+    const activity = [
+      { ini: 'PS', who: 'Priya Sharma', what: 'corrected a milk entry, 75.0 → 7.5 L', where: 'Yadav Dairy · tag 04 Shyama', when: '12:16' },
+      { ini: 'PS', who: 'Priya Sharma', what: 'corrected a milk entry, 21.0 → 12.0 L', where: 'Kaveri Farms · tag 12 Valli', when: '10:42' },
+      { ini: 'RD', who: 'Rahul Deshmukh', what: 'marked the FMD vaccine done', where: 'Shree Ganesh Dairy · tag 07 Kali', when: '10:15' },
+      { ini: 'AM', who: 'Anjali Menon', what: 'made Ganpat Jadhav a manager', where: 'Shree Ganesh Dairy', when: '09:58' },
+      { ini: 'PS', who: 'Priya Sharma', what: 'fixed a breed name, Mehsani → Mehsana', where: 'Gir Gau Shala · tag 14 Rani', when: 'Yesterday' }
+    ];
+    const langs = [['Hindi', 'हिन्दी', 526], ['Marathi', 'मराठी', 283], ['Gujarati', 'ગુજરાતી', 205], ['Tamil', 'தமிழ்', 141], ['Malayalam', 'മലയാളം', 90], ['English', '', 39]].map(([name, native, c]) => ({
+      name, native, count: c.toLocaleString('en-IN') + ' · ' + Math.round(c / 1284 * 100) + '%', w: (c / 526 * 100).toFixed(1) + '%'
+    }));
+    return {
+      ...this.ui({ invite: ['Invite staff', 'They get an email to set a password. Only brainwired emails can be invited.', 'Send invite'] }),
+      openInvite: () => this.open('invite'),
+      confirm: (e) => {
+        const d = this.formOf(e);
+        if (!(d.name || '').trim() || !(d.email || '').includes('@')) { this.setState({ err: 'Add a name and a valid work email.' }); return; }
+        this.say('Invite sent to ' + d.email.trim() + ' as ' + d.role);
+      },
+      kpis, period, bars, milkSum: fmt(sum) + ' L',
+      milkAria: 'Milk collected per day across all farms, 06 Oct to 04 Nov; highest ' + bars[peak].tipVal + ' on ' + bars[peak].tipDay,
+      attention, species, farms: farmsShown, ftabs, farmCount: farmsShown.length + ' of 81', activity, langs
+    };
+  }
+}
+</script>
+</body>
+</html>

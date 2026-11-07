@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WeSTOCK Admin navigation</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap">
+<style>
+body{margin:0}
+.nv{box-sizing:border-box;width:100%;min-height:100vh;padding:22px 14px 18px;display:flex;flex-direction:column;gap:24px;background:#0F1B2D;color:#FFFFFF;font-family:Nunito,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.nv *{box-sizing:border-box}
+.nv .brand{display:flex;align-items:center;gap:11px;padding:0 8px;text-decoration:none}
+.nv .grps{flex:1;display:flex;flex-direction:column;gap:18px}
+.nv .grp{display:flex;flex-direction:column;gap:3px}
+.nv .glbl{padding:0 12px 6px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#7D8A9C}
+.nv a.it{display:flex;align-items:center;gap:12px;min-height:42px;padding:0 12px;border-radius:12px;text-decoration:none;font-size:14.5px;font-weight:700;color:#C9D1DC}
+.nv a.it:hover{background:rgba(255,255,255,.05)}
+.nv a.it[aria-current="page"]{background:rgba(46,208,140,.14);color:#2ED08C;font-weight:800}
+.nv .cnt{font-family:Poppins,system-ui,sans-serif;font-size:11.5px;font-weight:500;color:#7D8A9C}
+.nv a.it[aria-current="page"] .cnt{color:#2ED08C}
+.nv .usr{display:flex;align-items:center;gap:10px;padding:12px;border-radius:14px;background:rgba(255,255,255,.05)}
+@media (max-width:900px){
+.nv{min-height:0;padding:12px 16px 10px;gap:10px}
+.nv .grps{flex-direction:row;gap:4px;overflow-x:auto;margin:0 -16px;padding:0 16px 2px;scrollbar-width:none}
+.nv .grps::-webkit-scrollbar{display:none}
+.nv .grp{flex-direction:row;gap:4px}
+.nv .glbl,.nv .cnt,.nv .usr{display:none}
+.nv a.it{min-height:38px;padding:0 12px;white-space:nowrap;font-size:13.5px;gap:8px;background:rgba(255,255,255,.05)}
+.nv .brand{padding:0}
+}
+</style>
+</helmet>
+<nav class="nv" aria-label="Admin navigation">
+  <a href="Main.dc.html" class="brand">
+    <span aria-hidden="true" style="width: 36px; height: 36px; border-radius: 11px; background: #2ED08C; display: flex; align-items: center; justify-content: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#0F1B2D" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l4 11 5-9 5 9 4-11"></path></svg></span>
+    <span style="display: flex; flex-direction: column;">
+      <span style="font-family: Poppins, system-ui, sans-serif; font-weight: 700; font-size: 18px; line-height: 1.15; letter-spacing: -0.01em; color: #FFFFFF;">WeSTOCK</span>
+      <span style="font-size: 11.5px; font-weight: 700; color: #7D8A9C;">Admin · brainwired</span>
+    </span>
+  </a>
+  <div class="grps">
+    <sc-for list="{{groups}}" as="g" hint-placeholder-count="5">
+      <div class="grp">
+        <span class="glbl">{{g.label}}</span>
+        <sc-for list="{{g.items}}" as="item" hint-placeholder-count="3">
+          <a href="{{item.href}}" class="it" aria-current="{{item.current}}">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><path d="{{item.icon}}"></path></svg>
+            <span style="flex: 1; white-space: nowrap;">{{item.label}}</span>
+            <sc-if value="{{item.hasCount}}" hint-placeholder-val="{{false}}"><span class="cnt">{{item.count}}</span></sc-if>
+          </a>
+        </sc-for>
+      </div>
+    </sc-for>
+  </div>
+  <div class="usr">
+    <span aria-hidden="true" style="width: 36px; height: 36px; flex: none; border-radius: 999px; background: #2ED08C; color: #0F1B2D; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12.5px;">AM</span>
+    <span style="flex: 1; display: flex; flex-direction: column; min-width: 0;">
+      <span style="font-size: 14px; font-weight: 800; color: #FFFFFF;">Anjali Menon</span>
+      <span style="font-size: 12px; color: #A9B3C2;">Super admin</span>
+    </span>
+    <a href="Login.dc.html" aria-label="Sign out" title="Sign out" style="width: 34px; height: 34px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.14); display: flex; align-items: center; justify-content: center; color: #C9D1DC; text-decoration: none;"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10"></path></svg></a>
+  </div>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["overview","farmers","livestock","reproduction","milk","health","analytics","staff"],"default":"overview"},"$preview":{"width":256,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const active = this.props.active ?? 'overview';
+    const I = {
+      overview: 'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z',
+      farmers: 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21v-1a6 6 0 0 1 6-6h2a6 6 0 0 1 6 6v1M16 3.5a4 4 0 0 1 0 7.5M22 21v-1a6 6 0 0 0-4-5.6',
+      livestock: 'M3 12V4h8l10 10-8 8L3 12zM7.5 7.5h.01',
+      reproduction: 'M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z',
+      milk: 'M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z',
+      health: 'M9 3h6v6h6v6h-6v6H9v-6H3V9h6z',
+      analytics: 'M4 20V10M10 20V4M16 20v-7M22 20H2',
+      staff: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4'
+    };
+    const mk = (key, label, href, count) => ({
+      key, label, href, icon: I[key], current: key === active ? 'page' : 'false', count: count || '', hasCount: !!count
+    });
+    const groups = [
+      { label: 'Overview', items: [mk('overview', 'Dashboard', 'Main.dc.html')] },
+      { label: 'Farms', items: [mk('farmers', 'Farmers & farms', 'Farmers.dc.html', '1,412'), mk('livestock', 'Livestock', 'Livestock.dc.html', '18,960')] },
+      { label: 'Records', items: [mk('reproduction', 'Reproduction', 'Reproduction.dc.html'), mk('milk', 'Milk & feed', 'MilkFeed.dc.html'), mk('health', 'Health & vaccines', 'Health.dc.html')] },
+      { label: 'Insights', items: [mk('analytics', 'Analytics', 'Analytics.dc.html')] },
+      { label: 'Admin', items: [mk('staff', 'Staff & activity log', 'Staff.dc.html')] }
+    ];
+    return { groups };
+  }
+}
+</script>
+</body>
+</html>

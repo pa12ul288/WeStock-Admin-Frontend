@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Analytics · WeSTOCK Admin</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#F4F6F5}
+*{box-sizing:border-box}
+h1,h2,h3,p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+.app{min-height:100vh;display:flex;background:#F4F6F5;font-family:Nunito,system-ui,sans-serif;color:#1A1A1A;font-size:14px;-webkit-font-smoothing:antialiased}
+.side{flex:0 0 256px;min-width:0;background:#0F1B2D}
+.main{flex:1 1 560px;min-width:0;display:flex;flex-direction:column}
+.panel{flex:1;display:flex;flex-direction:column;gap:18px;padding:8px clamp(16px,2.6vw,36px) 48px;min-width:0}
+.mono{font-family:Poppins,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#0B7A4B}
+.title{font-family:Poppins,system-ui,sans-serif;font-size:28px;font-weight:600;letter-spacing:-.015em;line-height:1.2;color:#0F1B2D}
+.sub{font-size:15px;color:#6B7280;margin-top:6px}
+.ph{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+.acts{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.card{background:#FFFFFF;border:1px solid #E5EAE7;border-radius:16px;box-shadow:0 1px 2px rgba(15,27,45,.04),0 6px 20px rgba(15,27,45,.04);min-width:0}
+.group{background:#FFFFFF;border:1px solid #E5EAE7;border-radius:18px;box-shadow:0 1px 2px rgba(15,27,45,.04),0 6px 20px rgba(15,27,45,.04);padding:14px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.group .card{box-shadow:none}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr));gap:14px}
+.kc{padding:18px 18px 16px;display:flex;flex-direction:column;gap:12px}
+.kh{display:flex;align-items:center;gap:10px}
+.ib{width:36px;height:36px;flex:none;border-radius:11px;background:#E3F8EF;display:flex;align-items:center;justify-content:center;color:#0B7A4B}
+.lbl{flex:1;min-width:0;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lbl-m{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#6B7280}
+.dots{width:28px;height:28px;flex:none;border:0;background:transparent;color:#9CA3AF;display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;padding:0}
+.big{font-family:Poppins,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:28px;font-weight:600;letter-spacing:-.02em;color:#0F1B2D;line-height:1.15;white-space:nowrap}
+.vrow{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.note{font-size:13px;color:#6B7280}
+.chip{display:inline-flex;align-items:center;gap:3px;height:22px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
+.up{background:#E3F8EF;color:#0B7A4B}
+.dn{background:#FDE8EC;color:#B4233C}
+.fl{background:#F1F3F2;color:#374151}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 18px;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;white-space:nowrap;border:1px solid transparent;text-decoration:none}
+.btn-p{background:#2ED08C;color:#0F1B2D}
+.btn-s{background:#FFFFFF;border-color:#DCE2DF;color:#0F1B2D}
+.btn-g{background:#FFFFFF;border-color:#DCE2DF;color:#0F1B2D}
+.btn-sm{height:34px;padding:0 12px;font-size:13px;border-radius:10px}
+.ibtn{width:34px;height:34px;flex:none;border:1px solid #DCE2DF;border-radius:10px;background:#FFFFFF;color:#0F1B2D;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.pill{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap;border:0}
+.pill i{width:6px;height:6px;border-radius:99px;background:currentColor;flex:none}
+.s-red{background:#FDE8EC;color:#B4233C}
+.s-amber{background:#FFF1E0;color:#9A4A00}
+.s-green{background:#E3F8EF;color:#0B7A4B}
+.s-blue{background:#E8EDFC;color:#2A4FD6}
+.s-pink{background:#FBE6F4;color:#A01A78}
+.s-grey{background:#F1F3F2;color:#374151}
+.ch{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ct{display:flex;align-items:center;gap:10px;min-width:0}
+.link{display:inline-flex;align-items:center;gap:4px;font-size:13.5px;font-weight:800;color:#0B7A4B;white-space:nowrap}
+.seg{display:inline-flex;flex-wrap:wrap;padding:4px;background:#E9EEEB;border-radius:13px;gap:2px}
+.seg button{height:34px;padding:0 14px;border:0;border-radius:10px;background:transparent;color:#4B5563;font-size:13.5px;font-weight:800;cursor:pointer;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:#FFFFFF;color:#0F1B2D;box-shadow:0 1px 3px rgba(15,27,45,.12)}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;position:relative}
+table{border-collapse:separate;border-spacing:0;width:100%}
+th{text-align:left;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#6B7280;padding:11px 18px;background:#FAFBFA;border-top:1px solid #EEF1EF;border-bottom:1px solid #EEF1EF;white-space:nowrap}
+td{padding:12px 18px;border-bottom:1px solid #F1F3F2;font-size:14px;white-space:nowrap;color:#1A1A1A}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:#FAFBFA}
+td.r,th.r{text-align:right}
+.tn{font-family:Poppins,system-ui,sans-serif;font-variant-numeric:tabular-nums;font-size:13.5px}
+.av{width:36px;height:36px;flex:none;border-radius:999px;background:#E3F8EF;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;color:#0B7A4B}
+.who{display:flex;align-items:center;gap:12px}
+.who b{display:block;font-weight:800;color:#0F1B2D}
+.who small{display:block;font-size:12.5px;color:#6B7280;margin-top:1px}
+.muted{color:#6B7280}
+.field{height:40px;width:100%;padding:0 12px;border:1px solid #DCE2DF;border-radius:11px;background:#FFFFFF;font-size:14px;font-weight:700;color:#0F1B2D}
+.fl-lbl{display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:800;color:#0F1B2D}
+.yax{display:flex;flex-direction:column;justify-content:space-between;font-size:11.5px;color:#6B7280;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.gridl{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+.gridl div{border-top:1px dashed #E3E8E5}
+.gridl div:last-child{border-top:1px solid #DCE2DF}
+.xl{font-size:11.5px;color:#6B7280;white-space:nowrap}
+.tip{position:absolute;z-index:2;display:flex;flex-direction:column;gap:2px;padding:8px 12px;border-radius:12px;background:#0F1B2D;color:#FFFFFF;font-size:12px;white-space:nowrap;box-shadow:0 8px 20px rgba(15,27,45,.22)}
+.row{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid #F1F3F2}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:36px 16px;text-align:center;border:1px dashed #DCE2DF;border-radius:14px;background:#FAFBFA}
+.sr{position:absolute;left:0;top:0;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid #F1F3F2;font-size:14px}
+.kv span:first-child{color:#6B7280}
+.kv b{font-weight:800;color:#0F1B2D;text-align:right}
+.show-sm{display:none !important}
+.ovl{position:fixed;inset:0;z-index:50;background:rgba(15,27,45,.48);display:flex;align-items:flex-start;justify-content:center;padding:0 16px;overflow:auto}
+.modal{width:100%;max-width:540px;max-height:calc(100vh - 32px);overflow:auto;background:#FFFFFF;border-radius:20px;box-shadow:0 24px 60px rgba(15,27,45,.28);display:flex;flex-direction:column;margin:0 0 16px;text-align:left}
+.mh{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 22px 0}
+.mt{font-family:Poppins,system-ui,sans-serif;font-size:19px;font-weight:600;color:#0F1B2D}
+.mb{padding:16px 22px 18px;display:flex;flex-direction:column;gap:14px}
+.mf{padding:14px 22px 18px;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;border-top:1px solid #F1F3F2}
+.x{width:34px;height:34px;flex:none;border:0;border-radius:10px;background:#F1F3F2;color:#374151;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.ta{min-height:84px;width:100%;padding:10px 12px;border:1px solid #DCE2DF;border-radius:11px;font-size:14px;font-weight:600;line-height:1.5;resize:vertical;color:#0F1B2D}
+.btn-d{background:#D62F4B;color:#FFFFFF}
+.btn:disabled{opacity:.5;cursor:default}
+.toast{position:fixed;z-index:60;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:12px 18px;border-radius:14px;background:#0F1B2D;color:#FFFFFF;font-size:14px;font-weight:700;box-shadow:0 12px 30px rgba(15,27,45,.3);max-width:calc(100vw - 32px)}
+.toast svg{flex:none;color:#2ED08C}
+.modal textarea{padding:10px 12px;border:1px solid #DCE2DF;border-radius:11px;font-size:14px;line-height:1.5;resize:vertical;width:100%}
+.warn{display:flex;gap:10px;padding:12px 14px;border-radius:12px;background:#FDE8EC;color:#7F1D2D;font-size:13.5px;line-height:1.45}
+.pg{cursor:pointer}
+@media (max-width:900px){
+.app{flex-direction:column}
+.side{flex:none;width:100%}
+.panel{padding:6px 16px 32px;gap:14px}
+.title{font-size:23px}
+.sub{font-size:14px}
+.ph{align-items:flex-start}
+.kgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kgrid .kc{padding:14px 14px 12px;gap:10px}
+.kgrid .big{font-size:20px}
+.kgrid .note{font-size:12px}
+.kgrid .dots{display:none}
+.kgrid .lbl{white-space:normal;line-height:1.25;font-size:11px;letter-spacing:.04em}
+.kgrid .ib{width:30px;height:30px;border-radius:9px}
+.kgrid .step{display:none}
+.show-sm{display:flex !important}
+.g2{grid-template-columns:1fr}
+.modal{border-radius:18px}
+.big{font-size:23px}
+th{padding:10px 12px}
+td{padding:11px 12px;font-size:13.5px}
+.hide-sm{display:none !important}
+.xlr>span:not(:nth-child(5n+1)) .xl{visibility:hidden}
+.xlr2>.xl:nth-child(even){visibility:hidden}
+.xlr2>.xl{min-width:0;text-align:left !important}
+.xlr2>.xl:nth-child(odd){overflow:visible}
+.xl{font-size:10.5px}
+.acts .field{flex:1 1 140px;width:auto !important}
+}
+.col{flex:1 1 0;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px;position:relative}
+.leg{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#4B5563;white-space:nowrap}
+.leg i{width:8px;height:8px;border-radius:2px;flex:none}
+.sv{display:flex;flex-direction:column;gap:2px}
+.sv .v{font-family:Poppins,system-ui,sans-serif;font-size:17px;font-weight:600;color:#0F1B2D}
+.sbox{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border:1px solid #EEF1EF;border-radius:12px;background:#FAFBFA}
+</style>
+</helmet>
+<div class="app" onMouseDown="{{trackY}}">
+  <aside class="side"><dc-import name="Sidebar" active="analytics" hint-size="100%,900px"></dc-import></aside>
+  <div class="main">
+    <dc-import name="TopBar" crumb="Insights" page="Analytics" hint-size="100%,56px"></dc-import>
+    <main class="panel">
+      <div class="ph">
+        <div>
+          <span class="eyebrow">Insights · optional</span>
+          <h1 class="title" style="margin-top: 6px;">Analytics</h1>
+          <p class="sub">The same five graphs farmers see in the app, for any farm · {{rangeText}}</p>
+        </div>
+        <div class="acts">
+          <div class="seg" role="group" aria-label="Period"><sc-for list="{{periods}}" as="p" hint-placeholder-count="3"><button type="button" aria-pressed="{{p.on}}" onClick="{{p.pick}}">{{p.label}}</button></sc-for></div>
+          <button type="button" class="btn btn-g" onClick="{{download}}"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>Download</button>
+        </div>
+      </div>
+
+      <div class="acts">
+        <div class="seg" role="group" aria-label="Farm">
+          <button type="button" aria-pressed="{{aOn}}" onClick="{{pickA}}">Shree Ganesh Dairy</button>
+          <button type="button" aria-pressed="{{bOn}}" onClick="{{pickB}}">Periyar Cattle Farm</button>
+        </div>
+        <sc-if value="{{hasHw}}" hint-placeholder-val="{{true}}"><select class="field" aria-label="Animal" value="{{animal}}" onChange="{{onAnimal}}" style="width: auto; height: 34px; font-size: 12.5px;"><option value="">Whole farm</option><option value="01">01 · Gauri</option><option value="02">02 · Lakshmi</option><option value="04">04 · Ganga</option></select></sc-if><sc-if value="{{noHw}}" hint-placeholder-val="{{false}}"><select class="field" aria-label="Animal" value="{{animal}}" onChange="{{onAnimal}}" style="width: auto; height: 34px; font-size: 12.5px;"><option value="">Whole farm</option><option value="03">03 · Ammini</option><option value="06">06 · Neeli</option><option value="08">08 · Kuttan</option></select></sc-if>
+        <span class="pill {{modeCls}}">{{modeText}}</span>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch;">
+        <section class="card" style="flex: 1 1 480px; padding: 16px 18px 14px; display: flex; flex-direction: column; gap: 14px;">
+          <div class="ch"><span class="lbl-m">1 · Milk</span><span class="mono" style="font-size: 11.5px; color: #6B7280;">{{milkUnit}}</span></div>
+          <div class="vrow"><span class="big">{{milkTotal}}</span><span class="chip up">{{milkTrend}}</span><span class="note">{{milkValue}} value</span></div>
+          <div style="display: flex; gap: 10px;">
+            <div class="yax" style="height: 170px; width: 34px; margin-top: -6px;"><span>{{mY3}}</span><span>{{mY2}}</span><span>{{mY1}}</span><span>0</span></div>
+            <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px;">
+              <div style="position: relative; height: 170px;">
+                <div class="gridl" aria-hidden="true"><div></div><div></div><div></div><div></div></div>
+                <div role="img" aria-label="{{milkAria}}" style="position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 14px; padding: 0 6px;">
+                  <sc-for list="{{milk}}" as="m" hint-placeholder-count="7">
+                    <div class="col" title="{{m.tip}}">
+                      <sc-if value="{{m.peak}}" hint-placeholder-val="{{false}}"><span style="position: absolute; z-index: 2; bottom: calc({{m.h}} + 8px); left: 50%; transform: translateX(-50%); padding: 6px 9px; border-radius: 8px; background: #0F1B2D; color: #FFFFFF; font-size: 11px; white-space: nowrap; box-shadow: 0 6px 16px rgba(15, 27, 45, 0.18);">{{m.tipTop}}</span></sc-if>
+                      <div style="width: 100%; max-width: 30px; height: {{m.h}}; border-radius: 999px; background: {{m.c}};"></div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div class="xlr2" style="display: flex; gap: 14px; padding: 0 6px;"><sc-for list="{{milk}}" as="m" hint-placeholder-count="7"><span class="xl" style="flex: 1 1 0; text-align: center; color: {{m.lc}};">{{m.day}}</span></sc-for></div>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding-top: 12px; border-top: 1px solid #F1F3F2;">
+            <span class="sv"><span class="note">Daily average</span><span class="v">{{milkAvg}}</span></span>
+            <span class="sv"><span class="note">Average price</span><span class="v">{{milkPrice}}</span></span>
+            <span class="sv"><span class="note">Milking animals</span><span class="v">{{milkers}}</span></span>
+          </div>
+        </section>
+
+        <section class="card" style="flex: 1 1 480px; padding: 16px 18px 14px; display: flex; flex-direction: column; gap: 14px;">
+          <div class="ch"><span class="lbl-m">2 · Feed</span><span class="mono" style="font-size: 11.5px; color: #6B7280;">{{feedUnit}}</span></div>
+          <div class="vrow"><span class="big">{{feedTotal}}</span><span class="note">{{feedCost}} spent · {{feedPerKg}} per kg</span></div>
+          <div style="display: flex; gap: 10px;">
+            <div class="yax" style="height: 170px; width: 34px; margin-top: -6px;"><span>{{fY2}}</span><span>{{fY1}}</span><span>{{fY0}}</span></div>
+            <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px;">
+              <div style="position: relative; height: 170px;">
+                <div class="gridl" aria-hidden="true"><div></div><div></div><div></div></div>
+                <svg role="img" aria-label="{{feedAria}}" width="100%" height="170" viewBox="0 0 600 170" preserveAspectRatio="none" style="position: absolute; inset: 0;">
+                  <defs><linearGradient id="gFeed" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2ED08C" stop-opacity="0.30"></stop><stop offset="1" stop-color="#1A1A1A" stop-opacity="0"></stop></linearGradient></defs>
+                  <path d="{{feedArea}}" fill="url(#gFeed)"></path>
+                  <path d="{{feedLine}}" fill="none" stroke="#0B7A4B" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+                </svg>
+                <sc-for list="{{feedDots}}" as="d" hint-placeholder-count="7"><span aria-hidden="true" style="position: absolute; left: {{d.x}}; top: {{d.y}}; width: {{d.s}}; height: {{d.s}}; transform: translate(-50%, -50%); border-radius: 99px; background: #FFFFFF; border: 2px solid #0B7A4B;"></span></sc-for>
+              </div>
+              <div class="xlr2" style="display: flex; justify-content: space-between;"><sc-for list="{{fdays}}" as="d" hint-placeholder-count="7"><span class="xl">{{d}}</span></sc-for></div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px; padding-top: 12px; border-top: 1px solid #F1F3F2;">
+            <div role="img" aria-label="Feed mix: green fodder 46%, dry fodder 28%, concentrate 18%, silage 6%, other 2%" style="display: flex; gap: 3px; height: 8px;"><sc-for list="{{feedMix}}" as="f" hint-placeholder-count="5"><span style="width: {{f.pct}}; border-radius: 3px; background: {{f.c}};"></span></sc-for></div>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px 14px;"><sc-for list="{{feedMix}}" as="f" hint-placeholder-count="5"><span class="leg"><i style="background: {{f.c}};"></i>{{f.name}} <span class="mono" style="color: #0F1B2D;">{{f.pct}}</span></span></sc-for></div>
+          </div>
+        </section>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch;">
+        <section class="card" style="flex: 1 1 480px; padding: 16px 18px 14px; display: flex; flex-direction: column; gap: 14px;">
+          <div class="ch"><span class="lbl-m">3 · Activity</span><span class="mono" style="font-size: 11.5px; color: #6B7280;">hours per cow · last 7 days</span></div>
+          <sc-if value="{{hasHw}}" hint-placeholder-val="{{true}}">
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <div style="display: flex; flex-wrap: wrap; gap: 6px 14px;"><sc-for list="{{actKeys}}" as="a" hint-placeholder-count="6"><span class="leg"><i style="background: {{a.c}};"></i>{{a.name}}</span></sc-for></div>
+              <div style="display: flex; gap: 10px;">
+                <div class="yax" style="height: 170px; width: 34px; margin-top: -6px;"><span>24 h</span><span>18</span><span>12</span><span>6</span><span>0</span></div>
+                <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px;">
+                  <div style="position: relative; height: 170px;">
+                    <div class="gridl" aria-hidden="true"><div></div><div></div><div></div><div></div><div></div></div>
+                    <div role="img" aria-label="{{actAria}}" style="position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 14px; padding: 0 6px;">
+                      <sc-for list="{{actDays}}" as="d" hint-placeholder-count="7">
+                        <div class="col" title="{{d.tip}}">
+                          <div style="width: 100%; max-width: 30px; height: 100%; display: flex; flex-direction: column; gap: 2px;">
+                            <sc-for list="{{d.segs}}" as="s" hint-placeholder-count="6"><div style="height: {{s.h}}; border-radius: {{s.r}}; background: {{s.c}};"></div></sc-for>
+                          </div>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                  <div class="xlr2" style="display: flex; gap: 14px; padding: 0 6px;"><sc-for list="{{actDays}}" as="d" hint-placeholder-count="7"><span class="xl" style="flex: 1 1 0; text-align: center;">{{d.day}}</span></sc-for></div>
+                </div>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding-top: 12px; border-top: 1px solid #F1F3F2;">
+                <span class="sv"><span class="note">Ruminating · average</span><span class="v">7.2 h</span></span>
+                <span class="sv"><span class="note">Eating · average</span><span class="v">4.4 h</span></span>
+                <span class="sv"><span class="note">Walking · average</span><span class="v">1.8 h</span></span>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{noHw}}" hint-placeholder-val="{{false}}">
+            <div class="empty" style="flex: 1;"><span class="ib"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"></path></svg></span><span style="font-size: 13.5px; font-weight: 800; color: #0F1B2D;">No activity data</span><span class="note" style="max-width: 300px; line-height: 1.5;">Activity comes from cattle collars. This graph fills in once the farm has a Blackbox and collars.</span></div>
+          </sc-if>
+        </section>
+
+        <section class="card" style="flex: 1 1 480px; padding: 16px 18px 14px; display: flex; flex-direction: column; gap: 14px;">
+          <div class="ch"><span class="lbl-m">4 · Cattle temperature</span><sc-if value="{{hasHw}}" hint-placeholder-val="{{true}}"><span class="pill s-red"><i></i>1 cow above 39.5 °C</span></sc-if></div>
+          <sc-if value="{{hasHw}}" hint-placeholder-val="{{true}}">
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <div class="vrow"><span class="big">38.6 °C</span><span class="note">herd average now · hourly, last 7 days</span></div>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px 14px;">
+                <span class="leg"><span aria-hidden="true" style="width: 14px; height: 2px; border-radius: 2px; background: #D6249F;"></span>Herd average</span>
+                <span class="leg"><span aria-hidden="true" style="width: 14px; height: 2px; border-radius: 2px; background: #F2A6D8;"></span>Highest cow</span>
+                <span class="leg"><span aria-hidden="true" style="width: 14px; border-top: 1.5px dashed #D62F4B;"></span>Fever alert 39.5 °C</span>
+              </div>
+              <div style="display: flex; gap: 10px;">
+                <div class="yax" style="height: 170px; width: 40px; margin-top: -6px;"><span>40.5 °C</span><span>39.5</span><span>38.5</span><span>37.5</span></div>
+                <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px;">
+                  <div style="position: relative; height: 170px;">
+                    <div class="gridl" aria-hidden="true"><div></div><div></div><div></div><div></div></div>
+                    <svg role="img" aria-label="Herd average stayed near 38.5 °C all week; the highest cow reached 40.1 °C today" width="100%" height="170" viewBox="0 0 700 170" preserveAspectRatio="none" style="position: absolute; inset: 0;">
+                      <line x1="0" y1="56.7" x2="700" y2="56.7" stroke="#D62F4B" stroke-width="1.2" stroke-dasharray="5 5" vector-effect="non-scaling-stroke"></line>
+                      <path d="{{maxLine}}" fill="none" stroke="#F2A6D8" stroke-width="1.5" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+                      <path d="{{avgLine}}" fill="none" stroke="#D6249F" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+                    </svg>
+                    <span aria-hidden="true" style="position: absolute; left: 100%; top: {{spikeY}}; width: 12px; height: 12px; transform: translate(-50%, -50%); border-radius: 99px; background: #FFFFFF; border: 3px solid #D62F4B;"></span>
+                    <span style="position: absolute; left: 100%; top: {{spikeY}}; transform: translate(calc(-100% - 14px), -50%); padding: 6px 9px; border-radius: 8px; background: #0F1B2D; color: #FFFFFF; font-size: 11px; white-space: nowrap; box-shadow: 0 6px 16px rgba(15, 27, 45, 0.18);">Lakshmi · <span class="mono">40.1 °C</span> · today 11:52</span>
+                  </div>
+                  <div class="xlr2" style="display: flex; justify-content: space-between;"><sc-for list="{{days}}" as="d" hint-placeholder-count="7"><span class="xl">{{d}}</span></sc-for></div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{noHw}}" hint-placeholder-val="{{false}}">
+            <div class="empty" style="flex: 1;"><span class="ib"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.8V4a2 2 0 0 0-4 0v10.8a4 4 0 1 0 4 0z"></path></svg></span><span style="font-size: 13.5px; font-weight: 800; color: #0F1B2D;">No body temperature data</span><span class="note" style="max-width: 300px; line-height: 1.5;">Body temperature comes from cattle collars. This graph fills in once the farm has a Blackbox and collars.</span></div>
+          </sc-if>
+        </section>
+      </div>
+
+      <section class="card" style="padding: 16px 18px 16px; display: flex; flex-direction: column; gap: 14px;">
+        <div class="ch">
+          <div class="ct"><span class="lbl-m">5 · Farm temperature</span><span class="pill s-grey">{{envSource}}</span></div>
+          <div class="acts">
+            <sc-if value="{{hasHw}}" hint-placeholder-val="{{true}}"><div class="seg" role="group" aria-label="Shed"><sc-for list="{{sheds}}" as="s" hint-placeholder-count="3"><button type="button" aria-pressed="{{s.on}}" onClick="{{s.pick}}">{{s.label}}</button></sc-for></div></sc-if>
+            <select class="field" aria-label="Day" value="{{day}}" onChange="{{onDay}}" style="width: auto; height: 32px; font-size: 12.5px;"><option value="0">04 Nov · yesterday</option><option value="1">03 Nov</option><option value="2">02 Nov</option><option value="3">01 Nov</option><option value="4">31 Oct</option><option value="5">30 Oct</option><option value="6">29 Oct</option></select>
+          </div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 16px;">
+          <div style="flex: 1 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; gap: 10px;">
+              <div class="yax" style="height: 160px; width: 40px; margin-top: -6px;"><span>35 °C</span><span>30</span><span>25</span><span>20</span><span>15</span></div>
+              <div style="position: relative; flex: 1; min-width: 0; height: 160px;">
+                <div class="gridl" aria-hidden="true"><div></div><div></div><div></div><div></div><div></div></div>
+                <svg role="img" aria-label="{{tempAria}}" width="100%" height="160" viewBox="0 0 690 160" preserveAspectRatio="none" style="position: absolute; inset: 0;">
+                  <defs><linearGradient id="gTemp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F59E0B" stop-opacity="0.30"></stop><stop offset="1" stop-color="#1A1A1A" stop-opacity="0"></stop></linearGradient></defs>
+                  <path d="{{tempArea}}" fill="url(#gTemp)"></path>
+                  <path d="{{tempLine}}" fill="none" stroke="#E07B00" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+                </svg>
+                <span aria-hidden="true" style="position: absolute; left: {{peakX}}; top: {{peakY}}; width: 10px; height: 10px; transform: translate(-50%, -50%); border-radius: 99px; background: #FFFFFF; border: 2.5px solid #E07B00;"></span>
+                <span class="mono" style="position: absolute; left: {{peakX}}; top: {{peakY}}; transform: translate(-50%, calc(-100% - 10px)); padding: 4px 8px; border-radius: 6px; background: #0F1B2D; color: #FFFFFF; font-size: 11px; white-space: nowrap;">{{peakTip}}</span>
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <span class="lbl-m" style="width: 40px; text-align: right; font-size: 10px;">Hum.</span>
+              <div style="position: relative; flex: 1; min-width: 0; height: 40px; border-radius: 8px; background: #FAFBFA; border: 1px solid #EEF1EF;">
+                <svg role="img" aria-label="{{humAria}}" width="100%" height="40" viewBox="0 0 690 40" preserveAspectRatio="none" style="position: absolute; inset: 0;"><path d="{{humLine}}" fill="none" stroke="#5B8DC9" stroke-width="1.5" stroke-linecap="round" vector-effect="non-scaling-stroke"></path></svg>
+                <span class="mono" style="position: absolute; right: 8px; top: 4px; font-size: 10px; color: #6B7280;">{{humRange}}</span>
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <span class="lbl-m" style="width: 40px; text-align: right; font-size: 10px;">THI</span>
+              <div role="img" aria-label="{{thiAria}}" style="flex: 1; min-width: 0; display: flex; gap: 2px; height: 22px;"><sc-for list="{{thi}}" as="t" hint-placeholder-count="24"><span title="{{t.tip}}" style="flex: 1; border-radius: 4px; background: {{t.c}};"></span></sc-for></div>
+            </div>
+            <div class="xlr2" style="display: flex; justify-content: space-between; padding-left: 50px;"><sc-for list="{{hours}}" as="h" hint-placeholder-count="7"><span class="xl">{{h}}</span></sc-for></div>
+            <div style="display: flex; align-items: center; gap: 8px; padding-left: 50px;"><span class="note">Lower THI</span><span aria-hidden="true" style="width: 120px; height: 6px; border-radius: 99px; background: linear-gradient(90deg, #BBF7D0, #FDE68A, #FCA5A5);"></span><span class="note">Higher THI (more heat stress)</span></div>
+          </div>
+          <div style="flex: 0 1 230px; display: flex; flex-direction: column; gap: 10px;">
+            <div class="sbox"><span class="lbl-m" style="font-size: 10px;">Right now</span><span class="mono" style="font-size: 20px; font-weight: 600; color: #0F1B2D;">{{envNow}}</span><span class="note">{{envNowSub}}</span></div>
+            <div class="sbox"><span class="lbl-m" style="font-size: 10px;">Hottest this week</span><span class="mono" style="font-size: 20px; font-weight: 600; color: #0F1B2D;">{{envPeak}}</span><span class="note">{{envPeakSub}}</span></div>
+            <div class="sbox"><span class="lbl-m" style="font-size: 10px;">Highest THI this week</span><span class="mono" style="font-size: 20px; font-weight: 600; color: #0F1B2D;">{{thiPeak}}</span><span class="note">{{thiPeakSub}}</span></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <sc-if value="{{toastOn}}" hint-placeholder-val="{{false}}"><div class="toast" role="status" style="top: {{toastTop}};"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg><span>{{toastText}}</span></div></sc-if>
+  <sc-if value="{{modalOpen}}" hint-placeholder-val="{{false}}">
+    <div class="ovl" onClick="{{closeModal}}">
+      <form class="modal" onClick="{{stop}}" onSubmit="{{noSubmit}}" aria-label="{{modalTitle}}" style="margin-top: {{modalTop}};">
+        <div class="mh"><div><h2 class="mt">{{modalTitle}}</h2><p class="note" style="margin-top: 4px; line-height: 1.45;">{{modalSub}}</p></div><button type="button" class="x" aria-label="Close" onClick="{{closeModal}}"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div>
+        <div class="mb">
+<!--KINDS-->
+          <sc-if value="{{hasErr}}" hint-placeholder-val="{{false}}"><div class="warn">{{errText}}</div></sc-if>
+        </div>
+        <div class="mf"><button type="button" class="btn btn-s" onClick="{{closeModal}}">Cancel</button><button type="button" class="btn {{okCls}}" onClick="{{confirm}}">{{okLabel}}</button></div>
+      </form>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1700}}'>
+class Component extends DCLogic {
+  open(kind, form) { this.setState({ modal: kind, form: form || {}, err: '' }); }
+  close() { this.setState({ modal: null, err: '' }); }
+  say(msg) {
+    this.setState({ modal: null, err: '', toast: msg });
+    clearTimeout(this.__tt);
+    this.__tt = setTimeout(() => this.setState({ toast: null }), 2800);
+  }
+  formOf(e) {
+    const el = e && e.currentTarget && e.currentTarget.closest ? e.currentTarget.closest('form') : null;
+    return el ? Object.fromEntries(new FormData(el).entries()) : {};
+  }
+  csv(name, rows) {
+    try {
+      const body = rows.map((r) => r.map((v) => '"' + String(v).replace(/"/g, '""') + '"').join(',')).join('\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([body], { type: 'text/csv' }));
+      a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    } catch (err) { }
+  }
+  ui(titles) {
+    const s = this.state || {};
+    const m = s.modal || '';
+    const t = titles[m] || ['', '', 'Save', 'btn-p'];
+    const vh = (typeof window !== 'undefined' && window.innerHeight) || 900;
+    const y = this.__y || 140;
+    const out = {
+      modalOpen: !!m, modalTop: Math.max(16, Math.min(y - 170, vh - 480)) + 'px',
+      toastOn: !!s.toast, toastText: s.toast || '', toastTop: Math.max(16, Math.min(y - 76, vh - 76)) + 'px',
+      f: s.form || {}, closeModal: () => this.close(), stop: (e) => e.stopPropagation(), noSubmit: (e) => e.preventDefault(),
+      trackY: (e) => { this.__y = e.clientY; },
+      modalTitle: t[0], modalSub: t[1] || '', okLabel: t[2] || 'Save', okCls: t[3] || 'btn-p',
+      hasErr: !!s.err, errText: s.err || ''
+    };
+    Object.keys(titles).forEach((k) => { out['is_' + k] = m === k; });
+    return out;
+  }
+  renderVals() {
+    const farm = (this.state && this.state.farm) || 'a';
+    const per = (this.state && this.state.per) || '7';
+    const shed = (this.state && this.state.shed) || 'S1';
+    const hw = farm === 'a';
+    const inr = (n) => '₹' + Math.round(n).toLocaleString('en-IN');
+    const rnd = (i) => { const x = Math.sin(i * 12.9898 + 78.233) * 43758.5453; return x - Math.floor(x); };
+    const smooth = (p) => {
+      let d = 'M' + p[0][0].toFixed(1) + ',' + p[0][1].toFixed(1);
+      for (let i = 0; i < p.length - 1; i++) {
+        const a = p[i - 1] || p[i], b = p[i], c = p[i + 1], e = p[i + 2] || c;
+        d += ' C' + (b[0] + (c[0] - a[0]) / 6).toFixed(1) + ',' + (b[1] + (c[1] - a[1]) / 6).toFixed(1) + ' ' + (c[0] - (e[0] - b[0]) / 6).toFixed(1) + ',' + (c[1] - (e[1] - b[1]) / 6).toFixed(1) + ' ' + c[0].toFixed(1) + ',' + c[1].toFixed(1);
+      }
+      return d;
+    };
+    const days = ['29 Oct', '30 Oct', '31 Oct', '01 Nov', '02 Nov', '03 Nov', '04 Nov'];
+    const periods = [['7', '7 days'], ['30', '30 days'], ['90', '90 days']].map(([k, label]) => ({ label, on: k === per ? 'true' : 'false', pick: () => this.setState({ per: k }) }));
+    const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const dateOf = (back) => { const d = new Date(Date.UTC(2026, 10, 4 - back)); return String(d.getUTCDate()).padStart(2, '0') + ' ' + MON[d.getUTCMonth()]; };
+    const nDays = +per;
+    const animal = (this.state && this.state.animal) || '';
+    const herdN = hw ? 50 : 6;
+    const cows = { '01': ['Gauri', 1.18], '02': ['Lakshmi', 0.92], '04': ['Ganga', 1.06], '03': ['Ammini', 1.12], '06': ['Neeli', 0.84], '08': ['Kuttan', 1.02] };
+    const cow = cows[animal];
+    const scale = cow ? cow[1] / herdN : 1;
+    const farmName = hw ? 'Shree Ganesh Dairy' : 'Periyar Cattle Farm';
+    const scopeName = cow ? animal + ' · ' + cow[0] : 'Whole farm';
+
+    const L7 = hw ? [318, 322, 309, 331, 326, 340, 312] : [24.5, 23.0, 25.5, 22.0, 24.0, 26.0, 23.5];
+    const P7 = hw ? [41.6, 42.4, 41.2, 43.1, 42.0, 42.8, 41.9] : [58, 58, 60, 58, 60, 60, 58];
+    const K7 = hw ? [640, 655, 630, 660, 648, 670, 652] : [62, 60, 64, 61, 63, 62, 60];
+    // daily series, oldest first; the last 7 days are the fixed week above
+    const LD = [], PD = [], KD = [];
+    for (let i = 0; i < nDays; i++) {
+      const back = nDays - 1 - i;
+      if (back < 7) { LD.push(L7[6 - back]); PD.push(P7[6 - back]); KD.push(K7[6 - back]); continue; }
+      const drift = back / 90;
+      LD.push(hw ? Math.round(318 - 22 * drift + (rnd(back + 100) - 0.5) * 30) : +(24 - 1.5 * drift + (rnd(back + 100) - 0.5) * 4).toFixed(1));
+      PD.push(hw ? +(41.4 + rnd(back + 200) * 1.6).toFixed(1) : (rnd(back + 200) > 0.5 ? 60 : 58));
+      KD.push(hw ? Math.round(645 - 15 * drift + (rnd(back + 300) - 0.5) * 40) : Math.round(62 + (rnd(back + 300) - 0.5) * 5));
+    }
+    const bs = per === '7' ? 1 : per === '30' ? 5 : 10;
+    const nb = nDays / bs;
+    const avgOf = (arr, b) => arr.slice(b * bs, b * bs + bs).reduce((a, v) => a + v, 0) / bs;
+    const fix = (v) => (v >= 100 ? Math.round(v) : +v.toFixed(1));
+    const L = [], P = [], K = [], labels = [];
+    for (let b = 0; b < nb; b++) {
+      L.push(fix(avgOf(LD, b) * scale)); P.push(avgOf(PD, b)); K.push(fix(avgOf(KD, b) * scale));
+      labels.push(dateOf(nDays - 1 - b * bs));
+    }
+    const fdays = labels;
+    const rangeText = dateOf(nDays - 1) + ' – 04 Nov 2026';
+    const tops = [0.3, 0.45, 0.6, 0.9, 1.2, 1.5, 3, 4.5, 6, 9, 12, 15, 30, 45, 60, 90, 120, 150, 300, 450, 600, 900, 1200];
+    const mTop = tops.find((t) => t >= Math.max(...L) * 1.15) || 1200;
+    const peak = L.indexOf(Math.max(...L));
+    const total = LD.reduce((a, v) => a + v * scale, 0);
+    const value = LD.reduce((a, v, i) => a + v * scale * PD[i], 0);
+    const lead = bs === 1 ? '' : 'From ';
+    const unitTail = bs === 1 ? '' : ' a day, avg';
+    const milk = L.map((v, i) => ({
+      day: labels[i], h: (v / mTop * 100).toFixed(1) + '%', c: i === peak ? '#0E6C80' : '#BEEFF7', lc: i === peak ? '#0E6C80' : '#6B7280', peak: i === peak,
+      tip: lead + labels[i] + ': ' + v + ' L' + unitTail, tipTop: labels[i] + ' · ' + v + ' L' + (bs === 1 ? ' · ' + inr(v * P[i]) : ' / day')
+    }));
+
+    const KC = hw ? 3.05 : 4.4;
+    let fTop = hw ? 700 : 70, fBot = hw ? 550 : 55;
+    if (cow || bs > 1) {
+      const lo = Math.min(...K), hi = Math.max(...K), pad = Math.max((hi - lo) * 0.8, hi * 0.04);
+      const u = hi >= 100 ? 10 : 1;
+      fBot = Math.floor((lo - pad) / u) * u; fTop = Math.ceil((hi + pad) / u) * u;
+      if (((fTop - fBot) / u) % 2) fTop += u;
+    }
+    const fp = K.map((v, i) => [i / (K.length - 1) * 600, 170 - (v - fBot) / (fTop - fBot) * 170]);
+    const feedLine = smooth(fp);
+    const feedDots = fp.map((p, i) => ({ x: (p[0] / 600 * 100).toFixed(2) + '%', y: (p[1] / 170 * 100).toFixed(2) + '%', s: i === K.length - 1 ? '11px' : '8px' }));
+    const feedMix = [['Green fodder', 46, '#2ED08C'], ['Dry fodder', 28, '#E2B93B'], ['Concentrate', 18, '#0F1B2D'], ['Silage', 6, '#8FD3EA'], ['Other', 2, '#A3ADB9']].map(([name, p, c]) => ({ name, c, pct: p + '%' }));
+    const kTot = KD.reduce((a, v) => a + v * scale, 0);
+
+    const actBase = [['Ruminating', 7.2, '#0B7A4B'], ['Standing', 5.2, '#0F1B2D'], ['Sitting', 4.6, '#8FB3D9'], ['Eating', 4.4, '#F5B547'], ['Walking', 1.8, '#2ED08C'], ['Drinking', 0.8, '#5B8DC9']];
+    const rv = [7.4, 6.9, 7.3, 7.6, 7.0, 7.5, 7.1];
+    const actDays = days.map((day, i) => {
+      const vals = actBase.map(([n, v]) => v);
+      vals[0] = rv[i];
+      vals[3] = 4.4 + (rnd(i + 3) - 0.5) * 0.6;
+      vals[4] = 1.8 + (rnd(i + 9) - 0.5) * 0.4;
+      vals[2] = 24 - vals[0] - vals[1] - vals[3] - vals[4] - vals[5];
+      const segs = actBase.map(([n, v, c], j) => ({ c, h: 'calc(' + (vals[j] / 24 * 100).toFixed(2) + '% - 2px)', r: j === 0 ? '7px 7px 2px 2px' : (j === 5 ? '2px 2px 0 0' : '2px') }));
+      return { day: day.slice(0, 2) + ' ' + day.slice(3), segs, tip: day + ': ' + actBase.map(([n], j) => n.toLowerCase() + ' ' + vals[j].toFixed(1) + ' h').join(', ') };
+    });
+    const actKeys = actBase.map(([name, v, c]) => ({ name, c }));
+
+    const yB = (t) => 170 - (t - 37.5) / 3 * 170;
+    const avgP = [], maxP = [];
+    for (let i = 0; i < 56; i++) {
+      const hr = (i % 8) * 3;
+      const x = i / 55 * 700;
+      const avg = 38.5 + 0.08 * Math.sin((hr - 15) / 24 * 2 * Math.PI) + (rnd(i + 7) - 0.5) * 0.04;
+      let mx = avg + 0.5 + 0.06 * Math.sin(i * 0.9);
+      if (i === 55) mx = 40.1;
+      avgP.push([x, yB(avg)]); maxP.push([x, yB(mx)]);
+    }
+
+    const dayIdx = +((this.state && this.state.day) || 0);
+    const dayName = dateOf(dayIdx);
+    const dOff = [0, -0.7, 0.5, -1.2, 0.9, -0.4, 0.3][dayIdx];
+    const base = (hw ? (shed === 'S2' ? 25.3 : shed === 'S3' ? 23.9 : 24.6) : 26.6) + dOff;
+    const seed = dayIdx * 31;
+    const amp = 4.6;
+    const humB = hw ? 60 : 71;
+    const tP = [], hP = [], thi = [], envRows = [];
+    let tMax = -99, tMaxH = 0, thiMax = 0, thiMaxH = 0, hMin = 99, hMax = 0;
+    const thiCol = (v) => {
+      const k = Math.max(0, Math.min(1, (v - 64) / 20));
+      const mix = (a, b, t) => Math.round(a + (b - a) * t);
+      const A = [187, 247, 208], B = [253, 230, 138], C = [252, 165, 165];
+      const [p, q, t] = k < 0.5 ? [A, B, k * 2] : [B, C, (k - 0.5) * 2];
+      return 'rgb(' + mix(p[0], q[0], t) + ',' + mix(p[1], q[1], t) + ',' + mix(p[2], q[2], t) + ')';
+    };
+    for (let h = 0; h < 24; h++) {
+      const cyc = Math.sin((h - 9) / 24 * 2 * Math.PI);
+      const t = base + amp * cyc + (rnd(h + 40 + seed) - 0.5) * 0.5;
+      const rh = humB - 13 * cyc + (rnd(h + 70 + seed) - 0.5) * 2;
+      const x = h / 23 * 690;
+      tP.push([x, 160 - (t - 15) / 20 * 160]);
+      hP.push([x, 36 - (rh - 30) / 60 * 32]);
+      const v = (1.8 * t + 32) - (0.55 - 0.0055 * rh) * (1.8 * t - 26);
+      if (t > tMax) { tMax = t; tMaxH = h; }
+      if (v > thiMax) { thiMax = v; thiMaxH = h; }
+      hMin = Math.min(hMin, rh); hMax = Math.max(hMax, rh);
+      envRows.push([String(h).padStart(2, '0') + ':00', t.toFixed(1), Math.round(rh), v.toFixed(0)]);
+      thi.push({ c: thiCol(v), tip: String(h).padStart(2, '0') + ':00 · ' + t.toFixed(1) + ' °C · ' + Math.round(rh) + '% · THI ' + v.toFixed(0) });
+    }
+    const tempLine = smooth(tP);
+    const pk = tP[tMaxH];
+    const sheds = ['S1', 'S2', 'S3'].map((s) => ({ label: s, on: s === shed ? 'true' : 'false', pick: () => this.setState({ shed: s }) }));
+
+    const nf = (v) => (Math.abs(v - Math.round(v)) < 0.05 ? String(Math.round(v)) : v.toFixed(1));
+    const trend = { '7': hw ? '↑ 4.1%' : '↑ 2.4%', '30': hw ? '↑ 2.8%' : '↑ 1.6%', '90': hw ? '↑ 6.5%' : '↑ 3.9%' }[per];
+    const fileName = 'westock-' + farmName.toLowerCase().replace(/[^a-z]+/g, '-') + (cow ? '-' + cow[0].toLowerCase() : '') + '-' + per + '-days.csv';
+    return {
+      ...this.ui({}),
+      confirm: () => this.close(),
+      periods, days, fdays, rangeText,
+      animal, onAnimal: (e) => this.setState({ animal: e.target.value }),
+      day: String(dayIdx), onDay: (e) => this.setState({ day: e.target.value }),
+      milkUnit: (bs === 1 ? 'litres per day' : 'litres a day · ' + bs + '-day avg') + (cow ? ' · ' + cow[0] : ''),
+      feedUnit: (bs === 1 ? 'kg per day' : 'kg a day · ' + bs + '-day avg') + (cow ? ' · ' + cow[0] : ''),
+      download: () => {
+        const rows = [['WeSTOCK analytics', farmName, scopeName, rangeText], [],
+          ['Milk and feed', bs === 1 ? 'Day' : 'Period from', 'Milk (L a day)', 'Feed (kg a day)']];
+        labels.forEach((d, i) => rows.push(['', d, L[i], K[i]]));
+        rows.push([], ['Farm temperature', dayName + ' 2026', hw ? shed + ' shed sensor' : 'Weather forecast'], ['', 'Hour', 'Temperature (°C)', 'Humidity (%)', 'THI']);
+        envRows.forEach((r) => rows.push([''].concat(r)));
+        this.csv(fileName, rows);
+        this.say('Downloaded ' + fileName);
+      },
+      aOn: hw ? 'true' : 'false', bOn: hw ? 'false' : 'true', pickA: () => this.setState({ farm: 'a', animal: '' }), pickB: () => this.setState({ farm: 'b', animal: '' }),
+      modeCls: hw ? 's-blue' : 's-grey', modeText: hw ? 'Blackbox + collars' : 'Manual entry · no collars',
+      milk, milkTotal: total.toLocaleString('en-IN', { maximumFractionDigits: 1 }) + ' L', milkValue: inr(value), milkTrend: trend,
+      milkAria: 'Milk, ' + rangeText + '; best ' + (bs === 1 ? 'day ' : 'stretch from ') + labels[peak] + ' with ' + L[peak] + ' litres a day',
+      mY3: mTop + ' L', mY2: nf(mTop * 2 / 3), mY1: nf(mTop / 3),
+      milkAvg: (total / nDays).toFixed(total / nDays >= 100 ? 0 : 1) + ' L', milkPrice: '₹' + (value / total).toFixed(2) + ' / L', milkers: cow ? '1' : String(herdN),
+      feedLine, feedArea: feedLine + ' L600,170 L0,170 Z', feedDots, feedMix,
+      feedTotal: Math.round(kTot).toLocaleString('en-IN') + ' kg', feedCost: inr(kTot * KC), feedPerKg: '₹' + KC.toFixed(2),
+      feedAria: 'Feed per day between ' + Math.min(...K) + ' and ' + Math.max(...K) + ' kg',
+      fY2: nf(fTop), fY1: nf((fTop + fBot) / 2), fY0: nf(fBot),
+      actDays, actKeys, actAria: 'Average day per cow over 7 days: ruminating about 7.2 hours, standing 5.2, sitting 4.6, eating 4.4, walking 1.8, drinking 0.8',
+      avgLine: smooth(avgP), maxLine: smooth(maxP), spikeY: (yB(40.1) / 170 * 100).toFixed(2) + '%',
+      hasHw: hw, noHw: !hw,
+      sheds, envSource: hw ? 'From the ' + shed + ' shed sensor' : 'From the weather forecast',
+      tempLine, tempArea: tempLine + ' L690,160 L0,160 Z', humLine: smooth(hP),
+      peakX: (pk[0] / 690 * 100).toFixed(2) + '%', peakY: (pk[1] / 160 * 100).toFixed(2) + '%', peakTip: tMax.toFixed(1) + ' °C at ' + String(tMaxH).padStart(2, '0') + ':00',
+      tempAria: 'Temperature on ' + dayName + ' went from about ' + (base - amp).toFixed(0) + ' °C before dawn to ' + tMax.toFixed(1) + ' °C at ' + tMaxH + ':00',
+      humAria: 'Humidity moved between ' + Math.round(hMin) + '% and ' + Math.round(hMax) + '%', humRange: Math.round(hMin) + '–' + Math.round(hMax) + '%',
+      thi, thiAria: 'Hourly THI on ' + dayName + ', highest ' + thiMax.toFixed(0) + ' at ' + thiMaxH + ':00',
+      hours: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '23:00'],
+      envNow: hw ? '28.6 °C · 54%' : '29.8 °C · 78%', envNowSub: hw ? 'THI 77 in ' + shed : 'THI 82 at the farm',
+      envPeak: hw ? '31.0 °C' : '32.4 °C', envPeakSub: '03 Nov · 15:00',
+      thiPeak: hw ? '79' : '84', thiPeakSub: '03 Nov · 15:00'
+    };
+  }
+}
+</script>
+</body>
+</html>
