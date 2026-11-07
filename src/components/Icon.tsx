@@ -24,6 +24,8 @@ export const ICONS = {
   rupee: 'M7 4h10M7 8h10M7 4c5 0 6 2 6 4s-2 4-6 4l7 8',
   sprout: 'M12 21V11M12 11c0-4 3-7 8-7 0 5-3 7-8 7zM12 14c0-3-2.5-5.5-7-5.5 0 4 2.5 5.5 7 5.5z',
   trash: 'M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13',
+  shield: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4',
+  eye: 'M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z',
 };
 
 export function Icon({ d, size = 18 }: { d: string; size?: number }) {

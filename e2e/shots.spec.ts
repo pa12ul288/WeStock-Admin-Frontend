@@ -181,3 +181,15 @@ test('vaccine schedule panel at 390', async ({ page }) => {
   const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
   expect(scrollWidth).toBeLessThanOrEqual(390);
 });
+
+test('invite staff dialog at 1440', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await signIn(page);
+  await page.goto('/staff');
+  await expect(page.getByTestId('skeleton-row')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Invite staff' }).click();
+  await expect(page.getByRole('dialog', { name: 'Invite staff' })).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  await page.waitForTimeout(600);
+  await page.screenshot({ path: '.shots/invite-staff-1440.png' });
+});

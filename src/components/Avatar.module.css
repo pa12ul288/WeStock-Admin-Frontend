@@ -12,6 +12,12 @@
   font-weight: 800;
 }
 
+.avatar[data-small] {
+  width: 28px;
+  height: 28px;
+  font-size: 10.5px;
+}
+
 .who {
   display: flex;
   align-items: center;

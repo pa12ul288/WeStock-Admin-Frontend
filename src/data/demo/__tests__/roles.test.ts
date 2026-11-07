@@ -261,4 +261,15 @@ describe('sign-in', () => {
       message: 'You can’t remove yourself. Ask another super admin.',
     });
   });
+
+  it("won't let a super admin demote themselves", async () => {
+    const ds = await signedIn('super_admin');
+    await expect(ds.updateStaff(FEATURED.staff.anjali, { role: 'support' })).rejects.toMatchObject({
+      code: 'validation',
+      field: 'role',
+    });
+    await expect(ds.updateStaff(FEATURED.staff.priya, { role: 'viewer' })).resolves.toMatchObject({
+      role: 'viewer',
+    });
+  });
 });

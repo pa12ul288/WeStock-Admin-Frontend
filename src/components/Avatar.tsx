@@ -12,10 +12,16 @@ export function initials(name: string | null | undefined): string {
   return letters.join('').toUpperCase() || '?';
 }
 
-/** The round green initials. */
-export function Avatar({ name }: { name: string | null | undefined }) {
+/** The round green initials; `small` is the 28 px one in log rows. */
+export function Avatar({
+  name,
+  small = false,
+}: {
+  name: string | null | undefined;
+  small?: boolean;
+}) {
   return (
-    <span className={styles.avatar} aria-hidden="true">
+    <span className={styles.avatar} data-small={small || undefined} aria-hidden="true">
       {initials(name)}
     </span>
   );

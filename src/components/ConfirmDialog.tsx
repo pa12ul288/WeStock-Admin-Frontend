@@ -12,6 +12,8 @@ interface ConfirmDialogProps {
   /** Anything else the dialog needs, such as a reason field. */
   children?: ReactNode;
   confirmLabel: string;
+  /** The button that closes without acting. */
+  cancelLabel?: string;
   /** Red action by default; `false` for a green one. */
   destructive?: boolean;
   /** Asks the user to type this word or name before the action runs. */
@@ -34,6 +36,7 @@ export function ConfirmDialog({
   warning,
   children,
   confirmLabel,
+  cancelLabel = 'Cancel',
   destructive = true,
   confirmText,
   confirmTextLabel = 'Type to confirm',
@@ -66,7 +69,7 @@ export function ConfirmDialog({
       footer={
         <>
           <Button onClick={onClose} data-autofocus={destructive && !confirmText ? true : undefined}>
-            Cancel
+            {cancelLabel}
           </Button>
           <Button type="submit" variant={destructive ? 'danger' : 'primary'} disabled={pending}>
             {confirmLabel}

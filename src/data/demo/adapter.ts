@@ -1822,6 +1822,9 @@ export function createDemoAdapter(store: DemoStore, options: DemoAdapterOptions 
       if (patch.status === 'removed' && userId === staff.user_id) {
         throw invalid('You can’t remove yourself. Ask another super admin.', 'status');
       }
+      if (patch.role !== undefined && patch.role !== 'super_admin' && userId === staff.user_id) {
+        throw invalid('You can’t change your own role. Ask another super admin.', 'role');
+      }
       return updateRow(staff, 'admin_staff', userId, patch);
     },
 
