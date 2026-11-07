@@ -65,7 +65,7 @@ Any password of 6+ characters works. The user menu has a role switcher and "Rese
 
 ## Later: connecting Supabase
 
-When Sri shares the Supabase project (URL, anon key and a test copy), the work is:
+When user shares the Supabase project (URL, anon key and a test copy), the work is:
 1. run `docs/backend-later/0005_admin.sql` on the **test** project
 2. ask Claude Code to build `src/data/supabase/adapter.ts`, implementing the same `DataSource` interface
    (the mapping table is in `docs/data-contract.md`, section 6), plus real sign-in and the `admin-invite`
