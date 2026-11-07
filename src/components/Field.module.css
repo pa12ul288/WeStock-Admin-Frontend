@@ -25,6 +25,21 @@
   font-weight: 600;
 }
 
+.input:disabled {
+  background: var(--surface-soft);
+  color: var(--navy);
+  opacity: 1;
+}
+
+.formError {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--pill-red);
+  color: var(--warn-ink);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
 .error {
   color: var(--pill-red-ink);
   font-size: 12.5px;

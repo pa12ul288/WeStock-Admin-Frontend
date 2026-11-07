@@ -89,6 +89,24 @@ export function formatRelative(
   return formatDate(ms);
 }
 
+/** The India calendar day as `YYYY-MM-DD`. */
+export function indiaDay(at: DateInput = Date.now()): string {
+  const ms = toMs(at) ?? Date.now();
+  return new Date(ms + IST_OFFSET).toISOString().slice(0, 10);
+}
+
+/** The `YYYY-MM-DD` this many days after (or before) another. */
+export function shiftDay(day: string, by: number): string {
+  return new Date(Date.parse(`${day}T00:00:00Z`) + by * DAY).toISOString().slice(0, 10);
+}
+
+/** Whole India calendar days since a moment, counted the way `formatRelative` counts them. */
+export function daysSince(at: DateInput, now: DateInput = Date.now()): number {
+  const ms = toMs(at) ?? 0;
+  const nowMs = toMs(now) ?? 0;
+  return Math.floor((nowMs + IST_OFFSET) / DAY) - Math.floor((ms + IST_OFFSET) / DAY);
+}
+
 function grouped(value: number, minDecimals: number, maxDecimals: number): string {
   return new Intl.NumberFormat('en-IN', {
     minimumFractionDigits: minDecimals,
@@ -110,6 +128,11 @@ export function formatRupees(value: number, { decimals = 0 } = {}): string {
 /** `14.5 L`; pass `decimals: 0` for large totals like `24,318 L`. */
 export function formatLitres(value: number, { decimals = 1 } = {}): string {
   return `${grouped(value, decimals, decimals)} L`;
+}
+
+/** A total for a card or list: `2,258 L`, keeping one decimal only when there is one: `168.5 L`. */
+export function formatLitresTotal(value: number): string {
+  return `${grouped(value, 0, 1)} L`;
 }
 
 /** `1,02,300 kg`, keeping one decimal only when there is one: `12.5 kg`. */

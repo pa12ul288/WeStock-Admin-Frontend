@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import {
   Bar,
   CartesianGrid,
+  Cell,
   LabelList,
   BarChart as RechartsBarChart,
   ResponsiveContainer,
@@ -33,6 +34,10 @@ interface BarChartProps<Row extends object> {
   formatY?: (value: number) => string;
   /** The bar shown dark with its tooltip open before anyone points at it. */
   highlightIndex?: number;
+  /** The bar shown dark all the time, without opening its tooltip. */
+  emphasisIndex?: number;
+  /** The gap around each bar on a phone. Few bars look better with a smaller one. */
+  phoneBarGap?: string;
   /** Slanted day labels, for 30 bars. */
   rotateLabels?: boolean;
   /** Shows every nth label on a phone. */
@@ -52,6 +57,8 @@ export function BarChart<Row extends object>({
   yTicks,
   formatY,
   highlightIndex,
+  emphasisIndex,
+  phoneBarGap = '35%',
   rotateLabels = false,
   labelEveryOnPhone = 1,
   totalLabel,
@@ -72,7 +79,7 @@ export function BarChart<Row extends object>({
         <RechartsBarChart
           data={data as Row[]}
           margin={{ top: totalLabel ? 22 : 10, right: 0, bottom: 0, left: 0 }}
-          barCategoryGap={isPhone ? '35%' : '30%'}
+          barCategoryGap={isPhone ? phoneBarGap : '30%'}
           accessibilityLayer={false}
         >
           <CartesianGrid vertical={false} stroke={GRID_COLOUR} strokeDasharray="4 4" />
@@ -117,6 +124,17 @@ export function BarChart<Row extends object>({
               activeBar={stacked ? false : { fill: 'var(--milk-ink)' }}
               isAnimationActive={false}
             >
+              {emphasisIndex !== undefined &&
+                data.map((_row, rowIndex) => (
+                  <Cell
+                    key={rowIndex}
+                    fill={
+                      rowIndex === emphasisIndex
+                        ? 'var(--milk-ink)'
+                        : (item.color ?? 'var(--milk-bar)')
+                    }
+                  />
+                ))}
               {totalLabel && index === series.length - 1 && (
                 <LabelList
                   position="top"

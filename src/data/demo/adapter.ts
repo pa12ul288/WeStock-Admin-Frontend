@@ -348,9 +348,12 @@ export function createDemoAdapter(store: DemoStore, options: DemoAdapterOptions 
     for (const animal of store.tables.animals.values()) {
       if (animal.status === 'active') bump(animals, animal.farm_id);
     }
+    // The last 7 finished days, as on the design: today is still filling up.
     const weekStart = addDays(day, -7);
     for (const entry of store.tables.milk_entries.values()) {
-      if (entry.entry_date > weekStart) bump(milk7d, entry.farm_id, entry.litres);
+      if (entry.entry_date >= weekStart && entry.entry_date < day) {
+        bump(milk7d, entry.farm_id, entry.litres);
+      }
       noteEntry(entry.farm_id, entry.created_at);
     }
     for (const entry of store.tables.feed_entries.values())
@@ -389,12 +392,9 @@ export function createDemoAdapter(store: DemoStore, options: DemoAdapterOptions 
     for (const [ownerId, rows] of byOwner) {
       const profile = store.get('profiles', ownerId);
       if (!profile) continue;
-      const pickMin = (values: (string | null)[]) =>
-        values.reduce<string | null>(
-          (min, v) => (v !== null && (min === null || v < min) ? v : min),
-          null,
-        );
       const lastEntries = rows.map((r) => r.last_entry_at);
+      // A farmer's place is their first farm's, the farm their row opens.
+      const firstFarm = [...rows].sort((a, b) => a.created_at.localeCompare(b.created_at))[0];
       farmerRows.push({
         id: profile.id,
         full_name: profile.full_name,
@@ -403,8 +403,8 @@ export function createDemoAdapter(store: DemoStore, options: DemoAdapterOptions 
         joined_at: profile.created_at,
         farms: rows.length,
         animals: rows.reduce((sum, r) => sum + r.animals, 0),
-        district: pickMin(rows.map((r) => r.district)),
-        state: pickMin(rows.map((r) => r.state)),
+        district: firstFarm?.district ?? null,
+        state: firstFarm?.state ?? null,
         last_entry_at: lastEntries.reduce<string | null>(
           (max, v) => (v !== null && (max === null || v > max) ? v : max),
           null,
@@ -1060,10 +1060,19 @@ export function createDemoAdapter(store: DemoStore, options: DemoAdapterOptions 
     async listFarmers(f) {
       await wait();
       const needle = (f.q ?? '').trim().toLowerCase();
-      const rows = computeViews()
-        .farmerRows.filter(
+      const computed = computeViews();
+      const phoneNeedle = needle.replace(/[\s-]/g, '');
+      const farmNames = new Map<UUID, string[]>();
+      for (const row of computed.farmRows.values()) {
+        farmNames.set(row.owner_id, [...(farmNames.get(row.owner_id) ?? []), row.name]);
+      }
+      const rows = computed.farmerRows
+        .filter(
           (r) =>
-            (!needle || contains(r.full_name, needle) || contains(r.phone, needle)) &&
+            (!needle ||
+              contains(r.full_name, needle) ||
+              (phoneNeedle !== '' && contains(r.phone, phoneNeedle)) ||
+              (farmNames.get(r.id) ?? []).some((name) => contains(name, needle))) &&
             (!f.state || r.state === f.state) &&
             (!f.language || r.language === f.language),
         )

@@ -1,0 +1,43 @@
+.avatar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: var(--pill-green);
+  color: var(--pill-green-ink);
+  font-size: 12.5px;
+  font-weight: 800;
+}
+
+.who {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.text {
+  min-width: 0;
+}
+
+.text b {
+  display: block;
+  color: var(--navy);
+  font-weight: 800;
+}
+
+.text small {
+  display: block;
+  margin-top: 1px;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.text small[data-numeric] {
+  font-family: var(--font-head);
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+}

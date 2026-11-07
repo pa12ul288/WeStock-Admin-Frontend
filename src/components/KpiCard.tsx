@@ -8,6 +8,8 @@ export interface KpiTrend {
   direction: 'up' | 'down' | 'same';
   /** `3.6%`, or `same`. */
   text: string;
+  /** A plain share such as `83%`: keeps the chip's colour but drops the arrow. */
+  plain?: boolean;
 }
 
 interface KpiCardProps {
@@ -38,7 +40,8 @@ export function KpiCard({ label, value, note, icon, tone = 'green', trend, to }:
         <span className={styles.value}>{value}</span>
         {trend && (
           <span className={styles.trend} data-direction={trend.direction}>
-            <span aria-hidden="true">{TREND_PREFIX[trend.direction]}</span> {trend.text}
+            {!trend.plain && <span aria-hidden="true">{TREND_PREFIX[trend.direction]}</span>}{' '}
+            {trend.text}
           </span>
         )}
       </div>

@@ -5,6 +5,18 @@
   padding: 12px 16px;
 }
 
+.bar[data-inline] {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.bar[data-inline] .search {
+  width: 260px;
+}
+
 .filters {
   display: flex;
   flex-wrap: wrap;

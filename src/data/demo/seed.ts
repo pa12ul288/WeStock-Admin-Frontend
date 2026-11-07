@@ -355,6 +355,8 @@ interface FarmPlan {
   language: Lang;
   district: string;
   state: string;
+  description?: string;
+  pin?: { lat: number; lng: number };
   blackbox: boolean;
   /** false: the Blackbox and its collars stopped reporting this morning. */
   online: boolean;
@@ -404,6 +406,8 @@ const FEATURED_FARMS: FarmPlan[] = [
     language: 'mr',
     district: 'Kolhapur',
     state: 'Maharashtra',
+    description: 'Family dairy with Gir and HF-cross cows, Murrah buffalo and a few goats.',
+    pin: { lat: 16.705, lng: 74.2433 },
     blackbox: true,
     online: true,
     afternoon: true,
@@ -738,13 +742,19 @@ export function generateSeed(nowMs: number = Date.now(), seed: number = DEMO_SEE
   for (const plan of plans) {
     const place = PLACES[plan.state];
     const created = anchor - int(40, 320) * DAY;
+    // An owner can't have joined after their own farm started.
+    const owner = profiles.find((profile) => profile.id === plan.ownerId);
+    if (owner && Date.parse(owner.created_at) > created) owner.created_at = toIso(created - DAY);
+    // Drawn even when a plan sets its own pin, so every later random number stays the same.
+    const lat = place ? round1(place.lat + (rng() - 0.5) * 2) : null;
+    const lng = place ? round1(place.lng + (rng() - 0.5) * 2) : null;
     farms.push({
       id: plan.id,
       owner_id: plan.ownerId,
       name: plan.name,
-      description: null,
-      lat: place ? round1(place.lat + (rng() - 0.5) * 2) : null,
-      lng: place ? round1(place.lng + (rng() - 0.5) * 2) : null,
+      description: plan.description ?? null,
+      lat: plan.pin?.lat ?? lat,
+      lng: plan.pin?.lng ?? lng,
       settings: { high_temp_c: 39.5, offline_after_min: 15 },
       created_at: toIso(created),
       district: plan.district,

@@ -21,6 +21,8 @@ interface FilterBarProps {
   selects?: readonly FilterSelect[];
   /** Goes above the filters: the Segmented tabs on Livestock, say. */
   lead?: ReactNode;
+  /** Puts `lead` and the filters on one line when they fit, as on Farmers & farms. */
+  inline?: boolean;
 }
 
 function SearchBox({ label, urlKey }: { label: string; urlKey: string }) {
@@ -89,9 +91,15 @@ function SelectFilter({ select }: { select: FilterSelect }) {
 }
 
 /** A debounced search box plus selects, all kept in the URL query. Any change returns to page 1. */
-export function FilterBar({ searchLabel, searchKey = 'q', selects = [], lead }: FilterBarProps) {
+export function FilterBar({
+  searchLabel,
+  searchKey = 'q',
+  selects = [],
+  lead,
+  inline = false,
+}: FilterBarProps) {
   return (
-    <div className={styles.bar}>
+    <div className={styles.bar} data-inline={inline || undefined}>
       {lead}
       <div className={styles.filters}>
         {searchLabel && <SearchBox label={searchLabel} urlKey={searchKey} />}

@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
 import { dataSource } from '../data';
+import { FEATURED } from '../data/demo/featured';
 import { AppProviders } from './Providers';
 import { routes } from './router';
 
@@ -41,7 +42,7 @@ describe('phase 1 routes, signed in', () => {
   it.each([
     ['/', 'Dashboard', 'Overview'],
     ['/farmers', 'Farmers & farms', 'Farms'],
-    ['/farms/demo', 'Farm page', 'Farmers & farms'],
+    [`/farms/${FEATURED.farms.shreeGanesh}`, 'Shree Ganesh Dairy', 'Farmers & farms'],
     ['/livestock', 'Livestock', 'Farms'],
     ['/animals/demo', 'Animal page', 'Livestock'],
     ['/reproduction', 'Reproduction', 'Records'],
