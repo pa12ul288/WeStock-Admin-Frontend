@@ -1,0 +1,39 @@
+/* Design tokens: values from docs/developer-guide.md. Components use only these variables.
+   A pill or milk token is the tint; its matching -ink token is the text colour on that tint. */
+:root {
+  --navy: #0f1b2d;
+  --green: #2ed08c;
+  --green-ink: #0b7a4b;
+  --bg: #f4f6f5;
+  --card: #ffffff;
+  --line: #e5eae7;
+  --ink: #1a1a1a;
+  --muted: #6b7280;
+  --danger: #d62f4b;
+
+  --pill-green: #e3f8ef;
+  --pill-green-ink: #0b7a4b;
+  --pill-amber: #fff1e0;
+  --pill-amber-ink: #9a4a00;
+  --pill-red: #fde8ec;
+  --pill-red-ink: #b4233c;
+  --pill-blue: #e8edfc;
+  --pill-blue-ink: #2a4fd6;
+  --pill-pink: #fbe6f4;
+  --pill-pink-ink: #a01a78;
+  --pill-grey: #f1f3f2;
+  --pill-grey-ink: #374151;
+
+  --milk: #ddf4f9;
+  --milk-ink: #0e6c80;
+  --milk-bar: #beeff7;
+
+  --font-fallbacks:
+    'Noto Sans Devanagari', 'Noto Sans Malayalam', 'Noto Sans Gujarati', 'Noto Sans Tamil',
+    system-ui, sans-serif;
+  --font-head: 'Poppins', var(--font-fallbacks);
+  --font-body: 'Nunito', var(--font-fallbacks);
+
+  --radius-card: 16px;
+  --radius-btn: 12px;
+}
