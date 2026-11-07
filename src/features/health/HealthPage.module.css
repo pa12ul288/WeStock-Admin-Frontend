@@ -1,0 +1,359 @@
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.eyebrow {
+  color: var(--green-ink);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 6px 0 0;
+  color: var(--navy);
+  font-family: var(--font-head);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.sub {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter {
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--navy);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.farmFilter {
+  width: 180px;
+}
+
+.note {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Totals */
+.totals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr));
+  gap: 12px;
+}
+
+.totalCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 18px 18px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--card);
+  box-shadow: var(--shadow-card);
+}
+
+.totalHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.totalIcon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+}
+
+.totalIcon[data-tone='blue'] {
+  background: var(--pill-blue);
+  color: var(--pill-blue-ink);
+}
+
+.totalIcon[data-tone='red'] {
+  background: var(--pill-red);
+  color: var(--pill-red-ink);
+}
+
+.totalLabel {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.totalValue {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.bigNumber {
+  color: var(--navy);
+  font-family: var(--font-head);
+  font-size: 28px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.chip[data-tone='good'] {
+  background: var(--pill-green);
+  color: var(--pill-green-ink);
+}
+
+.chip[data-tone='bad'] {
+  background: var(--pill-red);
+  color: var(--pill-red-ink);
+}
+
+.chip[data-tone='plain'] {
+  background: var(--pill-grey);
+  color: var(--pill-grey-ink);
+}
+
+.stack {
+  display: flex;
+  gap: 3px;
+  height: 8px;
+}
+
+.stack span {
+  border-radius: 3px;
+}
+
+.parts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.part {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-left: 12px;
+  border-left: 1px solid var(--line-soft);
+}
+
+.part:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.partLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink-softer);
+  font-size: 12px;
+}
+
+.partLabel i {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+}
+
+.partValue {
+  color: var(--navy);
+  font-family: var(--font-head);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* The schedule panel */
+.panelForm {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px 18px;
+}
+
+.panelHead {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.panelTitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.panelGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  gap: 14px;
+}
+
+.panelFoot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.panelNote {
+  margin-right: auto;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.dateInput {
+  font-family: var(--font-head);
+}
+
+/* The tables */
+.tabsRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.who {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.tag {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 34px;
+  padding: 0 6px;
+  border-radius: 10px;
+  background: var(--pill-green);
+  color: var(--pill-green-ink);
+  font-family: var(--font-head);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.name {
+  display: block;
+  color: var(--navy);
+  font-weight: 800;
+}
+
+.farm {
+  display: block;
+  margin-top: 1px;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.issue {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.date {
+  color: var(--muted);
+  font-family: var(--font-head);
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 900px) {
+  .head {
+    align-items: flex-start;
+  }
+
+  .title {
+    font-size: 23px;
+  }
+
+  .sub {
+    font-size: 14px;
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .filter,
+  .farmFilter {
+    flex: 1 1 140px;
+    width: auto;
+    min-width: 0;
+  }
+
+  .bigNumber {
+    font-size: 23px;
+  }
+}

@@ -39,7 +39,7 @@ const GROUPS: {
     key: 'animals_sick',
     title: 'Animals marked sick',
     note: 'Across all farms',
-    to: '/health',
+    to: '/health?tab=issues',
     icon: 'M9 3h6v6h6v6h-6v6H9v-6H3V9h6z',
     tone: 'red',
   },

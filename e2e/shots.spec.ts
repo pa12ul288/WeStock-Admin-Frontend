@@ -142,3 +142,42 @@ test('add cycle dialog at 1440', async ({ page }) => {
   await page.waitForTimeout(600);
   await page.screenshot({ path: '.shots/add-cycle-1440.png' });
 });
+
+test('vaccine schedule panel at 1440', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await signIn(page);
+  await page.goto(`/health?farm=${FEATURED.farms.shreeGanesh}`);
+  await expect(page.getByTestId('skeleton-row')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Vaccine schedule' }).click();
+  await expect(page.getByRole('button', { name: /^Create \d+ reminders$/ })).toBeEnabled();
+  await page.evaluate(() => document.fonts.ready);
+  await page.waitForTimeout(600);
+  await page.screenshot({ path: '.shots/vaccine-schedule-1440.png' });
+});
+
+for (const width of [1440, 390]) {
+  test(`health issues tab at ${width}`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await signIn(page);
+    await page.goto('/health?tab=issues');
+    await expect(page.getByTestId('skeleton-row')).toHaveCount(0);
+    await page.evaluate(() => document.fonts.ready);
+    await page.waitForTimeout(800);
+    await page.screenshot({ path: `.shots/health-issues-${width}.png`, fullPage: true });
+    const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
+    expect(scrollWidth).toBeLessThanOrEqual(width);
+  });
+}
+
+test('vaccine schedule panel at 390', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await signIn(page);
+  await page.goto('/health');
+  await expect(page.getByTestId('skeleton-row')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Vaccine schedule' }).click();
+  await expect(page.getByRole('button', { name: /^Create \d+ reminders?$/ })).toBeEnabled();
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: '.shots/vaccine-schedule-390.png', fullPage: true });
+  const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
+  expect(scrollWidth).toBeLessThanOrEqual(390);
+});

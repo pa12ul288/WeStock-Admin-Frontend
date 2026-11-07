@@ -20,6 +20,7 @@ import {
   cycleSteps,
   cycleTitle,
   healthSourceLabel,
+  healthUndoTo,
   isOpenCycle,
   lastChange,
   sortVaccinations,
@@ -107,10 +108,6 @@ export function VaccinationsCard({
       {adding && <VaccinationDialog animal={animal} onClose={() => setAdding(false)} />}
     </Card>
   );
-}
-
-function isHealthStatus(value: unknown): value is HealthStatus {
-  return typeof value === 'string' && value in HEALTH_LABELS;
 }
 
 function HealthRow({
@@ -209,22 +206,15 @@ export function HealthCard({
         </RoleGate>
       </div>
       {health.length === 0 && <p className={styles.emptyRow}>No health events yet.</p>}
-      {health.map((event) => {
-        const change = lastChange(log.data, event.id, 'status');
-        const undoTo =
-          event.status === 'resolved' && change?.to === 'resolved' && isHealthStatus(change.from)
-            ? change.from
-            : null;
-        return (
-          <HealthRow
-            key={event.id}
-            event={event}
-            source={healthSourceLabel(event, log.data)}
-            staffAdded={addedBy(log.data, event.id) !== null}
-            undoTo={undoTo}
-          />
-        );
-      })}
+      {health.map((event) => (
+        <HealthRow
+          key={event.id}
+          event={event}
+          source={healthSourceLabel(event, log.data)}
+          staffAdded={addedBy(log.data, event.id) !== null}
+          undoTo={healthUndoTo(event, log.data)}
+        />
+      ))}
       {adding && <HealthEventDialog animal={animal} onClose={() => setAdding(false)} />}
     </Card>
   );

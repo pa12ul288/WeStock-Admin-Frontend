@@ -3,11 +3,13 @@ import type {
   AnalyticsSeries,
   AuditLogEntry,
   HealthEvent,
+  HealthStatus,
   MilkEntry,
   ReproductionCycle,
   Vaccination,
 } from '../../data/types';
 import { daysSince, formatDate, indiaDay, shiftDay } from '../../lib/format';
+import { HEALTH_LABELS } from '../../lib/labels';
 
 const DAY_MS = 86_400_000;
 
@@ -61,6 +63,21 @@ export function lastChange(
     if (isChange(change)) return change;
   }
   return null;
+}
+
+function isHealthStatus(value: unknown): value is HealthStatus {
+  return typeof value === 'string' && value in HEALTH_LABELS;
+}
+
+/** The status an Undo goes back to: only a resolve the log shows can be undone. */
+export function healthUndoTo(
+  event: Pick<HealthEvent, 'id' | 'status'>,
+  log: readonly AuditLogEntry[] | undefined,
+): HealthStatus | null {
+  const change = lastChange(log, event.id, 'status');
+  return event.status === 'resolved' && change?.to === 'resolved' && isHealthStatus(change.from)
+    ? change.from
+    : null;
 }
 
 /** Who the log says added a record, if staff did. */
