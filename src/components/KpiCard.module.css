@@ -91,6 +91,14 @@
   white-space: nowrap;
 }
 
+.step {
+  flex: none;
+  color: var(--muted);
+  font-family: var(--font-head);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+}
+
 .values {
   display: flex;
   flex-wrap: wrap;
@@ -163,6 +171,10 @@
     letter-spacing: 0.04em;
     line-height: 1.25;
     white-space: normal;
+  }
+
+  .step {
+    display: none;
   }
 
   .value {

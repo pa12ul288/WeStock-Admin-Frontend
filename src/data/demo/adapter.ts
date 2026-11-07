@@ -37,7 +37,7 @@ import type {
   Vaccination,
   VaccinationRow,
 } from '../types';
-import { animalPhoto, slipImage } from './seed';
+import { animalPhoto } from './seed';
 import type { ChangeMeta, DemoStore, Rows, TableName } from './store';
 import { addDays, DAY, HOUR, istDate, MINUTE, toIso } from './time';
 
@@ -1545,7 +1545,8 @@ export function createDemoAdapter(store: DemoStore, options: DemoAdapterOptions 
         inseminated_at: isHeat ? null : toIso(at),
         tube_number: isHeat ? null : tube,
         insemination_verified: false,
-        insemination_image_url: !isHeat && tube ? slipImage(tube) : null,
+        // A phoned-in record: the farmer hasn't uploaded a slip for it.
+        insemination_image_url: null,
         pregnancy_confirmed_at: null,
         expected_delivery: null,
         delivered_at: null,

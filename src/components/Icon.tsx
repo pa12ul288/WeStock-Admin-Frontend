@@ -18,6 +18,8 @@ export const ICONS = {
     'M2 8.8a15 15 0 0 1 4-2.5M22 8.8a15 15 0 0 0-9-3.7M5 12.5a10 10 0 0 1 3-1.8M19 12.5a10 10 0 0 0-3.5-2M8.5 16a5 5 0 0 1 7 0M12 20h.01M3 3l18 18',
   pencil: 'M4 20h4L19 9l-4-4L4 16z',
   calendar: 'M4 6h16v14H4zM4 10h16M9 3v4M15 3v4',
+  calendarCheck: 'M4 6h16v14H4zM4 10h16M9 3v4M15 3v4M9 15l2 2 4-4',
+  flame: 'M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 2-7 2 1 3 3 3 5',
 };
 
 export function Icon({ d, size = 18 }: { d: string; size?: number }) {

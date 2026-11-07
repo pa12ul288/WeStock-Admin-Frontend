@@ -19,13 +19,27 @@ interface KpiCardProps {
   icon?: ReactNode;
   tone?: KpiTone;
   trend?: KpiTrend;
+  /** A small marker at the end of the head, such as `STEP 1`. Hidden on a phone. */
+  step?: string;
+  /** A pill beside the value. */
+  chip?: ReactNode;
   /** Makes the whole card a link. */
   to?: string;
 }
 
 const TREND_PREFIX = { up: '↑', down: '↓', same: '=' };
 
-export function KpiCard({ label, value, note, icon, tone = 'green', trend, to }: KpiCardProps) {
+export function KpiCard({
+  label,
+  value,
+  note,
+  icon,
+  tone = 'green',
+  trend,
+  step,
+  chip,
+  to,
+}: KpiCardProps) {
   const content = (
     <>
       <div className={styles.head}>
@@ -35,6 +49,7 @@ export function KpiCard({ label, value, note, icon, tone = 'green', trend, to }:
           </span>
         )}
         <span className={styles.label}>{label}</span>
+        {step && <span className={styles.step}>{step}</span>}
       </div>
       <div className={styles.values}>
         <span className={styles.value}>{value}</span>
@@ -44,6 +59,7 @@ export function KpiCard({ label, value, note, icon, tone = 'green', trend, to }:
             {trend.text}
           </span>
         )}
+        {chip}
       </div>
       {note && <span className={styles.note}>{note}</span>}
     </>

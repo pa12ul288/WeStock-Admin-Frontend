@@ -20,6 +20,7 @@ import type {
   Species,
   Vaccination,
 } from '../types';
+import { formatDate } from '../../lib/format';
 import { FEATURED, seedId } from './featured';
 import { addDays, DAY, HOUR, istDate, istInstant, MINUTE, toIso } from './time';
 
@@ -109,9 +110,14 @@ export function animalPhoto(tag: string, photo = 1): string {
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><defs><pattern id="p" width="32" height="32" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="32" height="32" fill="#F4F6F5"/><rect width="16" height="32" fill="#F1F3F2"/></pattern></defs><rect width="240" height="240" fill="url(#p)"/><text x="120" y="118" text-anchor="middle" font-family="sans-serif" font-size="26" fill="#6B7280">Photo ${photo}</text><text x="120" y="150" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#6B7280">Tag ${escapeXml(tag)}</text></svg>`,
   );
 }
-export function slipImage(tube: string): string {
+/** The farmer's slip photo as in the design: a slip card on a striped ground. */
+export function slipImage(tube: string, caption: string): string {
+  const width = Math.max(220, Math.round(36 + caption.length * 6.8));
+  const left = Math.round((496 - width) / 2);
+  const text = left + 18;
+  const font = 'font-family="Poppins, Nunito, Segoe UI, Arial, sans-serif"';
   return svgDataUrl(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200"><rect width="320" height="200" fill="#FFFFFF"/><rect x="8" y="8" width="304" height="184" fill="none" stroke="#E3E8E5"/><text x="24" y="60" font-family="sans-serif" font-size="14" fill="#6B7280">Insemination slip</text><text x="24" y="110" font-family="monospace" font-size="24" fill="#0F1B2D">${escapeXml(tube)}</text></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 372"><defs><pattern id="p" width="20" height="20" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="20" height="20" fill="#F4F6F5"/><rect width="10" height="20" fill="#EEF1EF"/></pattern><filter id="s" x="-20%" y="-30%" width="140%" height="170%"><feDropShadow dx="0" dy="6" stdDeviation="9" flood-color="#0F1B2D" flood-opacity="0.1"/></filter></defs><rect width="496" height="372" fill="url(#p)"/><rect x="${left}" y="126" width="${width}" height="95" rx="10" fill="#FFFFFF" filter="url(#s)"/><text x="${text}" y="150" ${font} font-size="10.5" font-weight="700" letter-spacing="0.7" fill="#6B7280">AI SLIP · TUBE NO.</text><text x="${text}" y="179" ${font} font-size="20" font-weight="700" fill="#0F1B2D">${escapeXml(tube)}</text><text x="${text}" y="204" ${font} font-size="13" fill="#6B7280">${escapeXml(caption)}</text><text x="248" y="241" text-anchor="middle" ${font} font-size="13" fill="#6B7280">Photo uploaded by the farmer</text></svg>`,
   );
 }
 
@@ -1338,6 +1344,11 @@ export function generateSeed(nowMs: number = Date.now(), seed: number = DEMO_SEE
       created_at: toIso(started),
     });
   };
+  const slipFor = (animal: Animal, tube: string, at: number) =>
+    slipImage(
+      tube,
+      `${animal.tag_number}${animal.name ? ` · ${animal.name}` : ''} · ${formatDate(at)}`,
+    );
   const addPregnant = (
     animal: Animal,
     cycleNo: number,
@@ -1355,7 +1366,7 @@ export function generateSeed(nowMs: number = Date.now(), seed: number = DEMO_SEE
       heat_confirmed: true,
       tube_number: tube,
       insemination_verified: true,
-      insemination_image_url: slipImage(tube),
+      insemination_image_url: slipFor(animal, tube, inseminated),
       pregnancy_confirmed_at: toIso(inseminated + (fullStory ? 69 : 25) * DAY),
       expected_delivery: addDays(today, daysLeft),
       created_at: toIso(inseminated),
@@ -1411,7 +1422,7 @@ export function generateSeed(nowMs: number = Date.now(), seed: number = DEMO_SEE
       inseminated_at: toIso(when),
       tube_number: tube,
       insemination_verified: i >= 30,
-      insemination_image_url: hasSlip ? slipImage(tube) : null,
+      insemination_image_url: hasSlip ? slipFor(animal, tube, when) : null,
       heat_confirmed: true,
       created_at: toIso(when),
     });

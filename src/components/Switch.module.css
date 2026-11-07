@@ -1,0 +1,29 @@
+.switch {
+  display: inline-flex;
+  justify-content: flex-start;
+  width: 36px;
+  height: 20px;
+  padding: 2px;
+  border: 0;
+  border-radius: 99px;
+  background: var(--track-off);
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.switch[aria-checked='true'] {
+  justify-content: flex-end;
+  background: var(--green);
+}
+
+.switch:disabled {
+  cursor: default;
+}
+
+.switch span {
+  width: 16px;
+  height: 16px;
+  border-radius: 99px;
+  background: var(--card);
+  box-shadow: var(--shadow-raised);
+}
