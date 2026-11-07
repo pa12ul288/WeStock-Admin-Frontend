@@ -1,0 +1,19 @@
+.loading {
+  display: flex;
+  min-height: 100vh;
+}
+
+.side {
+  flex: 0 0 256px;
+  background: var(--navy);
+}
+
+@media (max-width: 900px) {
+  .loading {
+    flex-direction: column;
+  }
+
+  .side {
+    flex: 0 0 112px;
+  }
+}

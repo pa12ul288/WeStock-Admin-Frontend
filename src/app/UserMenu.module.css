@@ -1,0 +1,134 @@
+.menu {
+  position: absolute;
+  z-index: 41;
+  bottom: 88px;
+  left: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 310px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--card);
+  box-shadow: var(--shadow-pop);
+  color: var(--ink);
+}
+
+.who {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+}
+
+.whoText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.name {
+  color: var(--navy);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.role {
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.badge {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--pill-amber);
+  color: var(--pill-amber-ink);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px 10px 10px;
+}
+
+.label {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.segmented {
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 13px;
+  background: var(--segment-bg);
+}
+
+.segmented button {
+  flex: 1 1 auto;
+  height: 34px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--ink-softer);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.segmented button[aria-pressed='true'] {
+  background: var(--card);
+  box-shadow: var(--shadow-raised);
+  color: var(--navy);
+}
+
+.action {
+  padding: 10px;
+  border: 0;
+  border-top: 1px solid var(--line-soft);
+  background: transparent;
+  color: var(--navy);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.action:hover {
+  background: var(--bg);
+}
+
+.action:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.menu :focus-visible {
+  outline-color: var(--green-ink);
+}
+
+@media (max-width: 900px) {
+  .menu {
+    top: 58px;
+    right: 16px;
+    bottom: auto;
+    left: 16px;
+    width: auto;
+  }
+}

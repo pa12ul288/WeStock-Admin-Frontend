@@ -1,31 +1,37 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import { useToast } from '../components/Toast';
+import { takeResetNotice } from '../features/auth/queries';
+import { BreadcrumbContext, useShellHandle } from './breadcrumb';
+import { Sidebar } from './Sidebar';
+import { TopBar } from './TopBar';
 import styles from './AppShell.module.css';
 
-/** Placeholder shell for M0: plain links so navigation works. The real Sidebar and TopBar come in M2. */
-const links = [
-  { to: '/', label: 'Dashboard' },
-  { to: '/farmers', label: 'Farmers & farms' },
-  { to: '/livestock', label: 'Livestock' },
-  { to: '/reproduction', label: 'Reproduction' },
-  { to: '/milk-feed', label: 'Milk & feed' },
-  { to: '/health', label: 'Health & vaccines' },
-  { to: '/analytics', label: 'Analytics' },
-  { to: '/staff', label: 'Staff & activity log' },
-];
-
 export function AppShell() {
+  const handle = useShellHandle();
+  const [pageOverride, setPageOverride] = useState<string | null>(null);
+  const page = pageOverride ?? handle?.page ?? '';
+  const toast = useToast();
+
+  useEffect(() => {
+    document.title = page ? `${page} · WeSTOCK Admin` : 'WeSTOCK Admin';
+  }, [page]);
+
+  useEffect(() => {
+    if (takeResetNotice()) toast.show('Demo data reset.');
+  }, [toast]);
+
   return (
     <div className={styles.shell}>
-      <nav className={styles.nav} aria-label="Admin navigation">
-        {links.map((link) => (
-          <NavLink key={link.to} to={link.to} end={link.to === '/'} className={styles.link}>
-            {link.label}
-          </NavLink>
-        ))}
-      </nav>
-      <main className={styles.main}>
-        <Outlet />
-      </main>
+      <Sidebar active={handle?.nav ?? null} />
+      <div className={styles.main}>
+        <TopBar crumb={handle?.crumb ?? ''} page={page} />
+        <main className={styles.panel}>
+          <BreadcrumbContext.Provider value={setPageOverride}>
+            <Outlet />
+          </BreadcrumbContext.Provider>
+        </main>
+      </div>
     </div>
   );
 }

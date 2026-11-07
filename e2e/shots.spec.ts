@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { FEATURED } from '../src/data/demo/featured';
+import { signIn } from './helpers';
 
 /** Every phase 1 route. `name` is the screenshot file name; ids are the featured demo records. */
 const routes = [
@@ -25,8 +26,13 @@ for (const viewport of viewports) {
   for (const route of routes) {
     test(`${route.name} at ${viewport.width}`, async ({ page }) => {
       await page.setViewportSize(viewport);
+      if (route.name !== 'login') await signIn(page);
       await page.goto(route.path);
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+      // The bell's badge means the shell's counts have loaded, so they are in the picture.
+      if (route.name !== 'login') {
+        await expect(page.getByRole('button', { name: /^Alerts, \d+ new$/ })).toBeVisible();
+      }
       await page.evaluate(() => document.fonts.ready);
 
       await page.screenshot({

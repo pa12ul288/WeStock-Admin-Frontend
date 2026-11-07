@@ -28,6 +28,32 @@
   --milk-ink: #0e6c80;
   --milk-bar: #beeff7;
 
+  /* From the prototype: greys, sidebar text and shadows the token table doesn't name. */
+  --line-strong: #dce2df;
+  --line-soft: #f1f3f2;
+  --line-control: #e3e8e5;
+  --ink-soft: #374151;
+  --ink-softer: #4b5563;
+  --navy-tint: #e7eaee;
+  --segment-bg: #e9eeeb;
+  --warn-ink: #7f1d2d;
+  --panel-ring: #1f3a4f;
+
+  --nav-text: #c9d1dc;
+  --nav-muted: #7d8a9c;
+  --nav-role: #a9b3c2;
+  --nav-hover: rgb(255 255 255 / 5%);
+  --nav-border: rgb(255 255 255 / 14%);
+  --nav-active: rgb(46 208 140 / 14%);
+
+  --overlay: rgb(15 27 45 / 48%);
+  --shadow-card: 0 1px 2px rgb(15 27 45 / 4%), 0 6px 20px rgb(15 27 45 / 4%);
+  --shadow-float: 0 12px 32px rgb(15 27 45 / 8%);
+  --shadow-pop: 0 18px 44px rgb(15 27 45 / 18%);
+  --shadow-modal: 0 24px 60px rgb(15 27 45 / 28%);
+  --shadow-toast: 0 12px 30px rgb(15 27 45 / 30%);
+  --shadow-raised: 0 1px 3px rgb(15 27 45 / 12%);
+
   --font-fallbacks:
     'Noto Sans Devanagari', 'Noto Sans Malayalam', 'Noto Sans Gujarati', 'Noto Sans Tamil',
     system-ui, sans-serif;
