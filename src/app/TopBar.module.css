@@ -71,21 +71,6 @@
   margin-left: auto;
 }
 
-.date {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  height: 42px;
-  padding: 0 14px;
-  border: 1px solid var(--line-control);
-  border-radius: 999px;
-  background: rgb(255 255 255 / 80%);
-  color: var(--navy);
-  font-size: 13px;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
 @media (max-width: 900px) {
   .bar {
     gap: 8px;
@@ -94,8 +79,7 @@
   }
 
   .crumb,
-  .sep,
-  .date {
+  .sep {
     display: none;
   }
 

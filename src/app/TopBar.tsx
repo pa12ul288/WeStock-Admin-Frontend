@@ -1,5 +1,5 @@
-import { formatWeekdayDate } from '../lib/format';
 import { AlertsBell } from './AlertsBell';
+import { DateChip } from './DateChip';
 import { GlobalSearch } from './GlobalSearch';
 import styles from './TopBar.module.css';
 
@@ -35,22 +35,7 @@ export function TopBar({ crumb, page }: { crumb: string; page: string }) {
       )}
       <div className={styles.right}>
         <GlobalSearch />
-        <span className={styles.date}>
-          <svg
-            aria-hidden="true"
-            width="15"
-            height="15"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M4 6h16v14H4zM4 10h16M9 3v4M15 3v4" />
-          </svg>
-          {formatWeekdayDate(Date.now())}
-        </span>
+        <DateChip />
         <AlertsBell />
       </div>
     </header>

@@ -1,0 +1,141 @@
+.wrap {
+  position: relative;
+  flex: none;
+}
+
+.date {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 14px;
+  border: 1px solid var(--line-control);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 80%);
+  color: var(--navy);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+
+.date:hover,
+.date[aria-expanded='true'] {
+  background: var(--card);
+  border-color: var(--green-ink);
+}
+
+.pop {
+  position: absolute;
+  z-index: 31;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 304px;
+  max-width: calc(100vw - 32px);
+  padding: 10px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 16px;
+  background: var(--glass-highlight), var(--glass-light);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-glass);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 2px 8px;
+}
+
+.title {
+  color: var(--navy);
+  font-family: var(--font-head);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--line-control);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--navy);
+  cursor: pointer;
+}
+
+.step:hover {
+  border-color: var(--green-ink);
+}
+
+.grid {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 2px;
+  table-layout: fixed;
+  text-align: center;
+}
+
+.grid th {
+  padding: 4px 0 6px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.grid td {
+  padding: 0;
+}
+
+.day,
+.today {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  color: var(--navy);
+  font-family: var(--font-head);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.today {
+  background: var(--green);
+  font-weight: 600;
+}
+
+.back {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--green-ink);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.back:hover {
+  background: var(--surface-soft);
+}
+
+@media (max-width: 900px) {
+  .wrap {
+    display: none;
+  }
+}
