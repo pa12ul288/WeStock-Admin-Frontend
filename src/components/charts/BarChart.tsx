@@ -49,6 +49,8 @@ interface BarChartProps<Row extends object> {
   rotateLabels?: boolean;
   /** Shows every nth label on a phone. */
   labelEveryOnPhone?: number;
+  /** Shows every nth label on a wider screen, for 90 bars. */
+  labelEvery?: number;
   /** Text above each stack, like `23.2k`. */
   totalLabel?: (row: Row) => string;
   /** The row whose text above the bar and label below it stand out, as the latest day does. */
@@ -93,6 +95,7 @@ export function BarChart<Row extends object>({
   rightMargin = 0,
   rotateLabels = false,
   labelEveryOnPhone = 1,
+  labelEvery = 1,
   totalLabel,
   labelEmphasisIndex,
   labelEmphasisColor = 'var(--navy)',
@@ -135,7 +138,10 @@ export function BarChart<Row extends object>({
                       x={Number(x)}
                       y={Number(y)}
                       dy="0.71em"
-                      textAnchor="middle"
+                      textAnchor={rotateLabels ? 'end' : 'middle'}
+                      transform={
+                        rotateLabels ? `rotate(-45, ${Number(x)}, ${Number(y)})` : undefined
+                      }
                       fontSize={AXIS_TICK.fontSize}
                       fill={emphasisFill(index) ?? AXIS_TICK.fill}
                     >
@@ -146,7 +152,7 @@ export function BarChart<Row extends object>({
             tickLine={false}
             stroke={AXIS_COLOUR}
             tickMargin={8}
-            interval={isPhone ? labelEveryOnPhone - 1 : 0}
+            interval={(isPhone ? labelEveryOnPhone : labelEvery) - 1}
             angle={rotateLabels ? -45 : 0}
             textAnchor={rotateLabels ? 'end' : 'middle'}
             height={rotateLabels ? 44 : 30}

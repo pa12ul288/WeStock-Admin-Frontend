@@ -15,7 +15,9 @@ test.describe('sign in', () => {
     test(`works for ${account.email}`, async ({ page }) => {
       await signIn(page, account.email);
       await expect(page).toHaveURL('/');
-      await expect(page.getByRole('heading', { level: 1, name: 'Dashboard' })).toBeVisible();
+      await expect(
+        page.getByRole('heading', { level: 1, name: /, here is every farm$/ }),
+      ).toBeVisible();
       const nav = page.getByRole('navigation', { name: 'Admin navigation' });
       await expect(
         nav.getByRole('button', { name: `${account.name}, ${account.role}. Account menu` }).first(),
@@ -88,7 +90,9 @@ test.describe('sign in', () => {
   test('without the tick, signing in ends when the browser closes', async ({ page, context }) => {
     await signIn(page);
     await page.reload();
-    await expect(page.getByRole('heading', { level: 1, name: 'Dashboard' })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 1, name: /, here is every farm$/ }),
+    ).toBeVisible();
     await context.clearCookies(); // what closing the browser does to a session cookie
     await page.reload();
     await expect(page).toHaveURL('/login');
@@ -100,10 +104,14 @@ test.describe('sign in', () => {
     await page.getByLabel('Password', { exact: true }).fill('demo-password');
     await page.getByLabel('Keep me signed in on this computer').check();
     await page.getByRole('button', { name: 'Sign in' }).click();
-    await expect(page.getByRole('heading', { level: 1, name: 'Dashboard' })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 1, name: /, here is every farm$/ }),
+    ).toBeVisible();
     await context.clearCookies();
     await page.reload();
-    await expect(page.getByRole('heading', { level: 1, name: 'Dashboard' })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 1, name: /, here is every farm$/ }),
+    ).toBeVisible();
   });
 });
 

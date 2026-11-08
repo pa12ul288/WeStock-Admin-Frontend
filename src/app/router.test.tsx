@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
@@ -39,8 +39,14 @@ describe('phase 1 routes, signed in', () => {
     await dataSource.auth.signOut();
   });
 
+  it('/ shows the greeting and the Dashboard breadcrumb', async () => {
+    renderAt('/');
+    expect(await h1('Anjali, here is every farm')).toBeTruthy();
+    const breadcrumb = screen.getByRole('navigation', { name: 'Breadcrumb' });
+    expect(breadcrumb.textContent).toBe('OverviewDashboard');
+  });
+
   it.each([
-    ['/', 'Dashboard', 'Overview'],
     ['/farmers', 'Farmers & farms', 'Farms'],
     [`/farms/${FEATURED.farms.shreeGanesh}`, 'Shree Ganesh Dairy', 'Farmers & farms'],
     ['/livestock', 'Livestock', 'Farms'],
@@ -58,8 +64,9 @@ describe('phase 1 routes, signed in', () => {
 
   it('moves between screens from the navigation', async () => {
     renderAt('/');
-    await h1('Dashboard');
-    await userEvent.click(screen.getByRole('link', { name: /^Livestock/ }));
+    await h1('Anjali, here is every farm');
+    const nav = screen.getByRole('navigation', { name: 'Admin navigation' });
+    await userEvent.click(within(nav).getByRole('link', { name: /^Livestock/ }));
     expect(await h1('Livestock')).toBeTruthy();
     expect(screen.getByRole('link', { name: /^Livestock/ }).getAttribute('aria-current')).toBe(
       'page',
@@ -79,6 +86,6 @@ describe('phase 1 routes, signed in', () => {
 
   it('leaves /login for the dashboard', async () => {
     renderAt('/login');
-    expect(await h1('Dashboard')).toBeTruthy();
+    expect(await h1('Anjali, here is every farm')).toBeTruthy();
   });
 });
