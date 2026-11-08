@@ -1,5 +1,13 @@
-import { useEffect, useMemo, useRef, type MouseEvent, type ReactNode } from 'react';
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  type MouseEvent,
+  type ReactNode,
+} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { entryDelay, GSAP_EASE, runGsap } from '../lib/motion';
 import type { SortState } from '../lib/url-state';
 import { iconButtonClass } from './Button';
 import { EmptyState } from './EmptyState';
@@ -80,6 +88,35 @@ function useStickyHead() {
   return { scroller, head };
 }
 
+/** The first rows to arrive ease in one after another, once. Later loads and sorts don't replay it. */
+function useRowsReveal(body: React.RefObject<HTMLTableSectionElement | null>, ready: boolean) {
+  const played = useRef(false);
+  const cleanup = useRef<() => void>(() => undefined);
+  useLayoutEffect(() => {
+    if (!ready || played.current) return;
+    played.current = true;
+    const element = body.current;
+    cleanup.current = runGsap(element, (gsap) => {
+      const rows = Array.from(element?.querySelectorAll('tr') ?? []).slice(0, 8);
+      if (rows.length === 0) return;
+      gsap.fromTo(
+        rows,
+        { opacity: 0, y: 8 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.3,
+          delay: entryDelay('rows'),
+          stagger: 0.035,
+          ease: GSAP_EASE.out,
+          clearProps: 'opacity,transform',
+        },
+      );
+    });
+  }, [body, ready]);
+  useLayoutEffect(() => () => cleanup.current(), []);
+}
+
 const isMissing = (value: SortValue) => value === null || value === undefined || value === '';
 
 /** The rows in the chosen order. Rows with no value stay at the end in both directions. */
@@ -143,6 +180,8 @@ export function DataTable<Row>({
   const navigate = useNavigate();
   const sorted = useMemo(() => sortRows(rows, columns, sort), [rows, columns, sort]);
   const showRows = !loading && !error;
+  const bodyRef = useRef<HTMLTableSectionElement>(null);
+  useRowsReveal(bodyRef, showRows && rows.length > 0);
 
   const cellClass = (column: Column<Row>) =>
     [
@@ -211,7 +250,7 @@ export function DataTable<Row>({
             )}
           </tr>
         </thead>
-        <tbody>
+        <tbody ref={bodyRef}>
           {loading &&
             Array.from({ length: skeletonRows }, (_, rowIndex) => (
               <tr key={rowIndex} data-testid="skeleton-row">

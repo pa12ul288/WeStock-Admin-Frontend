@@ -18,12 +18,23 @@
   pointer-events: none;
 }
 
+@media (min-width: 901px) {
+  .shell[data-rail='true'] {
+    --side-w: var(--side-w-rail);
+  }
+}
+
 .main {
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
   min-width: 0;
+}
+
+.panel h1:focus,
+.panel:focus {
+  outline: none;
 }
 
 .panel {

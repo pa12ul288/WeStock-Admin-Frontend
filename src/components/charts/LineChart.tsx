@@ -1,4 +1,4 @@
-import { useId, type ReactNode } from 'react';
+import { useId, useRef, type ReactNode } from 'react';
 import {
   Area,
   CartesianGrid,
@@ -11,6 +11,7 @@ import {
   YAxis,
 } from 'recharts';
 import { AXIS_COLOUR, AXIS_TICK, ChartLegend, chartTooltip, GRID_COLOUR } from './ChartParts';
+import { useChartReveal } from './useChartReveal';
 import { useIsPhone } from './useIsPhone';
 import styles from './charts.module.css';
 
@@ -88,6 +89,8 @@ export function LineChart<Row extends object>({
   formatX,
 }: LineChartProps<Row>) {
   const isPhone = useIsPhone();
+  const figure = useRef<HTMLElement>(null);
+  useChartReveal(figure);
   const idBase = useId().replace(/:/g, '');
   const legend = [
     ...series.map(({ label: name, color }) => ({ label: name, color })),
@@ -95,7 +98,7 @@ export function LineChart<Row extends object>({
   ];
 
   return (
-    <figure className={styles.chart} aria-label={label}>
+    <figure ref={figure} className={styles.chart} aria-label={label}>
       {legend.length > 1 && !hideLegend && <ChartLegend items={legend} />}
       <ResponsiveContainer width="100%" height={height}>
         <ComposedChart

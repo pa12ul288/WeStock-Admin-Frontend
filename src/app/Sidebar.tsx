@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useToast } from '../components/Toast';
@@ -6,6 +6,7 @@ import { useSignOut, useStaff } from '../features/auth/queries';
 import { useOverview } from '../features/dashboard/queries';
 import { errorMessage } from '../lib/errors';
 import { formatCount } from '../lib/format';
+import { getGsap, GSAP_EASE, reducedMotionNow } from '../lib/motion';
 import type { NavKey } from './breadcrumb';
 import { ROLE_LABELS } from './RoleGate';
 import { USER_MENU_TRIGGER, UserMenu } from './UserMenu';
@@ -59,7 +60,14 @@ function initials(name: string): string {
     .join('');
 }
 
-export function Sidebar({ active }: { active: NavKey | null }) {
+interface SidebarProps {
+  active: NavKey | null;
+  /** Collapsed to the icon rail (wide screens only). */
+  collapsed: boolean;
+  onToggle: () => void;
+}
+
+export function Sidebar({ active, collapsed, onToggle }: SidebarProps) {
   const staff = useStaff();
   const overview = useOverview().data;
   const counts: Partial<Record<NavKey, number>> = {
@@ -93,12 +101,61 @@ export function Sidebar({ active }: { active: NavKey | null }) {
     }
   }, [active]);
 
+  // The green marker slides to the current item (GSAP moves it; it sits behind the links).
+  const indicator = useRef<HTMLSpanElement>(null);
+  const placed = useRef(false);
+  useLayoutEffect(() => {
+    const marker = indicator.current;
+    const link = activeLink.current;
+    if (!marker) return;
+    if (!link) {
+      marker.style.opacity = '0';
+      return;
+    }
+    const place = (animate: boolean) => {
+      const y = link.offsetTop;
+      marker.style.opacity = '';
+      marker.style.height = `${link.offsetHeight}px`;
+      const gsap = getGsap();
+      if (!gsap) marker.style.transform = `translateY(${y}px)`;
+      else if (animate)
+        gsap.to(marker, { y, duration: 0.4, ease: GSAP_EASE.inOut, overwrite: true });
+      else gsap.set(marker, { y });
+    };
+    place(placed.current && !reducedMotionNow());
+    placed.current = true;
+    // Web fonts can change the item heights a moment later.
+    void document.fonts?.ready.then(() => place(false));
+  }, [active]);
+
   const name = staff?.full_name ?? '';
   const role = staff ? ROLE_LABELS[staff.role] : '';
 
   return (
     <aside className={styles.side}>
       <nav className={styles.inner} aria-label="Admin navigation">
+        <button
+          type="button"
+          className={styles.toggle}
+          aria-expanded={!collapsed}
+          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          onClick={onToggle}
+        >
+          <svg
+            data-nav-chevron
+            aria-hidden="true"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M15 6l-6 6 6 6" />
+          </svg>
+        </button>
         <div className={styles.top}>
           <Link
             to="/"
@@ -119,7 +176,7 @@ export function Sidebar({ active }: { active: NavKey | null }) {
                 <path d="M3 7l4 11 5-9 5 9 4-11" />
               </svg>
             </span>
-            <span className={styles.brandText}>
+            <span className={styles.brandText} data-nav-fade>
               <span className={styles.wordmark}>WeSTOCK</span>{' '}
               <span className={styles.brandSub}>Admin · brainwired</span>
             </span>
@@ -137,9 +194,12 @@ export function Sidebar({ active }: { active: NavKey | null }) {
         </div>
 
         <div ref={strip} className={styles.groups}>
+          <span ref={indicator} className={styles.indicator} aria-hidden="true" />
           {GROUPS.map((group) => (
             <div key={group.label} className={styles.group}>
-              <span className={styles.groupLabel}>{group.label}</span>
+              <span className={styles.groupLabel} data-nav-fade>
+                {group.label}
+              </span>
               {group.items.map((item) => {
                 const count = counts[item.key];
                 const current = item.key === active;
@@ -150,6 +210,7 @@ export function Sidebar({ active }: { active: NavKey | null }) {
                     to={item.to}
                     className={styles.item}
                     aria-current={current ? 'page' : undefined}
+                    title={collapsed ? item.label : undefined}
                   >
                     <svg
                       aria-hidden="true"
@@ -164,9 +225,13 @@ export function Sidebar({ active }: { active: NavKey | null }) {
                     >
                       <path d={ICONS[item.key]} />
                     </svg>
-                    <span className={styles.itemLabel}>{item.label}</span>
+                    <span className={styles.itemLabel} data-nav-fade>
+                      {item.label}
+                    </span>
                     {count !== undefined && (
-                      <span className={styles.count}>{formatCount(count)}</span>
+                      <span className={styles.count} data-nav-fade>
+                        {formatCount(count)}
+                      </span>
                     )}
                   </Link>
                 );
@@ -175,7 +240,7 @@ export function Sidebar({ active }: { active: NavKey | null }) {
           ))}
         </div>
 
-        <div className={styles.user}>
+        <div className={styles.user} data-nav-user>
           <button
             ref={footTrigger}
             type="button"

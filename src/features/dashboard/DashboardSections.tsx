@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar, AvatarName } from '../../components/Avatar';
 import { buttonClass } from '../../components/Button';
@@ -6,7 +6,7 @@ import { Card } from '../../components/Card';
 import { BarChart } from '../../components/charts/BarChart';
 import { DataTable, type Column } from '../../components/DataTable';
 import { Icon, ICONS } from '../../components/Icon';
-import { KpiCard, KpiGrid } from '../../components/KpiCard';
+import { KpiCard, KpiGrid, useKpiReveal } from '../../components/KpiCard';
 import { Segmented } from '../../components/Segmented';
 import { Skeleton } from '../../components/Skeleton';
 import { StatusPill } from '../../components/StatusPill';
@@ -121,6 +121,8 @@ export function PeriodTotals({
   // The figures stay on the period they were read for until the new one arrives.
   const period = data?.period;
   const perDay = (value: number) => value / (period?.days ?? days);
+  const grid = useRef<HTMLDivElement>(null);
+  useKpiReveal(grid);
   return (
     <section className={styles.group} aria-label={`Last ${days} days`}>
       <div className={styles.groupHead}>
@@ -132,7 +134,7 @@ export function PeriodTotals({
           onChange={(value) => onDaysChange(Number(value) as PeriodDays)}
         />
       </div>
-      <div className={styles.periodGrid}>
+      <div ref={grid} className={styles.periodGrid}>
         <KpiCard
           tone="milk"
           icon={<Icon d={ICONS.milk} />}

@@ -40,6 +40,19 @@ Other commands: `npm run typecheck`, `npm run lint`, `npm test`, `npm run build`
 `dist/`), `npx vite preview` (serve that build), `npm run e2e` (Playwright, builds and serves its own copy)
 and `npm run shots` (screenshots of every screen at 1440 and 390 px).
 
+## Motion and the glass look
+
+The interface uses two animation libraries, added with the owner's approval on top of the original stack:
+`framer-motion` 14.6.0 (button press, card hover lift, animated counters, dialog, menu and toast entrances) and
+`gsap` 3.15.0 (the dashboard load sequence, the sidebar collapse, page transitions and chart reveals). GSAP loads
+as its own file after the first paint. Glass (blurred, translucent surfaces) is used only on the sidebar, top bar,
+dialogs, menus and toasts; cards, tables and forms stay solid. Browsers without `backdrop-filter` get solid colours.
+
+**Reduced motion:** when the system setting "reduce motion" is on, nothing moves. States change at once, counters
+show their final values straight away and the sidebar snaps open or shut. The shared switch is `src/lib/motion.ts`.
+The test suite runs with reduced motion on (`playwright.config.ts`), so no test waits for an animation and
+screenshots show the final state. The sidebar's collapsed state is remembered in `localStorage`.
+
 ## Deploy to Vercel
 
 Framework Vite, build command `npm run build`, output folder `dist`, and the environment variables

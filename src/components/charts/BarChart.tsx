@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useRef, type ReactNode } from 'react';
 import {
   Bar,
   CartesianGrid,
@@ -11,6 +11,7 @@ import {
   YAxis,
 } from 'recharts';
 import { AXIS_COLOUR, AXIS_TICK, ChartLegend, chartTooltip, GRID_COLOUR } from './ChartParts';
+import { useChartReveal } from './useChartReveal';
 import { useIsPhone } from './useIsPhone';
 import styles from './charts.module.css';
 
@@ -105,11 +106,13 @@ export function BarChart<Row extends object>({
   maxBarSize,
 }: BarChartProps<Row>) {
   const isPhone = useIsPhone();
+  const figure = useRef<HTMLElement>(null);
+  useChartReveal(figure);
   const stacked = series.length > 1;
   const emphasisFill = (index?: number) =>
     index === labelEmphasisIndex ? labelEmphasisColor : undefined;
   return (
-    <figure className={styles.chart} aria-label={label}>
+    <figure ref={figure} className={styles.chart} aria-label={label}>
       {stacked && !hideLegend && (
         <ChartLegend
           items={series.map((item) => ({

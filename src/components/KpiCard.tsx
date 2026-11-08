@@ -1,7 +1,14 @@
-import type { ReactNode } from 'react';
+import { useLayoutEffect, useRef, type ReactNode, type RefObject } from 'react';
 import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useReducedMotion } from '../lib/motion';
+import {
+  entryDelay,
+  GSAP_EASE,
+  runGsap,
+  STAGGER,
+  STAGGER_MAX,
+  useReducedMotion,
+} from '../lib/motion';
 import { AnimatedValue } from './AnimatedValue';
 import styles from './KpiCard.module.css';
 
@@ -98,7 +105,40 @@ export function KpiCard({
   );
 }
 
+/**
+ * The cards of a grid reveal one after another the first time the grid appears (GSAP: opacity and
+ * clip-path only, so it never touches the card's own hover transform). Only the first few stagger.
+ */
+export function useKpiReveal(grid: RefObject<HTMLElement | null>): void {
+  useLayoutEffect(() => {
+    const element = grid.current;
+    return runGsap(element, (gsap) => {
+      const cards = Array.from(element?.querySelectorAll('[data-kpi]') ?? []).slice(0, STAGGER_MAX);
+      if (cards.length === 0) return;
+      gsap.fromTo(
+        cards,
+        { opacity: 0, clipPath: 'inset(0% 0% 100% 0% round 16px)' },
+        {
+          opacity: 1,
+          clipPath: 'inset(0% 0% 0% 0% round 16px)',
+          duration: 0.45,
+          delay: entryDelay('kpi'),
+          stagger: STAGGER,
+          ease: GSAP_EASE.out,
+          clearProps: 'opacity,clipPath',
+        },
+      );
+    });
+  }, [grid]);
+}
+
 /** The row of KPI cards: as many as fit on desktop, two across on a phone. */
 export function KpiGrid({ children }: { children: ReactNode }) {
-  return <div className={styles.grid}>{children}</div>;
+  const grid = useRef<HTMLDivElement>(null);
+  useKpiReveal(grid);
+  return (
+    <div ref={grid} className={styles.grid}>
+      {children}
+    </div>
+  );
 }

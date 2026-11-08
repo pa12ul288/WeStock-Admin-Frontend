@@ -50,7 +50,10 @@ test('the table header stays in view as the page scrolls', async ({ page }) => {
     window.scrollBy(0, (box?.top ?? 0) + 300);
     await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
   });
-  await expect.poll(async () => Math.round((await header.boundingBox())?.y ?? -1)).toBe(0);
+  // The glass top bar stays at the top of the page, so the header stops just below it.
+  const barHeight = Math.round((await page.locator('[data-topbar]').boundingBox())?.height ?? 0);
+  expect(barHeight).toBeGreaterThan(0);
+  await expect.poll(async () => Math.round((await header.boundingBox())?.y ?? -1)).toBe(barHeight);
   await page.screenshot({ path: '.shots/gallery-sticky-1440.png' });
 });
 
