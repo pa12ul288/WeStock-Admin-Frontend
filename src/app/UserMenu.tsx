@@ -1,8 +1,11 @@
 import { useRef } from 'react';
+import { m, useIsPresent } from 'framer-motion';
 import { useToast } from '../components/Toast';
 import type { StaffRole } from '../data/types';
 import { isDemoAuth, useResetDemoData, useSetDemoRole, useStaff } from '../features/auth/queries';
 import { errorMessage } from '../lib/errors';
+import { useReducedMotion } from '../lib/motion';
+import { popProps } from '../lib/motionProps';
 import { ROLE_LABELS } from './RoleGate';
 import { useDismiss } from './useDismiss';
 import styles from './UserMenu.module.css';
@@ -22,7 +25,9 @@ export function UserMenu({
   const reset = useResetDemoData();
   const toast = useToast();
   const box = useRef<HTMLDivElement>(null);
-  useDismiss(true, onClose, box, `[data-user-menu-trigger="${USER_MENU_TRIGGER}"]`);
+  const reduced = useReducedMotion();
+  const present = useIsPresent();
+  useDismiss(present, onClose, box, `[data-user-menu-trigger="${USER_MENU_TRIGGER}"]`);
 
   if (!staff) return null;
 
@@ -35,7 +40,14 @@ export function UserMenu({
   }
 
   return (
-    <div ref={box} className={styles.menu} role="dialog" aria-label="Account menu">
+    <m.div
+      ref={box}
+      className={styles.menu}
+      role="dialog"
+      aria-label="Account menu"
+      style={{ transformOrigin: '50% 100%', pointerEvents: present ? undefined : 'none' }}
+      {...popProps(reduced, 'bottom')}
+    >
       <div className={styles.who}>
         <div className={styles.whoText}>
           <span className={styles.name}>{staff.full_name}</span>
@@ -81,6 +93,6 @@ export function UserMenu({
       <button type="button" className={styles.action} onClick={onSignOut}>
         Sign out
       </button>
-    </div>
+    </m.div>
   );
 }

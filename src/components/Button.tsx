@@ -1,4 +1,6 @@
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import { m, type HTMLMotionProps } from 'framer-motion';
+import { useReducedMotion } from '../lib/motion';
 import styles from './Button.module.css';
 
 type Variant = 'primary' | 'secondary' | 'danger';
@@ -9,22 +11,28 @@ export function buttonClass(variant: Variant = 'secondary', size: Size = 'md'): 
   return [styles.button, styles[variant], size === 'sm' ? styles.small : ''].join(' ');
 }
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends HTMLMotionProps<'button'> {
   variant?: Variant;
   size?: Size;
 }
 
+/** A button that presses in a little (Framer Motion; plain when motion is reduced). */
 export function Button({
   variant = 'secondary',
   size = 'md',
   type = 'button',
   className,
+  disabled,
   ...rest
 }: ButtonProps) {
+  const reduced = useReducedMotion();
   return (
-    <button
+    <m.button
       type={type}
+      disabled={disabled}
       className={[buttonClass(variant, size), className].filter(Boolean).join(' ')}
+      whileTap={reduced || disabled ? undefined : { scale: 0.97 }}
+      transition={{ duration: 0.12 }}
       {...rest}
     />
   );
@@ -33,13 +41,21 @@ export function Button({
 /** The square button look used for row actions, for a `Link` too. */
 export const iconButtonClass = styles.icon;
 
-interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface IconButtonProps extends HTMLMotionProps<'button'> {
   'aria-label': string;
   children: ReactNode;
 }
 
-export function IconButton({ type = 'button', className, ...rest }: IconButtonProps) {
+export function IconButton({ type = 'button', className, disabled, ...rest }: IconButtonProps) {
+  const reduced = useReducedMotion();
   return (
-    <button type={type} className={[styles.icon, className].filter(Boolean).join(' ')} {...rest} />
+    <m.button
+      type={type}
+      disabled={disabled}
+      className={[styles.icon, className].filter(Boolean).join(' ')}
+      whileTap={reduced || disabled ? undefined : { scale: 0.92 }}
+      transition={{ duration: 0.12 }}
+      {...rest}
+    />
   );
 }

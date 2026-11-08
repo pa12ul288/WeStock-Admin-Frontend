@@ -1,5 +1,8 @@
 import type { ReactNode } from 'react';
+import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { useReducedMotion } from '../lib/motion';
+import { AnimatedValue } from './AnimatedValue';
 import styles from './KpiCard.module.css';
 
 export type KpiTone = 'green' | 'amber' | 'red' | 'blue' | 'pink' | 'grey' | 'milk' | 'navy';
@@ -27,6 +30,8 @@ interface KpiCardProps {
   to?: string;
 }
 
+const MotionLink = m.create(Link);
+
 const TREND_PREFIX = { up: '↑', down: '↓', same: '=' };
 
 export function KpiCard({
@@ -40,6 +45,7 @@ export function KpiCard({
   chip,
   to,
 }: KpiCardProps) {
+  const reduced = useReducedMotion();
   const content = (
     <>
       <div className={styles.head}>
@@ -52,7 +58,9 @@ export function KpiCard({
         {step && <span className={styles.step}>{step}</span>}
       </div>
       <div className={styles.values}>
-        <span className={styles.value}>{value}</span>
+        <span className={styles.value}>
+          <AnimatedValue value={value} />
+        </span>
         {trend && (
           <span className={styles.trend} data-direction={trend.direction}>
             {!trend.plain && <span aria-hidden="true">{TREND_PREFIX[trend.direction]}</span>}{' '}
@@ -64,12 +72,29 @@ export function KpiCard({
       {note && <span className={styles.note}>{note}</span>}
     </>
   );
+  // Framer Motion owns the card's transform (hover lift, press); GSAP's entrance on the grid only
+  // touches opacity and clip-path, so the two never meet on one property.
+  const lift = reduced ? undefined : { y: -3 };
   return to ? (
-    <Link to={to} className={`${styles.card} ${styles.link}`}>
+    <MotionLink
+      to={to}
+      className={`${styles.card} ${styles.link}`}
+      data-kpi
+      whileHover={lift}
+      whileTap={reduced ? undefined : { scale: 0.985 }}
+      transition={{ duration: 0.18 }}
+    >
       {content}
-    </Link>
+    </MotionLink>
   ) : (
-    <div className={styles.card}>{content}</div>
+    <m.div
+      className={styles.card}
+      data-kpi
+      whileHover={reduced ? undefined : { y: -2 }}
+      transition={{ duration: 0.18 }}
+    >
+      {content}
+    </m.div>
   );
 }
 

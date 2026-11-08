@@ -1,8 +1,11 @@
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
+import { AnimatePresence, m } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { useToast } from '../components/Toast';
 import type { SearchHit } from '../data/types';
 import { errorMessage } from '../lib/errors';
+import { useReducedMotion } from '../lib/motion';
+import { popProps } from '../lib/motionProps';
 import { useGlobalSearch, useSearchNow } from './queries';
 import { useDismiss } from './useDismiss';
 import styles from './GlobalSearch.module.css';
@@ -38,6 +41,7 @@ export function GlobalSearch() {
   const navigate = useNavigate();
   const toast = useToast();
   const listId = useId();
+  const reduced = useReducedMotion();
   const box = useRef<HTMLDivElement>(null);
   const input = useRef<HTMLInputElement>(null);
 
@@ -149,56 +153,65 @@ export function GlobalSearch() {
         onFocus={() => setOpen(true)}
         onKeyDown={onKeyDown}
       />
-      {showList && (
-        <div className={styles.pop} id={listId} role="listbox" aria-label="Search results">
-          <span className={styles.heading}>{term === '' ? 'Recent' : 'Results'}</span>
-          {hits.map((hit, index) => (
-            <Link
-              key={`${hit.kind}-${hit.id}`}
-              id={optionId(index)}
-              to={hit.href}
-              role="option"
-              aria-selected={index === active}
-              className={styles.hit}
-              tabIndex={-1}
-              onMouseEnter={() => setActive(index)}
-              onClick={(event) => {
-                event.preventDefault();
-                go(hit);
-              }}
-            >
-              <span className={styles.icon} data-kind={hit.kind}>
-                <svg
-                  aria-hidden="true"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.9"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d={KIND_ICON[hit.kind]} />
-                </svg>
-              </span>
-              <span className={styles.hitText}>
-                <span className={styles.title}>{hit.title}</span>
-                <span className={styles.sub}>{hit.subtitle}</span>
-              </span>
-            </Link>
-          ))}
-          {search.isError && term !== '' && (
-            <span className={styles.message}>{errorMessage(search.error)}</span>
-          )}
-          {!search.isError && term !== '' && hits.length === 0 && settled && (
-            <span className={styles.message}>No farm, farmer or tag matches “{term}”.</span>
-          )}
-          {!search.isError && term !== '' && hits.length === 0 && !settled && (
-            <span className={styles.message}>Searching…</span>
-          )}
-        </div>
-      )}
+      <AnimatePresence>
+        {showList && (
+          <m.div
+            className={styles.pop}
+            id={listId}
+            role="listbox"
+            aria-label="Search results"
+            style={{ transformOrigin: '0 0' }}
+            {...popProps(reduced)}
+          >
+            <span className={styles.heading}>{term === '' ? 'Recent' : 'Results'}</span>
+            {hits.map((hit, index) => (
+              <Link
+                key={`${hit.kind}-${hit.id}`}
+                id={optionId(index)}
+                to={hit.href}
+                role="option"
+                aria-selected={index === active}
+                className={styles.hit}
+                tabIndex={-1}
+                onMouseEnter={() => setActive(index)}
+                onClick={(event) => {
+                  event.preventDefault();
+                  go(hit);
+                }}
+              >
+                <span className={styles.icon} data-kind={hit.kind}>
+                  <svg
+                    aria-hidden="true"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.9"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d={KIND_ICON[hit.kind]} />
+                  </svg>
+                </span>
+                <span className={styles.hitText}>
+                  <span className={styles.title}>{hit.title}</span>
+                  <span className={styles.sub}>{hit.subtitle}</span>
+                </span>
+              </Link>
+            ))}
+            {search.isError && term !== '' && (
+              <span className={styles.message}>{errorMessage(search.error)}</span>
+            )}
+            {!search.isError && term !== '' && hits.length === 0 && settled && (
+              <span className={styles.message}>No farm, farmer or tag matches “{term}”.</span>
+            )}
+            {!search.isError && term !== '' && hits.length === 0 && !settled && (
+              <span className={styles.message}>Searching…</span>
+            )}
+          </m.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

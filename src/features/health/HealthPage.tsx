@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { AnimatePresence, m } from 'framer-motion';
 import { CAN_EDIT, RoleGate, useHasRole } from '../../app/RoleGate';
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
@@ -8,6 +9,8 @@ import { PAGE_SIZE, Pagination } from '../../components/Pagination';
 import { Segmented } from '../../components/Segmented';
 import type { UUID } from '../../data/types';
 import { formatCount, indiaDay } from '../../lib/format';
+import { useReducedMotion } from '../../lib/motion';
+import { panelProps } from '../../lib/motionProps';
 import { useClearUrlParams, useLastPageGuard, useUrlPage, useUrlState } from '../../lib/url-state';
 import { useAllFarms } from '../farmers/queries';
 import { useSpecies } from '../livestock/queries';
@@ -35,6 +38,7 @@ const TAB_NOTES = {
 };
 
 export function HealthPage() {
+  const reduced = useReducedMotion();
   const [values, setValues] = useUrlState({ tab: 'vax', farm: '', species: '' });
   const [page, setPage] = useUrlPage();
   const clearFilters = useClearUrlParams(FILTER_KEYS);
@@ -174,18 +178,22 @@ export function HealthPage() {
         healthFailed={lists.healthFailed}
       />
 
-      {scheduling && (
-        <RoleGate allow={CAN_EDIT}>
-          <SchedulePanel
-            defaultFarmId={farmId}
-            onCreated={() => {
-              setScheduling(false);
-              setValues({ tab: 'vax' });
-            }}
-            onClose={() => setScheduling(false)}
-          />
-        </RoleGate>
-      )}
+      <AnimatePresence>
+        {scheduling && (
+          <RoleGate allow={CAN_EDIT}>
+            <m.div {...panelProps(reduced)}>
+              <SchedulePanel
+                defaultFarmId={farmId}
+                onCreated={() => {
+                  setScheduling(false);
+                  setValues({ tab: 'vax' });
+                }}
+                onClose={() => setScheduling(false)}
+              />
+            </m.div>
+          </RoleGate>
+        )}
+      </AnimatePresence>
 
       <Card flush>
         <div className={styles.tabsRow}>

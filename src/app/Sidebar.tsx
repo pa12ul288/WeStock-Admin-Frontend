@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useToast } from '../components/Toast';
 import { useSignOut, useStaff } from '../features/auth/queries';
@@ -214,18 +215,20 @@ export function Sidebar({ active }: { active: NavKey | null }) {
           </button>
         </div>
 
-        {menuOpen && (
-          <UserMenu
-            onClose={(viaEscape) => {
-              setMenuOpen(false);
-              if (viaEscape) {
-                footTrigger.current?.focus();
-                phoneTrigger.current?.focus();
-              }
-            }}
-            onSignOut={doSignOut}
-          />
-        )}
+        <AnimatePresence>
+          {menuOpen && (
+            <UserMenu
+              onClose={(viaEscape) => {
+                setMenuOpen(false);
+                if (viaEscape) {
+                  footTrigger.current?.focus();
+                  phoneTrigger.current?.focus();
+                }
+              }}
+              onSignOut={doSignOut}
+            />
+          )}
+        </AnimatePresence>
       </nav>
     </aside>
   );

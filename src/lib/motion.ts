@@ -15,7 +15,11 @@ import type { gsap as Gsap } from 'gsap';
 
 export const DURATION = { fast: 0.15, base: 0.24, slow: 0.4 } as const;
 /** The same curves as `--ease-out` and `--ease-in-out`. */
-export const EASE = { out: [0.22, 1, 0.36, 1], inOut: [0.65, 0, 0.35, 1] } as const;
+type Bezier = [number, number, number, number];
+export const EASE: { out: Bezier; inOut: Bezier } = {
+  out: [0.22, 1, 0.36, 1],
+  inOut: [0.65, 0, 0.35, 1],
+};
 export const GSAP_EASE = { out: 'power3.out', inOut: 'power2.inOut' } as const;
 /** Gap between staggered items, and the most items that stagger (the rest appear with the last). */
 export const STAGGER = 0.06;

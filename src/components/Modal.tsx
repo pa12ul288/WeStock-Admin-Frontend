@@ -1,5 +1,8 @@
 import { useEffect, useId, useLayoutEffect, useRef, type FormEvent, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
+import { m } from 'framer-motion';
+import { DURATION, EASE, reducedMotionNow, useReducedMotion } from '../lib/motion';
+import { exitGhost } from './exitGhost';
 import { lastClickY } from './clickPosition';
 import styles from './Modal.module.css';
 
@@ -34,6 +37,16 @@ export function Modal({
 }: ModalProps) {
   const titleId = useId();
   const panel = useRef<HTMLFormElement>(null);
+  const overlay = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+
+  // The page removes the dialog at once; leave a fading copy behind for the exit.
+  useLayoutEffect(() => {
+    const element = overlay.current;
+    return () => {
+      if (element && !reducedMotionNow()) exitGhost(element);
+    };
+  }, []);
 
   useLayoutEffect(() => {
     const element = panel.current;
@@ -78,16 +91,23 @@ export function Modal({
   }
 
   return createPortal(
-    <div
+    <m.div
+      ref={overlay}
       className={styles.overlay}
+      initial={reduced ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: DURATION.base, ease: EASE.out }}
       onKeyDown={onKeyDown}
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
     >
-      <form
+      <m.form
         ref={panel}
         className={styles.modal}
+        initial={reduced ? false : { opacity: 0, y: 14, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: DURATION.base, ease: EASE.out }}
         data-size={size}
         role="dialog"
         aria-modal="true"
@@ -129,8 +149,8 @@ export function Modal({
             {footer}
           </div>
         )}
-      </form>
-    </div>,
+      </m.form>
+    </m.div>,
     document.body,
   );
 }

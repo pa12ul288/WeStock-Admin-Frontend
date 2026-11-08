@@ -1,0 +1,12 @@
+/* Both texts share one cell, so the counting never changes the width of the number. */
+.stack {
+  display: inline-grid;
+}
+
+.stack > * {
+  grid-area: 1 / 1;
+}
+
+.final {
+  opacity: 0;
+}

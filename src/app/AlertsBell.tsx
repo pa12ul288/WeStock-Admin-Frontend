@@ -1,9 +1,12 @@
 import { useRef, useState } from 'react';
+import { AnimatePresence, m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ATTENTION_GROUPS as GROUPS } from '../features/dashboard/attention';
 import { useOverview } from '../features/dashboard/queries';
 import { errorMessage } from '../lib/errors';
 import { formatCount } from '../lib/format';
+import { useReducedMotion } from '../lib/motion';
+import { popProps } from '../lib/motionProps';
 import { useDismiss } from './useDismiss';
 import styles from './AlertsBell.module.css';
 
@@ -28,6 +31,7 @@ function writeSeen(value: string): void {
 export function AlertsBell() {
   const { data, error, isPending } = useOverview();
   const [open, setOpen] = useState(false);
+  const reduced = useReducedMotion();
   const [seen, setSeen] = useState(readSeen);
   const box = useRef<HTMLDivElement>(null);
   const button = useRef<HTMLButtonElement>(null);
@@ -76,57 +80,65 @@ export function AlertsBell() {
           </span>
         )}
       </button>
-      {open && (
-        <div className={styles.pop} role="dialog" aria-label="Alerts">
-          <div className={styles.head}>
-            <span className={styles.heading}>Alerts</span>
-            {unread > 0 && (
-              <button
-                type="button"
-                className={styles.markRead}
-                onClick={() => {
-                  setSeen(fingerprint);
-                  writeSeen(fingerprint);
-                }}
-              >
-                Mark all as read
-              </button>
-            )}
-          </div>
-          {isPending && <p className={styles.message}>Loading…</p>}
-          {error && <p className={styles.message}>{errorMessage(error)}</p>}
-          {attention &&
-            GROUPS.map((group) => (
-              <Link
-                key={group.key}
-                to={group.to}
-                className={styles.row}
-                onClick={() => setOpen(false)}
-              >
-                <span className={styles.icon} data-tone={group.tone}>
-                  <svg
-                    aria-hidden="true"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.9"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d={group.icon} />
-                  </svg>
-                </span>
-                <span className={styles.text}>
-                  <span className={styles.title}>{group.title}</span>
-                  <span className={styles.note}>{group.note}</span>
-                </span>
-                <span className={styles.value}>{formatCount(attention[group.key])}</span>
-              </Link>
-            ))}
-        </div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <m.div
+            className={styles.pop}
+            role="dialog"
+            aria-label="Alerts"
+            style={{ transformOrigin: '100% 0' }}
+            {...popProps(reduced)}
+          >
+            <div className={styles.head}>
+              <span className={styles.heading}>Alerts</span>
+              {unread > 0 && (
+                <button
+                  type="button"
+                  className={styles.markRead}
+                  onClick={() => {
+                    setSeen(fingerprint);
+                    writeSeen(fingerprint);
+                  }}
+                >
+                  Mark all as read
+                </button>
+              )}
+            </div>
+            {isPending && <p className={styles.message}>Loading…</p>}
+            {error && <p className={styles.message}>{errorMessage(error)}</p>}
+            {attention &&
+              GROUPS.map((group) => (
+                <Link
+                  key={group.key}
+                  to={group.to}
+                  className={styles.row}
+                  onClick={() => setOpen(false)}
+                >
+                  <span className={styles.icon} data-tone={group.tone}>
+                    <svg
+                      aria-hidden="true"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.9"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d={group.icon} />
+                    </svg>
+                  </span>
+                  <span className={styles.text}>
+                    <span className={styles.title}>{group.title}</span>
+                    <span className={styles.note}>{group.note}</span>
+                  </span>
+                  <span className={styles.value}>{formatCount(attention[group.key])}</span>
+                </Link>
+              ))}
+          </m.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
