@@ -157,7 +157,13 @@ export function DataTable<Row>({
   }
 
   return (
-    <div ref={scroller} className={styles.scroller}>
+    <div
+      ref={scroller}
+      className={styles.scroller}
+      tabIndex={0}
+      role="region"
+      aria-label={`${label}, scrolls sideways`}
+    >
       <table className={styles.table} aria-label={label} aria-busy={loading}>
         <thead ref={head} className={styles.head}>
           <tr>

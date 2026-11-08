@@ -1,3 +1,4 @@
+import type { DataSource } from '../src/data/source';
 import { readFile } from 'node:fs/promises';
 import { expect, test, type Download, type Page } from '@playwright/test';
 import { FEATURED } from '../src/data/demo/featured';
@@ -8,7 +9,6 @@ const SUPPORT = 'priya@brainwired.demo';
 const VIEWER = 'fatima@brainwired.demo';
 
 /** Reads the data layer the running app is using: same module instance on the dev server. */
-const DATA_MODULE = '/src/data/index.ts';
 
 interface AuditRow {
   action: string;
@@ -19,11 +19,12 @@ interface AuditRow {
 
 async function latestAudit(page: Page, limit = 5): Promise<AuditRow[]> {
   return page.evaluate(
-    async ({ path, limit }) => {
-      const { dataSource } = await import(/* @vite-ignore */ path);
+    async ({ limit }) => {
+      const { dataSource } = (window as unknown as { __westock: { dataSource: DataSource } })
+        .__westock;
       return dataSource.listAudit({ limit });
     },
-    { path: DATA_MODULE, limit },
+    { limit },
   );
 }
 
@@ -313,11 +314,12 @@ test.describe('farm page', () => {
     await expect(page.getByText('Enter a temperature above 0.')).toBeVisible();
 
     const settingsBefore = await page.evaluate(
-      async ({ path, id }) => {
-        const { dataSource } = await import(/* @vite-ignore */ path);
+      async ({ id }) => {
+        const { dataSource } = (window as unknown as { __westock: { dataSource: DataSource } })
+          .__westock;
         return (await dataSource.getFarm(id)).farm.settings;
       },
-      { path: DATA_MODULE, id: FEATURED.farms.shreeGanesh },
+      { id: FEATURED.farms.shreeGanesh },
     );
 
     await page.getByLabel('Farm name').fill('Shree Ganesh Gotha');
@@ -333,11 +335,12 @@ test.describe('farm page', () => {
     await expect(page).not.toHaveURL(/tab=/);
 
     const saved = await page.evaluate(
-      async ({ path, id }) => {
-        const { dataSource } = await import(/* @vite-ignore */ path);
+      async ({ id }) => {
+        const { dataSource } = (window as unknown as { __westock: { dataSource: DataSource } })
+          .__westock;
         return (await dataSource.getFarm(id)).farm;
       },
-      { path: DATA_MODULE, id: FEATURED.farms.shreeGanesh },
+      { id: FEATURED.farms.shreeGanesh },
     );
     expect(saved).toMatchObject({ lat: 16.8, lng: 74.5, description: 'Moved to the new shed.' });
     expect(saved.settings).toEqual({
@@ -459,14 +462,15 @@ test.describe('role gating', () => {
   test('the adapter refuses a support delete too', async ({ page }) => {
     await openFarm(page, SUPPORT);
     const code = await page.evaluate(
-      async ({ path, id }) => {
-        const { dataSource } = await import(/* @vite-ignore */ path);
+      async ({ id }) => {
+        const { dataSource } = (window as unknown as { __westock: { dataSource: DataSource } })
+          .__westock;
         return dataSource.deleteFarm(id).then(
           () => 'deleted',
           (error: { code: string }) => error.code,
         );
       },
-      { path: DATA_MODULE, id: FEATURED.farms.shreeGanesh },
+      { id: FEATURED.farms.shreeGanesh },
     );
     expect(code).toBe('not_allowed');
   });

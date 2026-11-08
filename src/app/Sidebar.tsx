@@ -99,7 +99,11 @@ export function Sidebar({ active }: { active: NavKey | null }) {
     <aside className={styles.side}>
       <nav className={styles.inner} aria-label="Admin navigation">
         <div className={styles.top}>
-          <Link to="/" className={styles.brand} aria-label="WeSTOCK Admin, go to the dashboard">
+          <Link
+            to="/"
+            className={styles.brand}
+            aria-label="WeSTOCK Admin · brainwired, go to the dashboard"
+          >
             <span className={styles.logo} aria-hidden="true">
               <svg
                 width="21"
@@ -115,7 +119,7 @@ export function Sidebar({ active }: { active: NavKey | null }) {
               </svg>
             </span>
             <span className={styles.brandText}>
-              <span className={styles.wordmark}>WeSTOCK</span>
+              <span className={styles.wordmark}>WeSTOCK</span>{' '}
               <span className={styles.brandSub}>Admin · brainwired</span>
             </span>
           </Link>
@@ -127,9 +131,8 @@ export function Sidebar({ active }: { active: NavKey | null }) {
             aria-expanded={menuOpen}
             data-user-menu-trigger={USER_MENU_TRIGGER}
             onClick={() => setMenuOpen((open) => !open)}
-          >
-            {initials(name)}
-          </button>
+            data-initials={initials(name)}
+          />
         </div>
 
         <div ref={strip} className={styles.groups}>
@@ -181,11 +184,9 @@ export function Sidebar({ active }: { active: NavKey | null }) {
             data-user-menu-trigger={USER_MENU_TRIGGER}
             onClick={() => setMenuOpen((open) => !open)}
           >
-            <span className={styles.avatar} aria-hidden="true">
-              {initials(name)}
-            </span>
+            <span className={styles.avatar} aria-hidden="true" data-initials={initials(name)} />
             <span className={styles.userText}>
-              <span className={styles.userName}>{name}</span>
+              <span className={styles.userName}>{name}</span>{' '}
               <span className={styles.userRole}>{role}</span>
             </span>
           </button>

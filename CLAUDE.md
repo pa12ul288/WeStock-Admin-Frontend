@@ -40,7 +40,7 @@ npm run build       # type-check + production build to dist/
 npm run typecheck
 npm run lint
 npm test            # vitest
-npm run e2e         # playwright (starts the dev server)
+npm run e2e         # playwright (builds the app in e2e mode and serves it with vite preview)
 npm run shots       # playwright: screenshot every route at 1440 and 390 into .shots/
 ```
 

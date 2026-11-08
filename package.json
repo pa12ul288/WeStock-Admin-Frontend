@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "test": "vitest run",
     "e2e": "playwright test",
+    "build:e2e": "vite build --mode e2e --outDir .e2e-dist",
     "shots": "playwright test e2e/shots.spec.ts"
   },
   "dependencies": {
@@ -23,6 +24,7 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@eslint/js": "^9.39.5",
     "@playwright/test": "^1.65.0",
     "@testing-library/dom": "^10.4.2",

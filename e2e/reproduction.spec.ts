@@ -191,9 +191,9 @@ test.describe('reproduction', () => {
     ).toBeVisible();
     const photo = dialog(page).getByRole('img', { name: 'Photo of the insemination slip' });
     await expect(photo).toBeVisible();
-    expect(decodeURIComponent((await photo.getAttribute('src')) ?? '')).toContain(tube);
+    expect(await photo.innerHTML()).toContain(tube);
     await expect(dialog(page).getByText('Tube number entered in the app')).toBeVisible();
-    await expect(dialog(page).getByText(tube)).toBeVisible();
+    await expect(dialog(page).locator('b').filter({ hasText: tube })).toBeVisible();
 
     await dialog(page).getByRole('button', { name: 'Cancel' }).click();
     await expect(dialog(page)).toHaveCount(0);

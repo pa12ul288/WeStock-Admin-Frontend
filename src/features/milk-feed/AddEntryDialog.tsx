@@ -219,7 +219,7 @@ export function AddEntryDialog({ defaultFarmId, onAdded, onClose }: AddEntryDial
         />
       </div>
       <Field label="Farm">
-        <select className={inputClass} {...register('farm')}>
+        <select className={inputClass} {...register('farm')} value={farmId}>
           {farmRows.map((row) => (
             <option key={row.id} value={row.id}>
               {row.name}

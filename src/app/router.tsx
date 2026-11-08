@@ -20,19 +20,21 @@ const shell = (crumb: string, page: string, nav: ShellHandle['nav']): ShellHandl
   nav,
 });
 
-// import.meta.env.DEV is false in `vite build`, so the gallery and its import leave the bundle.
-const devRoutes: RouteObject[] = import.meta.env.DEV
-  ? [
-      {
-        path: 'dev/components',
-        lazy: async () => {
-          const { ComponentsPage } = await import('../features/dev/ComponentsPage');
-          return { Component: ComponentsPage };
+// The gallery is only in `vite dev` and the e2e build (`vite build --mode e2e`); the real build
+// (mode production) leaves it and its import out of the bundle.
+const devRoutes: RouteObject[] =
+  import.meta.env.DEV || import.meta.env.MODE === 'e2e'
+    ? [
+        {
+          path: 'dev/components',
+          lazy: async () => {
+            const { ComponentsPage } = await import('../features/dev/ComponentsPage');
+            return { Component: ComponentsPage };
+          },
+          handle: shell('Dev', 'Components', null),
         },
-        handle: shell('Dev', 'Components', null),
-      },
-    ]
-  : [];
+      ]
+    : [];
 
 export const routes: RouteObject[] = [
   { path: '/login', element: <LoginPage /> },

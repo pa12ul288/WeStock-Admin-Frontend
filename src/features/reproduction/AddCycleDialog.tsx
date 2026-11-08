@@ -124,7 +124,7 @@ export function AddCycleDialog({ defaultFarmId, onAdded, onClose }: AddCycleDial
     >
       <div className={styles.dialogGrid}>
         <Field label="Farm" error={errors.farm?.message}>
-          <select className={inputClass} {...register('farm')}>
+          <select className={inputClass} {...register('farm')} value={farmId}>
             {farmRows.map((row) => (
               <option key={row.id} value={row.id}>
                 {row.name}

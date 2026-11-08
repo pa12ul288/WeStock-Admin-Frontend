@@ -1,3 +1,4 @@
+import type { DataSource } from '../src/data/source';
 import { readFile } from 'node:fs/promises';
 import { expect, test, type Page } from '@playwright/test';
 import { FEATURED } from '../src/data/demo/featured';
@@ -204,10 +205,11 @@ test.describe('add animal', () => {
 
     await page.reload();
     await expect(rows(page).first()).toContainText('Chitra');
-    const log = await page.evaluate(async (path) => {
-      const { dataSource } = await import(/* @vite-ignore */ path);
+    const log = await page.evaluate(async () => {
+      const { dataSource } = (window as unknown as { __westock: { dataSource: DataSource } })
+        .__westock;
       return dataSource.listAudit({ table_name: 'animals', limit: 1 });
-    }, '/src/data/index.ts');
+    });
     expect(log[0]).toMatchObject({ action: 'insert', table_name: 'animals' });
   });
 

@@ -186,6 +186,12 @@
   display: flex;
 }
 
+/* The initials come from CSS so the button's name is exactly its aria-label's words. */
+.avatar::before,
+.phoneUser::before {
+  content: attr(data-initials);
+}
+
 .userText {
   display: flex;
   flex: 1;

@@ -55,6 +55,7 @@ export function AddAnimalDialog({
     register,
     handleSubmit,
     setError,
+    watch,
     formState: { errors },
   } = useForm<Values>({
     resolver: zodResolver(schema),
@@ -71,6 +72,8 @@ export function AddAnimalDialog({
     },
     resetOptions: { keepDirtyValues: true },
   });
+
+  const farmId = watch('farm');
 
   const submit = handleSubmit((values) => {
     setFormError(null);
@@ -130,7 +133,7 @@ export function AddAnimalDialog({
     >
       {!farm && (
         <Field label="Farm" error={errors.farm?.message}>
-          <select className={inputClass} {...register('farm')}>
+          <select className={inputClass} {...register('farm')} value={farmId}>
             {farmRows.map((row) => (
               <option key={row.id} value={row.id}>
                 {row.name}

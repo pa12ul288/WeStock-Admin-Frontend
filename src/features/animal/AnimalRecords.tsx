@@ -270,7 +270,7 @@ export function PhotosCard({ animal }: { animal: AnimalListRow }) {
         </div>
       )}
       <p className={styles.noteLoose}>
-        Added by the farmer from the app. Staff can remove a wrong photo; removals are logged.
+        Added by the farmer from the app. Photos can only be viewed here.
       </p>
     </Card>
   );

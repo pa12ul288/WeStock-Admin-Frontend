@@ -1,3 +1,4 @@
+import type { DataSource } from '../src/data/source';
 import { expect, test, type Page } from '@playwright/test';
 import { FEATURED } from '../src/data/demo/featured';
 import { signIn } from './helpers';
@@ -17,11 +18,12 @@ interface AuditRow {
 
 async function latestAudit(page: Page, table: string): Promise<AuditRow> {
   const rows = await page.evaluate(
-    async ({ path, table: name }) => {
-      const { dataSource } = await import(/* @vite-ignore */ path);
+    async ({ table: name }) => {
+      const { dataSource } = (window as unknown as { __westock: { dataSource: DataSource } })
+        .__westock;
       return dataSource.listAudit({ table_name: name, limit: 1 });
     },
-    { path: '/src/data/index.ts', table },
+    { table },
   );
   return rows[0] as AuditRow;
 }
