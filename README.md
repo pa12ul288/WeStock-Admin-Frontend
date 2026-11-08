@@ -1,10 +1,53 @@
-# WeSTOCK Admin: kickoff pack for Claude Code
+# WeSTOCK Admin
 
-This pack has everything Claude Code needs to build the WeSTOCK admin dashboard: the **frontend only**,
-running on built-in demo data and hosted on **Vercel**. Supabase gets connected in a later phase without
-rewriting the screens.
+A web dashboard for **brainwired staff** to view and fix the data farmers enter in the **WeSTOCK** app, a
+livestock farm-management app. It covers farmers and farms, livestock, reproduction, milk and feed, health and
+vaccines, analytics, and staff with an activity log.
 
-## What's inside
+**This is a demo.** It runs entirely in your browser on made-up data: there is no server, no database and no
+real farmer information. Every button works, and your changes are kept in this browser only. Supabase is
+connected in a later phase without changing the screens. A "Demo" ribbon in the top bar shows when the app
+runs in demo mode.
+
+## Try it (for reviewers)
+
+Open the site and sign in with any of these accounts. **Any password of 6 or more characters works.**
+
+| Email | Role |
+| --- | --- |
+| anjali@brainwired.demo | Super admin |
+| priya@brainwired.demo | Support |
+| rahul@brainwired.demo | Support |
+| fatima@brainwired.demo | Viewer |
+| vikram@brainwired.demo | Support (invited; signing in makes them active) |
+
+- The **user menu** (your initials, top of the sidebar or top bar) has a **role switcher** (Super admin,
+  Support, Viewer) so you can see what each role may do.
+- **Reset demo data** in the same menu throws away every change you made and restores the original data.
+- Everyone sees the same farms on every visit; your edits live only in your own browser.
+
+## Run it locally
+
+You need Node.js 20 or newer.
+
+```bash
+npm install
+cp .env.example .env     # optional: the defaults already run the demo
+npm run dev              # http://localhost:5173
+```
+
+Other commands: `npm run typecheck`, `npm run lint`, `npm test`, `npm run build` (production build into
+`dist/`), `npx vite preview` (serve that build), `npm run e2e` (Playwright, builds and serves its own copy)
+and `npm run shots` (screenshots of every screen at 1440 and 390 px).
+
+## Deploy to Vercel
+
+Framework Vite, build command `npm run build`, output folder `dist`, and the environment variables
+`VITE_DATA_SOURCE=demo` and `VITE_APP_ENV=demo`. `vercel.json` already holds the single-page-app rewrite and
+the long cache headers for `/assets`. Environment variables are read at build time, so redeploy after
+changing them.
+
+## What's inside the repository
 
 | Path | What it is |
 | --- | --- |
@@ -39,29 +82,14 @@ rewriting the screens.
 **Before step 3:** be signed in to GitHub on your laptop (run `gh auth login` once, or sign in to GitHub
 Desktop), so Claude Code can push. If you aren't, it still builds everything and tells you at the end how to push.
 
-**When it's done:** in Vercel, go to Add New → Project and import the repo. Choose framework **Vite**, add two
-environment variables, `VITE_DATA_SOURCE=demo` and `VITE_APP_ENV=demo`, and click Deploy. Anyone with the
-link can then try the dashboard.
-
 **Public repo:** the brainwired database files (`docs/backend-later/`) are kept out of the repo
 automatically. The app only contains made-up demo data.
-
-## Demo sign-in (on the deployed site)
-
-| Email | Role |
-| --- | --- |
-| anjali@brainwired.demo | Super admin |
-| priya@brainwired.demo | Support |
-| fatima@brainwired.demo | Viewer |
-
-Any password of 6+ characters works. The user menu has a role switcher and "Reset demo data".
 
 ## Tips
 
 - If a screen looks off, tell Claude Code which screenshot to compare against, e.g. "the KPI cards on
   /milk-feed don't match design/screens/desktop/08-milk-and-feed.png: fix the spacing and the icon colours".
 - To change a rule for the whole project, edit `CLAUDE.md`, not just the prompt.
-- Before sharing the Vercel link, run M12 (the QA pass).
 
 ## Later: connecting Supabase
 

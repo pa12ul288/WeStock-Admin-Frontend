@@ -3,6 +3,8 @@ import { AlertsBell } from './AlertsBell';
 import { GlobalSearch } from './GlobalSearch';
 import styles from './TopBar.module.css';
 
+const showRibbon = import.meta.env.VITE_APP_ENV === 'demo';
+
 export function TopBar({ crumb, page }: { crumb: string; page: string }) {
   return (
     <header className={styles.bar}>
@@ -26,6 +28,11 @@ export function TopBar({ crumb, page }: { crumb: string; page: string }) {
           {page}
         </span>
       </nav>
+      {showRibbon && (
+        <span className={styles.ribbon} title="Made-up data. Nothing here is real.">
+          Demo
+        </span>
+      )}
       <div className={styles.right}>
         <GlobalSearch />
         <span className={styles.date}>
