@@ -59,6 +59,8 @@ interface BarChartProps<Row extends object> {
   labelEmphasisColor?: string;
   /** Leaves out a stacked chart's legend, for one placed in the card's header instead. */
   hideLegend?: boolean;
+  /** The widest a bar gets, in px. Stacks default to 46 and single bars to 30. */
+  maxBarSize?: number;
 }
 
 interface EmphasisTickProps {
@@ -100,6 +102,7 @@ export function BarChart<Row extends object>({
   labelEmphasisIndex,
   labelEmphasisColor = 'var(--navy)',
   hideLegend = false,
+  maxBarSize,
 }: BarChartProps<Row>) {
   const isPhone = useIsPhone();
   const stacked = series.length > 1;
@@ -181,7 +184,7 @@ export function BarChart<Row extends object>({
               stackId={stacked ? 'stack' : undefined}
               fill={item.color ?? 'var(--milk-bar)'}
               radius={stacked ? (index === series.length - 1 ? [7, 7, 2, 2] : 2) : 999}
-              maxBarSize={stacked ? 46 : 30}
+              maxBarSize={maxBarSize ?? (stacked ? 46 : 30)}
               stroke={stacked ? 'var(--card)' : undefined}
               strokeWidth={stacked ? 1 : undefined}
               activeBar={stacked ? false : { fill: 'var(--milk-ink)' }}

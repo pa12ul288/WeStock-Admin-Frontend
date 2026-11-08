@@ -57,6 +57,12 @@ interface LineChartProps<Row extends object> {
   yAxisWidth?: number;
   /** Leaves out the legend, when the card's header shows it instead. */
   hideLegend?: boolean;
+  /** Room to the right of the last point. */
+  rightMargin?: number;
+  /** Where the tooltip sits from the top, in px, so one left open can rest beside its point. */
+  tooltipY?: number;
+  /** Writes the bottom axis's labels, for a key that is unique per point (a timestamp) but not readable. */
+  formatX?: (value: string) => string;
 }
 
 /** Trends such as temperature and THI. */
@@ -77,6 +83,9 @@ export function LineChart<Row extends object>({
   hideCursor = false,
   yAxisWidth = 44,
   hideLegend = false,
+  rightMargin = 24,
+  tooltipY,
+  formatX,
 }: LineChartProps<Row>) {
   const isPhone = useIsPhone();
   const idBase = useId().replace(/:/g, '');
@@ -91,7 +100,7 @@ export function LineChart<Row extends object>({
       <ResponsiveContainer width="100%" height={height}>
         <ComposedChart
           data={data as Row[]}
-          margin={{ top: 10, right: 24, bottom: 0, left: 0 }}
+          margin={{ top: 10, right: rightMargin, bottom: 0, left: 0 }}
           accessibilityLayer={false}
         >
           <defs>
@@ -119,6 +128,7 @@ export function LineChart<Row extends object>({
             tickLine={false}
             stroke={AXIS_COLOUR}
             tickMargin={8}
+            tickFormatter={formatX}
             interval={(isPhone ? labelEveryOnPhone : labelEvery) - 1}
           />
           <YAxis
@@ -135,6 +145,7 @@ export function LineChart<Row extends object>({
             cursor={hideCursor ? false : { stroke: AXIS_COLOUR }}
             isAnimationActive={false}
             defaultIndex={highlightIndex}
+            position={tooltipY === undefined ? undefined : { y: tooltipY }}
           />
           {references.map((reference) => (
             <ReferenceLine
