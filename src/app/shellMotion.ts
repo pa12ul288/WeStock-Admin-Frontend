@@ -59,8 +59,8 @@ export function usePageTransition(page: RefObject<HTMLElement | null>, pathname:
     if (!gsap || reducedMotionNow()) return;
     const tween = gsap.fromTo(
       element,
-      { opacity: 0, y: 10 },
-      { opacity: 1, y: 0, duration: 0.28, ease: GSAP_EASE.out, clearProps: 'opacity,transform' },
+      { opacity: 0, y: 18 },
+      { opacity: 1, y: 0, duration: 0.38, ease: GSAP_EASE.out, clearProps: 'opacity,transform' },
     );
     return () => {
       tween.revert();
