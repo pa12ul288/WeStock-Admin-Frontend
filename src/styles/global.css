@@ -39,3 +39,22 @@ h1 {
   outline: 2px solid var(--green-ink);
   outline-offset: 2px;
 }
+
+/* Date fields: the whole field opens the calendar (see lib/datePicker.ts), and the icon is easy to see. */
+input[type='date'],
+input[type='datetime-local'] {
+  cursor: pointer;
+  color-scheme: light;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator,
+input[type='datetime-local']::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.75;
+  padding: 4px;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator:hover,
+input[type='datetime-local']::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
