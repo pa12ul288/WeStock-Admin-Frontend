@@ -15,7 +15,9 @@ export default defineConfig({
   expect: { timeout: 10_000 },
   forbidOnly: !!process.env.CI,
   reporter: 'list',
-  use: { baseURL },
+  // Motion is off in every spec, so none waits on an animation and screenshots show the final state.
+  // Specs that test motion switch it back on with page.emulateMedia.
+  use: { baseURL, reducedMotion: 'reduce' },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
     command: 'npm run build:e2e && npx vite preview --port 4173 --strictPort --outDir .e2e-dist',

@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider } from 'react-router-dom';
 import { ToastProvider } from '../components/Toast';
+import { MotionProvider } from './MotionProvider';
 import { router } from './router';
 
 /** Everything the screens need above them, without the router, so tests can bring their own. */
@@ -9,7 +10,9 @@ export function AppProviders({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
   return (
     <QueryClientProvider client={queryClient}>
-      <ToastProvider>{children}</ToastProvider>
+      <MotionProvider>
+        <ToastProvider>{children}</ToastProvider>
+      </MotionProvider>
     </QueryClientProvider>
   );
 }
