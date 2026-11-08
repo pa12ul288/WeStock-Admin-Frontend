@@ -3,7 +3,15 @@
   z-index: 40;
   flex: 0 0 256px;
   min-width: 0;
-  background: var(--navy);
+  /* Navy glass: the brand navy with soft light from the top corner and a thin lit edge. */
+  border-right: 1px solid var(--glass-edge-dark);
+  background-color: var(--glass-navy-solid);
+  background-image:
+    radial-gradient(130% 55% at 0% 0%, var(--glow-green), transparent 60%),
+    linear-gradient(165deg, rgb(255 255 255 / 6%), rgb(255 255 255 / 0%) 38%);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: 1px 0 0 rgb(255 255 255 / 4%) inset;
   color: var(--card);
 }
 
@@ -109,6 +117,9 @@
   font-size: 14.5px;
   font-weight: 700;
   text-decoration: none;
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out);
 }
 
 .item svg {
@@ -116,7 +127,8 @@
 }
 
 .item:hover {
-  background: var(--nav-hover);
+  background: rgb(255 255 255 / 8%);
+  color: var(--card);
 }
 
 .item[aria-current='page'] {
@@ -148,8 +160,9 @@
   align-items: center;
   gap: 10px;
   padding: 12px;
+  border: 1px solid var(--glass-edge-dark);
   border-radius: 14px;
-  background: var(--nav-hover);
+  background: rgb(255 255 255 / 6%);
 }
 
 .userButton {
@@ -226,6 +239,11 @@
   background: transparent;
   color: var(--nav-text);
   cursor: pointer;
+  transition: background-color var(--motion-fast) var(--ease-out);
+}
+
+.signOut:hover {
+  background: rgb(255 255 255 / 8%);
 }
 
 .side :focus-visible {

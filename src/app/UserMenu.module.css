@@ -8,10 +8,12 @@
   gap: 4px;
   width: 310px;
   padding: 8px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--glass-edge);
   border-radius: 16px;
-  background: var(--card);
-  box-shadow: var(--shadow-pop);
+  background: var(--glass-highlight), var(--glass-light);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-glass);
   color: var(--ink);
 }
 
@@ -121,6 +123,12 @@
 
 .menu :focus-visible {
   outline-color: var(--green-ink);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .menu {
+    background: var(--glass-light-solid);
+  }
 }
 
 @media (max-width: 900px) {

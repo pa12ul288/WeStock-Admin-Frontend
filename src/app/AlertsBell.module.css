@@ -46,10 +46,12 @@
   width: 340px;
   max-width: calc(100vw - 32px);
   padding: 8px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--glass-edge);
   border-radius: 16px;
-  background: var(--card);
-  box-shadow: var(--shadow-pop);
+  background: var(--glass-highlight), var(--glass-light);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-glass);
 }
 
 .head {
@@ -154,6 +156,12 @@
   font-size: 15px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .pop {
+    background: var(--glass-light-solid);
+  }
 }
 
 @media (max-width: 900px) {

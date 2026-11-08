@@ -7,7 +7,7 @@ const showRibbon = import.meta.env.VITE_APP_ENV === 'demo';
 
 export function TopBar({ crumb, page }: { crumb: string; page: string }) {
   return (
-    <header className={styles.bar}>
+    <header className={styles.bar} data-topbar>
       <nav className={styles.nav} aria-label="Breadcrumb">
         <span className={styles.crumb}>{crumb}</span>
         <svg

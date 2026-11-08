@@ -57,7 +57,12 @@ function useStickyHead() {
       frame = 0;
       if (!scroller.current || !head.current) return;
       const box = scroller.current.getBoundingClientRect();
-      const offset = Math.max(0, Math.min(-box.top, box.height - head.current.offsetHeight));
+      // The glass top bar stays at the top of the page, so the header stops just below it.
+      const stuckAt = document.querySelector<HTMLElement>('[data-topbar]')?.offsetHeight ?? 0;
+      const offset = Math.max(
+        0,
+        Math.min(stuckAt - box.top, box.height - head.current.offsetHeight),
+      );
       head.current.style.transform = offset > 0 ? `translateY(${offset}px)` : '';
     };
     const schedule = () => {

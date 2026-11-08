@@ -1,11 +1,27 @@
 .shell {
-  display: flex;
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--side-w) minmax(0, 1fr);
   min-height: 100vh;
 }
 
+/* Soft gradient lighting behind the page: it gives the glass bar and menus something to blur.
+   Cards, tables and forms sit solid on top of it. */
+.shell::before {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  background:
+    radial-gradient(60rem 34rem at 14% -10%, var(--glow-green), transparent 62%),
+    radial-gradient(48rem 30rem at 100% 0%, var(--glow-blue), transparent 60%);
+  content: '';
+  pointer-events: none;
+}
+
 .main {
+  position: relative;
+  z-index: 1;
   display: flex;
-  flex: 1 1 560px;
   flex-direction: column;
   min-width: 0;
 }
@@ -21,11 +37,8 @@
 
 @media (max-width: 900px) {
   .shell {
-    flex-direction: column;
-  }
-
-  .main {
-    flex: 1 1 auto;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
   }
 
   .panel {

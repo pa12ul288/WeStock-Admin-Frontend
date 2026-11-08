@@ -13,6 +13,30 @@
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-base) var(--ease-out),
+    filter var(--motion-fast) var(--ease-out);
+}
+
+.button:not(:disabled):hover {
+  box-shadow: 0 6px 16px rgb(15 27 45 / 10%);
+}
+
+.primary:not(:disabled):hover {
+  box-shadow: 0 6px 18px rgb(46 208 140 / 38%);
+  filter: brightness(1.04);
+}
+
+.secondary:not(:disabled):hover {
+  border-color: var(--navy-tint);
+  background: var(--surface-soft);
+}
+
+/* Links styled as buttons have no JS press effect, so they get a CSS one. */
+a.button:active {
+  filter: brightness(0.96);
 }
 
 .button:disabled {

@@ -21,8 +21,15 @@
   text-decoration: none;
 }
 
+.card {
+  transition:
+    border-color var(--motion-base) var(--ease-out),
+    box-shadow var(--motion-base) var(--ease-out);
+}
+
 .link:hover {
   border-color: var(--line-strong);
+  box-shadow: var(--shadow-lift);
 }
 
 .head {

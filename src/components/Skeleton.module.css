@@ -1,18 +1,30 @@
+/* A calm sweep of light across the placeholder: transform only, and still when motion is reduced. */
 .skeleton {
+  position: relative;
   display: block;
   max-width: 100%;
+  overflow: hidden;
   background: var(--segment-bg);
-  animation: pulse 1.4s ease-in-out infinite;
 }
 
-@keyframes pulse {
-  50% {
-    opacity: 0.45;
+.skeleton::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 65%), transparent);
+  content: '';
+  animation: sweep 1.6s var(--ease-in-out) infinite;
+  transform: translateX(-100%);
+}
+
+@keyframes sweep {
+  to {
+    transform: translateX(100%);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .skeleton {
+  .skeleton::after {
     animation: none;
+    opacity: 0;
   }
 }

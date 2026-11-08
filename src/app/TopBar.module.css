@@ -1,13 +1,23 @@
 .bar {
-  position: relative;
+  position: sticky;
   z-index: 30;
+  top: 0;
   display: flex;
   align-items: center;
   gap: 12px;
   width: 100%;
   min-height: 68px;
   padding: 12px clamp(16px, 2.6vw, 36px);
-  background: var(--bg);
+  border-bottom: 1px solid rgb(15 27 45 / 5%);
+  background: var(--glass-bar);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .bar {
+    background: var(--glass-bar-solid);
+  }
 }
 
 .nav {
@@ -69,7 +79,7 @@
   padding: 0 14px;
   border: 1px solid var(--line-control);
   border-radius: 999px;
-  background: var(--card);
+  background: rgb(255 255 255 / 80%);
   color: var(--navy);
   font-size: 13px;
   font-weight: 800;
